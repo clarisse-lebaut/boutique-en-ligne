@@ -1,19 +1,6 @@
 <?php
-if (false) {
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL);
-}
-
-include_once "../classes/account.php";
-
-include_once "../classes/bdd.php";
-include_once "../classes/request.php";
-
-$request = new Request();
-
-$pageTitle = "Créer un compte";
-include_once "../assets/components/header.php";
+// $pageTitle = "Créer un compte";
+include "../assets/components/header.php";
 ?>
 
 <main>
@@ -40,5 +27,5 @@ include_once "../assets/components/header.php";
 </main>
 
 <?php
-include_once "../assets/components/footer.php";
+include "../assets/components/footer.php";
 ?>
