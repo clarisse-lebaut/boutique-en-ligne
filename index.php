@@ -1,8 +1,8 @@
 <?php
-$pageTitle = "Accueil";
-include_once "./assets/components/header.php";
-?>
+include_once "./classes/bdd.php";
+include_once "./classes/request.php";
 
-<?php
-include_once "./assets/components/footer.php";
-?>
+$request = new Request();
+
+$pageTitle = "Accueil";
+header("Location: ./pages/home.php");
