@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
   <script src="../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
 
-  <link rel="stylesheet" href="..compte/assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/global.css">
 </head>
 
 <body>
