@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --primary-clr: #fffafa;
+  --secondary-clr: #ffadd9;
+  --accent-clr: #ee4343;
+  --accent-clr-hover: #db3d3d;
+
+  --ff-inknut-antiqua: 'Inknut Antiqua';
+}
+
+body {
+  background-color: var(--primary-clr);
+}
+
+.title {
+  font-family: var(--ff-inknut-antiqua), serif;
+}
+
+.btn.btn-primary {
+  background-color: var(--accent-clr);
+  border-color: var(--accent-clr-hover);
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:focus {
+  background-color: var(--accent-clr-hover);
+}
