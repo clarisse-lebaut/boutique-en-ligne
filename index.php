@@ -28,6 +28,7 @@ $request = new Request();
 </head>
 
 <body>
+  <h1 class="text-danger title">CandyShop</h1>
 </body>
 
 </html>
