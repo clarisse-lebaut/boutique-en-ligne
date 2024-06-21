@@ -1,4 +1,12 @@
 <?php
+if (false) {
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+}
+
+include_once "./classes/account.php";
+
 include_once "./classes/bdd.php";
 include_once "./classes/request.php";
 
