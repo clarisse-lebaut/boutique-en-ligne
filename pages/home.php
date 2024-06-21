@@ -1,6 +1,6 @@
 <?php
 $pageTitle = "Accueil";
-include "./assets/components/header.php";
+include "../assets/components/header.php";
 ?>
 
 <ul>
@@ -17,5 +17,5 @@ include "./assets/components/header.php";
 </ul>
 
 <?php
-include "./assets/components/footer.php";
+include "../assets/components/footer.php";
 ?>
