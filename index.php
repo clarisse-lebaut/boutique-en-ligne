@@ -12,6 +12,7 @@ include_once "./classes/request.php";
 
 $request = new Request();
 
+$pageTitle = "Accueil";
 include_once "./assets/components/header.php";
 ?>
 
