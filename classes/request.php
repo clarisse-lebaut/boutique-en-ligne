@@ -26,31 +26,6 @@ class Request extends BDD
       return 'Failed to add user';
     }
   }
-  public function getProducts()
-  {
-    $sql = 'SELECT name, price FROM candy';
-    $stmt = $this->connection->prepare($sql);
-
-    if ($stmt->execute()) {
-      $stmt->setFetchMode(PDO::FETCH_ASSOC);
-      return $stmt->fetchAll();
-    } else {
-      return false;
-    }
-  }
-
-  public function getProductsDamier()
-  {
-    $sql = 'SELECT name, price FROM candy ORDER BY RAND() LIMIT 9';
-    $stmt = $this->connection->prepare($sql);
-
-    if ($stmt->execute()) {
-      $stmt->setFetchMode(PDO::FETCH_ASSOC);
-      return $stmt->fetchAll();
-    } else {
-      return false;
-    }
-  }
 
 }
 
