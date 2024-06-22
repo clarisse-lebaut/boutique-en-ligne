@@ -6,7 +6,7 @@ class Request extends BDD
     parent::__construct();
   }
 
-  function addUser($firstname, $lastname, $email, $password)
+  public function addUser($firstname, $lastname, $email, $password)
   {
     $role = 'User'; // Valeur par défaut pour le rôle
     $sql = 'INSERT INTO account (firstname, lastname, email, password, role) VALUES (:firstname, :lastname, :email, :password, :role)';
@@ -26,5 +26,31 @@ class Request extends BDD
       return 'Failed to add user';
     }
   }
+  public function getProducts()
+  {
+    $sql = 'SELECT name, price FROM candy';
+    $stmt = $this->connection->prepare($sql);
+
+    if ($stmt->execute()) {
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      return $stmt->fetchAll();
+    } else {
+      return false;
+    }
+  }
+
+  public function getProductsDamier()
+  {
+    $sql = 'SELECT name, price FROM candy ORDER BY RAND() LIMIT 9';
+    $stmt = $this->connection->prepare($sql);
+
+    if ($stmt->execute()) {
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      return $stmt->fetchAll();
+    } else {
+      return false;
+    }
+  }
+
 }
 
