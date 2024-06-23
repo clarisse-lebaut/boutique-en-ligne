@@ -75,27 +75,23 @@ $searchForm->render();
         left: 50px;
     }
 
-    #prev:hover,
-    #next:hover {
-        width: 100px;
-        top: 20%;
-        left: 30px;
-    }
-
-    #next:hover {
-        left: unset;
-        right: 30px;
-
-    }
-
-    #prev:hover {
-        left: 30px;
-
-    }
-
     #next {
         left: unset;
         right: 50px;
+    }
+
+    #prev:hover,
+    #next:hover {
+        background-color: #ffadd9;
+        box-shadow: 0 0 10px 10px #ffadd9;
+        border-radius: 100px;
+    }
+
+    #prev:active{
+        transform: translateX(-20px);
+    }
+    #next:active {
+        transform: translateX(20px);
     }
 
     .lastout {}
