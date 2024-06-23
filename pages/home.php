@@ -32,6 +32,7 @@ include "../assets/components/footer.php";
 </head>
 
 <a href="./create_account.php">Se créer un compte</a>
+<a href="./404.php">Test page 404</a>
 
 <?php
 // Appelle de classe pour la barre de recherche
