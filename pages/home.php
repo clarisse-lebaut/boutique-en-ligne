@@ -4,14 +4,16 @@ require '../classes/bdd.php';
 require '../classes/request.php';
 
 include "../assets/components/header.php";
+include "../assets/components/search.php";
 
 // Appelle la fonction pour obtenir les produits
 $request = new Request();
-$products = $request->getProducts();
-$productsDamier = $request->getProductsDamier();
+$products = $request->getProductsCarousel();
+$productsDamier = $request->getProductsCheckerBoard();
 
 include "../assets/components/footer.php";
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,94 +22,149 @@ include "../assets/components/footer.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?></title>
+    <link rel="stylesheet" href="../assets/css/global.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        .carousel_style {
-            height: 500px;
-            background-color: gray;
-        }
-
-        .candy_details {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-    </style>
+    <script src="../assets/script/slider.js" defer></script>
+    <script src="../assets/script/search.js" defer></script>
 </head>
 
-<body>
+<a href="./create_account.php">Se créer un compte</a>
 
-    <div class="container mb-4">
+<?php
+// Appelle de classe pour la barre de recherche
+$searchForm = new SearchForm();
+$searchForm->render();
+?>
 
-    </div>
+<style>
+    body {
+        background-color: #fffafa;
+    }
 
-    <a href="./create_account.php">Se créer un compte</a>
+    .slider {
+        position: relative;
+        width: 100%;
+        height: 370px;
+        display: flex;
+    }
 
-    <div class="container mt-4">
-        <h1>NOS DERNIERES SORTIES</h1>
-        <?php if ($products !== false && count($products) > 0) { ?>
-            <div id="productCarousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <?php
-                    $active = 'active';
-                    foreach ($products as $row) { ?>
-                        <div class="carousel-item <?php echo $active; ?> carousel_style">
-                            <div class="d-block w-100 candy_details">
-                                <h2><?php echo htmlspecialchars($row["name"]); ?></h2>
-                                <p>Price: $<?php echo htmlspecialchars($row["price"]); ?></p>
-                            </div>
-                        </div>
-                        <?php
-                        $active = '';
-                    } ?>
+    .item {
+        position: absolute;
+        width: 200px;
+        height: 320px;
+        text-align: justify;
+        border-radius: 10px;
+        padding: 20px;
+        transition: 0.5s;
+        left: calc(50% - 110px);
+        top: 0;
+        background-color: #ffadd9;
+    }
+
+    #next,
+    #prev {
+        position: absolute;
+        top: 30%;
+        color: red;
+        background-color: transparent;
+        border: none;
+        font-weight: bold;
+        left: 50px;
+    }
+
+    #prev:hover,
+    #next:hover {
+        width: 100px;
+        top: 20%;
+        left: 30px;
+    }
+
+    #next:hover {
+        left: unset;
+        right: 30px;
+
+    }
+
+    #prev:hover {
+        left: 30px;
+
+    }
+
+    #next {
+        left: unset;
+        right: 50px;
+    }
+
+    .lastout {}
+
+    .loved {
+        background-color: #ffffff;
+    }
+
+    .news {}
+</style>
+
+<div class="container mb-4 lastOut">
+    <h1>NOS DERNIERES SORTIES</h1>
+    <hr width="250px">
+    <?php if ($products !== false && count($products) > 0) { ?>
+        <div id="slider_products" class="container mb-4">
+            <div class="slider">
+                <div class="btn_next">
+                    <img id="next" src="../assets/images/btn/orange-candy.png" alt="" width="80px">
                 </div>
-                <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                <?php
+                $active = 'active';
+                foreach ($products as $row) { ?>
+                    <div class="item <?php echo $active; ?>">
+                        <h2><?php echo htmlspecialchars($row["name"]); ?></h2>
+                        <p>Price: $<?php echo htmlspecialchars($row["price"]); ?></p>
+                    </div>
+                    <?php
+                    $active = '';
+                } ?>
+                <div class="btn_prev">
+                    <img id="prev" src="../assets/images/btn/orange-candy.png" alt="" width="80px">
+                </div>
             </div>
-        <?php } else { ?>
-            <p>Failed to get products or no products found</p>
-        <?php } ?>
-    </div>
+        </div>
+    <?php } else { ?>
+        <p>Failed to get products or no products found</p>
+    <?php } ?>
+</div>
+<style>
+    .grid-box {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
 
-    <style>
-        .grid-box {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            background-color: blue;
-            padding: 10px;
-        }
+    .card-color-1 {
+        background-color: #fffafa;
+        /* Couleur 1 */
+    }
 
-        .card-color-1 {
-            background-color: #fffafa;
-            /* Couleur 1 */
-        }
+    .card-color-2 {
+        background-color: #ffadd9;
+        /* Couleur 2 */
+    }
 
-        .card-color-2 {
-            background-color: #ffadd9;
-            /* Couleur 2 */
-        }
-
-        .card {
-            margin: 0;
-            /* Évite les marges des cartes */
-        }
-    </style>
-
-
-    <div class="container mt-4">
+    .card {
+        margin: 0;
+        /* Évite les marges des cartes */
+        height: 250px;
+        box-shadow: 5px 5px 5px 1px gray;
+        border-radius: 10px;
+    }
+</style>
+<div class="container-fluid mt-4 loved">
+    <div class="container py-4">
         <h1>LES PLUS AIMEES</h1>
+        <hr width="250px">
         <div class="grid-box">
             <?php
             if ($productsDamier !== false && count($productsDamier) > 0) {
@@ -128,41 +185,115 @@ include "../assets/components/footer.php";
             ?>
         </div>
     </div>
-    </div>
-    <style>
-        .contact-form {
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-    </style>
-    <div class="container mt-4">
-        <h2>Contactez-nous</h2>
-        <div class="container contact-form">
-            <form action="process_contact.php" method="POST">
-                <div class="form-group">
-                    <label for="name">Nom</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+</div>
+</div>
+
+<div class="container-fluid mt-4 news">
+    <div class="container">
+        <h2>Actualité sucrée</h2>
+        <hr width="250px">
+        <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="../assets/readme/readme.jpeg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>First slide label</h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                <div class="carousel-item">
+                    <img src="../assets/readme/readme.jpeg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Second slide label</h5>
+                        <p>Some representative placeholder content for the second slide.</p>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="subject">Sujet</label>
-                    <input type="text" class="form-control" id="subject" name="subject" required>
+                <div class="carousel-item">
+                    <img src="../assets/readme/readme.jpeg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Third slide label</h5>
+                        <p>Some representative placeholder content for the third slide.</p>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-            </form>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
+</div>
+<style>
+    .contact-form {
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+<div class="container mt-4">
+    <h2>Contactez-nous</h2>
+    <?php
+    if ($_POST) {
+        // Récupération des données du formulaire
+        $name = htmlspecialchars($_POST['name']);
+        $email = htmlspecialchars($_POST['email']);
+        $subject = htmlspecialchars($_POST['subject']);
+        $message = htmlspecialchars($_POST['message']);
+
+        // Validation simple (vous pouvez ajouter plus de validation)
+        if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
+            // Traitement des données, par exemple, les enregistrer dans une base de données ou les envoyer par email
+            // Pour l'instant, nous allons simplement les afficher
+            echo "Nom: " . $name . "<br>";
+            echo "Email: " . $email . "<br>";
+            echo "Sujet: " . $subject . "<br>";
+            echo "Message: " . $message . "<br>";
+        } else {
+            echo "Données invalides.";
+        }
+    } else {
+        echo "Méthode de requête non autorisée.";
+    }
+    ?>
+    <div class="container contact-form">
+        <form action="" method="POST">
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Sujet</label>
+                <input type="text" class="form-control" id="subject" name="subject" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+</div>
 </body>
 
 </html>

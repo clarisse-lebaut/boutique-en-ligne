@@ -26,9 +26,10 @@ class Request extends BDD
       return 'Failed to add user';
     }
   }
-  public function getProducts()
+
+  public function getProductsCarousel()
   {
-    $sql = 'SELECT name, price FROM candy';
+    $sql = 'SELECT name, price FROM candy ORDER BY created_at DESC LIMIT 5';
     $stmt = $this->connection->prepare($sql);
 
     if ($stmt->execute()) {
@@ -39,7 +40,7 @@ class Request extends BDD
     }
   }
 
-  public function getProductsDamier()
+  public function getProductsCheckerBoard()
   {
     $sql = 'SELECT name, price FROM candy ORDER BY RAND() LIMIT 9';
     $stmt = $this->connection->prepare($sql);
@@ -51,6 +52,5 @@ class Request extends BDD
       return false;
     }
   }
-
 }
 
