@@ -1,8 +1,5 @@
 <?php
 $pageTitle = "Accueil";
-require '../classes/bdd.php';
-require '../classes/request.php';
-
 include "../assets/components/header.php";
 include "../assets/components/search.php";
 
