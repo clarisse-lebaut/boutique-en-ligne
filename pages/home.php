@@ -13,7 +13,6 @@ $products = $request->getProductsCarousel();
 $productsDamier = $request->getProductsCheckerBoard();
 // Appelle la classe de la barre de recherche
 $searchForm = new SearchForm();
-$searchForm->render();
 
 include "../assets/components/footer.php";
 ?>
@@ -28,6 +27,10 @@ include "../assets/components/footer.php";
 <a href="./create_account.php">Se créer un compte</a>
 <a href="./404.php">Test page 404</a>
 <a href="../config/disconnect.php">Déconnexion</a>
+
+<?php
+$searchForm->render();
+?>
 
 <!-- PART : to make appear the name of the connected user -->
 <h1 class="user-name">
@@ -48,7 +51,7 @@ include "../assets/components/footer.php";
         // Ajoutez ici les actions que vous souhaitez prendre si l'utilisateur est connecté
     } else {
         // Action à prendre si l'utilisateur n'est pas connecté
-        echo "Bienvenue, bienenvue dans un monde de pur merveille";
+        echo "Bienvenue dans un monde de pur merveille";
         // Ajoutez ici les actions que vous souhaitez prendre si l'utilisateur n'est pas connecté
     }
     ?>
