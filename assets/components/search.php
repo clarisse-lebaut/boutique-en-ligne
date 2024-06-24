@@ -29,8 +29,8 @@ class SearchForm
                     display: flex;
                     gap: 5px;
                     position: absolute;
-                    bottom: 24%;
-                    left: 39.5%;
+                    bottom: 24.3%;
+                    left: 41%;
                 }
             </style>
         </head>
