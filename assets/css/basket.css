@@ -1,0 +1,38 @@
+.cart-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item h2 {
+  margin: 0;
+}
+
+.cart-item .quantity,
+.cart-item .price {
+  font-weight: bold;
+}
+
+.total-amount {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.user-name{
+    text-align: center;
+}
+
+.agency{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.link{
+    display: flex;
+    gap: 50px;
+}
