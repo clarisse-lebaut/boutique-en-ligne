@@ -1,5 +1,6 @@
 <?php
 $pageTitle = "Accueil";
+
 include "../assets/components/header.php";
 include "../assets/components/search.php";
 
@@ -18,6 +19,7 @@ include "../assets/components/footer.php";
 
 <a href="./create_account.php">Se créer un compte</a>
 <a href="./404.php">Test page 404</a>
+<a href="../config/disconnect.php">Déconnexion</a>
 
 <?php
 // Appelle de classe pour la barre de recherche
@@ -84,7 +86,38 @@ $searchForm->render();
     }
 
     .news {}
+
+    .user-name{
+        text-align: center;
+        padding: 100px;
+    }
 </style>
+
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+// Définir la fonction isLoggedIn
+function isLoggedIn()
+{
+    return isset($_SESSION['user_id']);
+}
+?>
+
+<h1 class="user-name">
+    <?php
+    // Exécution conditionnelle en fonction de l'état de connexion
+    if (isLoggedIn()) {
+        // Action à prendre si l'utilisateur est connecté
+        echo "Quelle sera votre péché " . $_SESSION['firstname'] . " ?";
+        // Ajoutez ici les actions que vous souhaitez prendre si l'utilisateur est connecté
+    } else {
+        // Action à prendre si l'utilisateur n'est pas connecté
+        echo "Utilisateur non connecté";
+        // Ajoutez ici les actions que vous souhaitez prendre si l'utilisateur n'est pas connecté
+    }
+    ?>
+</h1>
 
 <div class="container mb-4 lastOut">
     <h1>NOS DERNIERES SORTIES</h1>
