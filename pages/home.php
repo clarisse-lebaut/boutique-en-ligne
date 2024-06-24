@@ -11,22 +11,8 @@ $productsDamier = $request->getProductsCheckerBoard();
 include "../assets/components/footer.php";
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageTitle; ?></title>
-    <link rel="stylesheet" href="../assets/css/global.css">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="../assets/script/slider.js" defer></script>
-    <script src="../assets/script/search.js" defer></script>
-</head>
+<script src="../assets/script/slider.js" defer></script>
+<script src="../assets/script/search.js" defer></script>
 
 <a href="./create_account.php">Se créer un compte</a>
 <a href="./404.php">Test page 404</a>
@@ -38,10 +24,6 @@ $searchForm->render();
 ?>
 
 <style>
-    body {
-        background-color: #fffafa;
-    }
-
     .slider {
         position: relative;
         width: 100%;
@@ -73,27 +55,24 @@ $searchForm->render();
         left: 50px;
     }
 
-    #prev:hover,
-    #next:hover {
-        width: 100px;
-        top: 20%;
-        left: 30px;
-    }
-
-    #next:hover {
-        left: unset;
-        right: 30px;
-
-    }
-
-    #prev:hover {
-        left: 30px;
-
-    }
-
     #next {
         left: unset;
         right: 50px;
+    }
+
+    #prev:hover,
+    #next:hover {
+        background-color: #ffadd9;
+        box-shadow: 0 0 10px 10px #ffadd9;
+        border-radius: 100px;
+    }
+
+    #prev:active {
+        transform: translateX(-20px);
+    }
+
+    #next:active {
+        transform: translateX(20px);
     }
 
     .lastout {}
