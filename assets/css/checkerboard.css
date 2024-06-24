@@ -1,0 +1,25 @@
+/* CSS for checkerboard in home.php */
+.grid-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+.card-color-1 {
+  background-color: #fffafa;
+  /* Couleur 1 */
+}
+
+.card-color-2 {
+  background-color: #ffadd9;
+  /* Couleur 2 */
+}
+
+.card {
+  margin: 0;
+  /* Évite les marges des cartes */
+  height: 250px;
+  box-shadow: 5px 5px 5px 1px gray;
+  border-radius: 10px;
+}

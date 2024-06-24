@@ -1,3 +1,4 @@
+<!-- import class and fonction -->
 <?php
 $pageTitle = "Accueil";
 
@@ -10,102 +11,36 @@ require '../classes/request.php';
 $request = new Request();
 $products = $request->getProductsCarousel();
 $productsDamier = $request->getProductsCheckerBoard();
+// Appelle la classe de la barre de recherche
+$searchForm = new SearchForm();
+$searchForm->render();
 
 include "../assets/components/footer.php";
 ?>
 
+<!-- all link -->
+<link rel="stylesheet" href="../assets/css/home.css">
+<link rel="stylesheet" href="../assets/css/slider.css">
+<link rel="stylesheet" href="../assets/css/checkerboard.css">
+<link rel="stylesheet" href="../assets/css/formContact.css">
 <script src="../assets/script/slider.js" defer></script>
 <script src="../assets/script/search.js" defer></script>
-
 <a href="./create_account.php">Se créer un compte</a>
 <a href="./404.php">Test page 404</a>
 <a href="../config/disconnect.php">Déconnexion</a>
 
-<?php
-// Appelle de classe pour la barre de recherche
-$searchForm = new SearchForm();
-$searchForm->render();
-?>
-
-<style>
-    .slider {
-        position: relative;
-        width: 100%;
-        height: 370px;
-        display: flex;
-    }
-
-    .item {
-        position: absolute;
-        width: 200px;
-        height: 320px;
-        text-align: justify;
-        border-radius: 10px;
-        padding: 20px;
-        transition: 0.5s;
-        left: calc(50% - 110px);
-        top: 0;
-        background-color: #ffadd9;
-    }
-
-    #next,
-    #prev {
-        position: absolute;
-        top: 30%;
-        color: red;
-        background-color: transparent;
-        border: none;
-        font-weight: bold;
-        left: 50px;
-    }
-
-    #next {
-        left: unset;
-        right: 50px;
-    }
-
-    #prev:hover,
-    #next:hover {
-        background-color: #ffadd9;
-        box-shadow: 0 0 10px 10px #ffadd9;
-        border-radius: 100px;
-    }
-
-    #prev:active {
-        transform: translateX(-20px);
-    }
-
-    #next:active {
-        transform: translateX(20px);
-    }
-
-    .lastout {}
-
-    .loved {
-        background-color: #ffffff;
-    }
-
-    .news {}
-
-    .user-name{
-        text-align: center;
-        padding: 100px;
-    }
-</style>
-
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-// Définir la fonction isLoggedIn
-function isLoggedIn()
-{
-    return isset($_SESSION['user_id']);
-}
-?>
-
+<!-- PART : to make appear the name of the connected user -->
 <h1 class="user-name">
     <?php
+    // Condition pour vérifier si une session est en cour
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    // Fucntion to check if an user is connected
+    function isLoggedIn()
+    {
+        return isset($_SESSION['user_id']);
+    }
     // Exécution conditionnelle en fonction de l'état de connexion
     if (isLoggedIn()) {
         // Action à prendre si l'utilisateur est connecté
@@ -113,12 +48,13 @@ function isLoggedIn()
         // Ajoutez ici les actions que vous souhaitez prendre si l'utilisateur est connecté
     } else {
         // Action à prendre si l'utilisateur n'est pas connecté
-        echo "Utilisateur non connecté";
+        echo "Bienvenue, bienenvue dans un monde de pur merveille";
         // Ajoutez ici les actions que vous souhaitez prendre si l'utilisateur n'est pas connecté
     }
     ?>
 </h1>
 
+<!-- PART : slider to make appear the last add products -->
 <div class="container mb-4 lastOut">
     <h1>NOS DERNIERES SORTIES</h1>
     <hr width="250px">
@@ -147,32 +83,8 @@ function isLoggedIn()
         <p>Failed to get products or no products found</p>
     <?php } ?>
 </div>
-<style>
-    .grid-box {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        padding: 10px;
-    }
 
-    .card-color-1 {
-        background-color: #fffafa;
-        /* Couleur 1 */
-    }
-
-    .card-color-2 {
-        background-color: #ffadd9;
-        /* Couleur 2 */
-    }
-
-    .card {
-        margin: 0;
-        /* Évite les marges des cartes */
-        height: 250px;
-        box-shadow: 5px 5px 5px 1px gray;
-        border-radius: 10px;
-    }
-</style>
+<!-- PART : checkerboard to make appeart the most loved products -->
 <div class="container-fluid mt-4 loved">
     <div class="container py-4">
         <h1>LES PLUS AIMEES</h1>
@@ -200,6 +112,7 @@ function isLoggedIn()
 </div>
 </div>
 
+<!-- PART :carousel to make appeart the last news -->
 <div class="container-fluid mt-4 news">
     <div class="container">
         <h2>Actualité sucrée</h2>
@@ -249,16 +162,8 @@ function isLoggedIn()
         </div>
     </div>
 </div>
-<style>
-    .contact-form {
-        background: #fff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-</style>
+
+<!-- PART : form to contact us -->
 <div class="container mt-4">
     <h2>Contactez-nous</h2>
     <?php
