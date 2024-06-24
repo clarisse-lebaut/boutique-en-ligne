@@ -1,4 +1,6 @@
 <?php
+require '';
+
 class Request extends BDD
 {
   function __construct()
@@ -8,6 +10,18 @@ class Request extends BDD
 
   public function addUser($firstname, $lastname, $email, $password)
   {
+    // Vérifier si l'adresse e-mail existe déjà
+    $checkSql = 'SELECT COUNT(*) FROM account WHERE email = :email';
+    $checkStmt = $this->connection->prepare($checkSql);
+    $checkStmt->bindParam(':email', $email);
+    $checkStmt->execute();
+    $emailExists = $checkStmt->fetchColumn();
+
+    if ($emailExists) {
+      return 'Email already exists';
+    }
+
+    // Si l'email n'existe pas, ajouter le nouvel utilisateur
     $role = 'User'; // Valeur par défaut pour le rôle
     $sql = 'INSERT INTO account (firstname, lastname, email, password, role) VALUES (:firstname, :lastname, :email, :password, :role)';
     $stmt = $this->connection->prepare($sql);
@@ -26,6 +40,7 @@ class Request extends BDD
       return 'Failed to add user';
     }
   }
+
 
   public function getProductsCarousel()
   {

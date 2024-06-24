@@ -3,6 +3,8 @@ $pageTitle = "Accueil";
 include "../assets/components/header.php";
 include "../assets/components/search.php";
 
+require '../classes/bdd.php';
+require '../classes/request.php';
 // Appelle la fonction pour obtenir les produits
 $request = new Request();
 $products = $request->getProductsCarousel();
