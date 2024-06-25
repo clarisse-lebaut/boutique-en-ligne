@@ -8,11 +8,16 @@ if ($_POST) {
     $lastname = $_POST['lastname'] ?? '';
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
-    $role = "user";
+    $confirmed_password = $_POST['confirmed_password'] ?? '';
+    $role = "User";
 
-    $request = new Request();
-    $result = $request->addUser($firstname, $lastname, $email, $password);
-    $message = $result;
+    if ($password !== $confirmed_password) {
+        $message = "Les mot de passes ne sont pas identique";
+    } else {
+        $request = new Request();
+        $result = $request->addUser($firstname, $lastname, $email, $password);
+        $message = $result;
+    }
 }
 ?>
 
@@ -47,6 +52,10 @@ if ($_POST) {
         <div>
             <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="confirm_password">Confirmer le mot de passe</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
         </div>
         <div>
             <button type="submit">Créer</button>
