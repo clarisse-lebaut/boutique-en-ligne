@@ -6,10 +6,14 @@ $message = '';
 $firstname = '';
 $lastname = '';
 $email = '';
+$adress = '';
+$postal_code = '';
 if ($_POST) {
     $firstname = $_POST['firstname'] ?? '';
     $lastname = $_POST['lastname'] ?? '';
     $email = $_POST['email'] ?? '';
+    $postal_code = $_POST['postal_code'] ?? '';
+    $adress = $_POST['adress'] ?? '';
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
     $role = "User";
@@ -35,7 +39,7 @@ if ($_POST) {
         $message = 'Le mot de passe doit contenir au moins un caractère spécial.';
     } else {
         $request = new Request();
-        $result = $request->addUser($firstname, $lastname, $email, $password);
+        $result = $request->addUser($firstname, $lastname, $email, $adress, $postal_code, $password);
         $message = $result;
     }
 }
@@ -75,6 +79,15 @@ if ($_POST) {
         <div>
             <label for="email">Email</label>
             <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
+        </div>
+        <div>
+            <label for="adress">Adresse</label>
+            <input type="text" id="adress" name="adress" value="<?php echo htmlspecialchars($adress); ?>" required>
+        </div>
+        <div>
+            <label for="postal_code">Code Postale</label>
+            <input type="number" id="postal_code" name="postal_code"
+                value="<?php echo htmlspecialchars($postal_code); ?>" required>
         </div>
         <div>
             <label for="password">Mot de passe</label>

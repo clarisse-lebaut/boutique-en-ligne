@@ -8,7 +8,7 @@ class Request extends BDD
     parent::__construct();
   }
 
-  public function addUser($firstname, $lastname, $email, $password)
+  public function addUser($firstname, $lastname, $email, $adress, $postal_code, $password)
   {
     // Vérifier si l'adresse e-mail existe déjà
     $checkSql = 'SELECT COUNT(*) FROM account WHERE email = :email';
@@ -23,12 +23,14 @@ class Request extends BDD
 
     // Si l'email n'existe pas, ajouter le nouvel utilisateur
     $role = 'User'; // Valeur par défaut pour le rôle
-    $sql = 'INSERT INTO account (firstname, lastname, email, password, role) VALUES (:firstname, :lastname, :email, :password, :role)';
+    $sql = 'INSERT INTO account (firstname, lastname, email, adress, postal_code, password, role) VALUES (:firstname, :lastname, :email, :adress, :postal_code, :password, :role)';
     $stmt = $this->connection->prepare($sql);
 
     $stmt->bindParam(':firstname', $firstname);
     $stmt->bindParam(':lastname', $lastname);
     $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':adress', $adress);
+    $stmt->bindParam(':postal_code', $postal_code);
     // Hachage du mot de passe avant de le stocker
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $stmt->bindParam(':password', $hashedPassword);
