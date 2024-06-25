@@ -9,6 +9,6 @@
     <input type="password" name="password" id="password" minlength="8">
 
     <input type="submit" class="btn btn-primary" name="btnConnect" value="Se connecter">
-    <a href="index.php?page=<?= PAGE_REGISTER ?>">S'inscrire</a>
+    <a href="index.php?page=3">S'inscrire</a>
   </form>
 </main>
