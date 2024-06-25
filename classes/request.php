@@ -46,6 +46,26 @@ class Request extends BDD
     }
   }
 
+  function updateAccount(int $id, string $firstname, string $lastname, string $address, string $zipcode, string $email, string $password): void
+  {
+    try {
+      $sql = "UPDATE account SET firstname = :firstname, lastname = :lastname, address = :address, zipcode = :zipcode, email = :email, password = :password, updated_at = CURRENT_TIMESTAMP WHERE id = :id;";
+      $stmt = $this->connection->prepare($sql);
+      $stmt->execute([
+        ":id" => $id,
+        ":firstname" => $firstname,
+        ":lastname" => $lastname,
+        ":address" => $address,
+        ":zipcode" => $zipcode,
+        ":email" => $email,
+        ":password" => $password
+      ]);
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to update the account!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
   function isAccountExist(string $email): bool
   {
     try {
