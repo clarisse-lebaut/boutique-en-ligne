@@ -30,6 +30,10 @@ switch ($_GET["page"]) {
   case PAGE_CONNECTION:
     include "./pages/connection.php";
     break;
+  case PAGE_PROFILE:
+    $account = $request->getAccountById($_SESSION["accountId"]);
+    include "./pages/profile.php";
+    break;
   case CONNECTION: // =======> ACTIONS
     // Go to the home page when the user is already connected
     if (isset($_SESSION["accountId"])) {
