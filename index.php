@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
 include_once "./assets/scripts/constants.php";
 
 include_once "./classes/bdd.php";
@@ -25,16 +21,32 @@ if (!isset($_GET["page"])) {
 
 switch ($_GET["page"]) {
   case PAGE_HOME: // =======> PAGES
+    echo '<script src="./assets/script/slider.js" defer></script>';
+    echo '<script src="./assets/script/search.js" defer></script>';
     include "./pages/home.php";
     break;
   case PAGE_CONNECTION:
     include "./pages/connection.php";
     break;
+  case PAGE_REGISTER:
+    include "./pages/create_account.php";
+    break;
+  case PAGE_BASKET:
+    include "./pages/basket.php";
+    break;
   case PAGE_PROFILE:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
     $account = $request->getAccountById($_SESSION["accountId"]);
     include "./pages/profile.php";
     break;
   case PAGE_MODIFY_PROFILE:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
     $account = $request->getAccountById($_SESSION["accountId"]);
     include "./pages/modify.php";
     break;
@@ -100,7 +112,7 @@ switch ($_GET["page"]) {
     header("Location: index.php?page=" . PAGE_PROFILE);
     break;
   default:
-    echo "Error 404";
+    include "./pages/404.php";
     break;
 }
 

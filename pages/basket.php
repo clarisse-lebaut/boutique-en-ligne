@@ -1,9 +1,5 @@
 <?php
 $pageTitle = "Panier";
-include "../assets/components/header.php";
-require '../classes/bdd.php';
-include "../assets/components/footer.php";
-
 // Initialiser le panier s'il n'existe pas
 if (!isset($_SESSION['basket'])) {
     $_SESSION['basket'] = array();
@@ -48,70 +44,60 @@ if (isset($_COOKIE['user_basket'])) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
-    <title><?php echo htmlspecialchars($pageTitle); ?></title>
-    <link rel="stylesheet" href="../assets/css/basket.css">
-</head>
+<title><?php echo htmlspecialchars($pageTitle); ?></title>
+<h1 class="user-name">
+    <?php
+    if (isLoggedIn()) {
+        echo "" . htmlspecialchars($_SESSION['firstname']) . ", quelques clics et ces sucreries sont à vous !";
+    } else {
+        echo "Si vous souhaitez passer commande, connectez-vous ou créez un compte.";
+    }
+    ?>
+</h1>
 
-<body>
-
-
-    <h1 class="user-name">
-        <?php
-        if (isLoggedIn()) {
-            echo "" . htmlspecialchars($_SESSION['firstname']) . ", quelques clics et ces sucreries sont à vous !";
-        } else {
-            echo "Si vous souhaitez passer commande, connectez-vous ou créez un compte.";
-        }
-        ?>
-    </h1>
-
-    <div class="container mt-4 agency">
-        <h3>Votre Panier</h3>
-        <?php
-        if (empty($_SESSION['basket'])) {
-            echo "<p>Votre panier est vide.</p>";
-        } else {
-            $totalAmount = 0;
-            echo "<div class='cart-items'>";
-            foreach ($_SESSION['basket'] as $index => $item) {
-                $itemTotal = $item['quantity'] * $item['price'];
-                $totalAmount += $itemTotal;
-                echo "<div class='cart-item'>";
-                echo "<h2>" . htmlspecialchars($item['name']) . "</h2>";
-                echo "<span class='quantity'>Quantité: " . htmlspecialchars($item['quantity']) . "</span>";
-                echo "<span class='price'>Prix: " . htmlspecialchars(number_format($item['price'], 2)) . " €</span>";
-                echo "<span class='item-total'>Total: " . htmlspecialchars(number_format($itemTotal, 2)) . " €</span>";
-                echo "<form action='' method='post'>";
-                echo "<input type='hidden' name='delete_item' value='" . htmlspecialchars($index) . "'>";
-                echo "<input type='submit' value='Supprimer'>";
-                echo "</form>";
-                echo "</div>";
-            }
-            echo "</div>";
-            echo "<div class='total-amount'>Montant total: " . htmlspecialchars(number_format($totalAmount, 2)) . " €</div>";
+<div class="container mt-4 agency">
+    <h3>Votre Panier</h3>
+    <?php
+    if (empty($_SESSION['basket'])) {
+        echo "<p>Votre panier est vide.</p>";
+    } else {
+        $totalAmount = 0;
+        echo "<div class='cart-items'>";
+        foreach ($_SESSION['basket'] as $index => $item) {
+            $itemTotal = $item['quantity'] * $item['price'];
+            $totalAmount += $itemTotal;
+            echo "<div class='cart-item'>";
+            echo "<h2>" . htmlspecialchars($item['name']) . "</h2>";
+            echo "<span class='quantity'>Quantité: " . htmlspecialchars($item['quantity']) . "</span>";
+            echo "<span class='price'>Prix: " . htmlspecialchars(number_format($item['price'], 2)) . " €</span>";
+            echo "<span class='item-total'>Total: " . htmlspecialchars(number_format($itemTotal, 2)) . " €</span>";
             echo "<form action='' method='post'>";
-            echo "<input type='submit' name='clear_cart' value='Vider le panier'>";
+            echo "<input type='hidden' name='delete_item' value='" . htmlspecialchars($index) . "'>";
+            echo "<input type='submit' value='Supprimer'>";
             echo "</form>";
+            echo "</div>";
         }
-        ?>
-        <?php if (isLoggedIn()): ?>
-            <form action="order.php" method="POST">
-                <input type="submit" value="Passer commande">
-            </form>
-        <?php else: ?>
-            <p><a href="./login.php">Connectez-vous</a> pour passer commande.</p>
-        <?php endif; ?>
+        echo "</div>";
+        echo "<div class='total-amount'>Montant total: " . htmlspecialchars(number_format($totalAmount, 2)) . " €</div>";
+        echo "<form action='' method='post'>";
+        echo "<input type='submit' name='clear_cart' value='Vider le panier'>";
+        echo "</form>";
+    }
+    ?>
+    <?php if (isLoggedIn()): ?>
+        <form action="order.php" method="POST">
+            <input type="submit" value="Passer commande">
+        </form>
+    <?php else: ?>
+        <p><a href="./login.php">Connectez-vous</a> pour passer commande.</p>
+    <?php endif; ?>
 
-        <div class="link">
-            <a href="./products.php">Retour aux produits</a>
-            <a href="./home.php">Revenir sur la page d'accueil</a>
-        </div>
+    <div class="link">
+        <a href="./products.php">Retour aux produits</a>
+        <a href="./index.php?page=<?= PAGE_HOME ?>">Revenir sur la page d'accueil</a>
     </div>
+</div>
 
 </body>
 

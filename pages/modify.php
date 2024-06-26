@@ -1,30 +1,28 @@
-<?php
-if (!isset($_SESSION["accountId"])) {
-  header("Location: index.php?page=" . PAGE_HOME);
-}
-?>
-
 <main>
   <h1>Modifier mon profil</h1>
   <form action="index.php?page=<?= MODIFICATION_OF_PROFILE ?>" method="post">
     <div>
       <label for="firstname">Prénom</label>
-      <input type="text" name="firstname" id="firstname" placeholder="<?= empty($account["firstname"]) ? "Non renseigner" : $account["firstname"] ?>">
+      <input type="text" name="firstname" id="firstname"
+        placeholder="<?= empty($account["firstname"]) ? "Non renseigner" : $account["firstname"] ?>">
     </div>
 
     <div>
       <label for="lastname">Nom de famille</label>
-      <input type="text" name="lastname" id="lastname" placeholder="<?= empty($account["lastname"]) ? "Non renseigner" : $account["lastname"] ?>">
+      <input type="text" name="lastname" id="lastname"
+        placeholder="<?= empty($account["lastname"]) ? "Non renseigner" : $account["lastname"] ?>">
     </div>
 
     <div>
       <label for="address">Adresse</label>
-      <input type="text" name="address" id="address" placeholder="<?= empty($account["address"]) ? "Non renseigner" : $account["address"] ?>">
+      <input type="text" name="address" id="address"
+        placeholder="<?= empty($account["address"]) ? "Non renseigner" : $account["address"] ?>">
     </div>
 
     <div>
       <label for="zipcode">Code postal</label>
-      <input type="text" name="zipcode" id="zipcode" placeholder="<?= empty($account["zipcode"]) ? "Non renseigner" : $account["zipcode"] ?>">
+      <input type="text" name="zipcode" id="zipcode"
+        placeholder="<?= empty($account["zipcode"]) ? "Non renseigner" : $account["zipcode"] ?>">
     </div>
 
     <div>

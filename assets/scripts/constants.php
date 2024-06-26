@@ -3,8 +3,10 @@
 // PAGE ID
 define("PAGE_HOME", 1);
 define("PAGE_CONNECTION", 2);
-define("PAGE_PROFILE", 4);
-define("PAGE_MODIFY_PROFILE", 5);
+define("PAGE_PROFILE", 3);
+define("PAGE_MODIFY_PROFILE", 4);
+define("PAGE_REGISTER", 5);
+define("PAGE_BASKET", 6);
 
 // ACTION ID
 define("CONNECTION", 100);

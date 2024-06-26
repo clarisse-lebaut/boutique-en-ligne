@@ -1,4 +1,9 @@
 /* general CSS for the home.php page */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 /* .lastout {
     
 } */

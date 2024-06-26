@@ -1,34 +1,14 @@
 <!-- import class and fonction -->
 <?php
 $pageTitle = "Accueil";
-
-include "../assets/components/header.php";
-include "../assets/components/search.php";
-
-require '../classes/bdd.php';
-require '../classes/request.php';
+include "./assets/components/search.php";
 // Appelle la fonction pour obtenir les produits
 $request = new Request();
 $products = $request->getProductsCarousel();
 $productsDamier = $request->getProductsCheckerBoard();
 // Appelle la classe de la barre de recherche
 $searchForm = new SearchForm();
-
-include "../assets/components/footer.php";
 ?>
-
-<!-- all link -->
-<link rel="stylesheet" href="../assets/css/home.css">
-<link rel="stylesheet" href="../assets/css/slider.css">
-<link rel="stylesheet" href="../assets/css/checkerboard.css">
-<link rel="stylesheet" href="../assets/css/formContact.css">
-<script src="../assets/script/slider.js" defer></script>
-<script src="../assets/script/search.js" defer></script>
-
-<a href="./create_account.php">Se créer un compte</a>
-<a href="./404.php">Test page 404</a>
-<a href="./basket.php">Panier</a>
-<a href="../config/disconnect.php">Déconnexion</a>
 
 <?php
 $searchForm->render();
@@ -67,7 +47,7 @@ $searchForm->render();
         <div id="slider_products" class="container mb-4">
             <div class="slider">
                 <div class="btn_next">
-                    <img id="next" src="../assets/images/btn/orange-candy.png" alt="" width="80px">
+                    <img id="next" src="./assets/images/btn/orange-candy.png" alt="" width="80px">
                 </div>
                 <?php
                 $active = 'active';
@@ -80,7 +60,7 @@ $searchForm->render();
                     $active = '';
                 } ?>
                 <div class="btn_prev">
-                    <img id="prev" src="../assets/images/btn/orange-candy.png" alt="" width="80px">
+                    <img id="prev" src="./assets/images/btn/orange-candy.png" alt="" width="80px">
                 </div>
             </div>
         </div>
@@ -133,21 +113,21 @@ $searchForm->render();
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="../assets/readme/readme.jpeg" class="d-block w-100" alt="...">
+                    <img src="./assets/readme/readme.jpeg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>First slide label</h5>
                         <p>Some representative placeholder content for the first slide.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/readme/readme.jpeg" class="d-block w-100" alt="...">
+                    <img src="./assets/readme/readme.jpeg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Second slide label</h5>
                         <p>Some representative placeholder content for the second slide.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/readme/readme.jpeg" class="d-block w-100" alt="...">
+                    <img src="./assets/readme/readme.jpeg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Third slide label</h5>
                         <p>Some representative placeholder content for the third slide.</p>
