@@ -6,25 +6,50 @@ require_once 'candy_class.php';
 
 $candy = new candy();
 
-// Handle adding/removing from favorites
+// Handle adding/removing from favorites and basket
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['candy_id'])) {
     $candy_id = $_POST['candy_id'];
     $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
-    if ($user_id) {
-        try {
-            if ($candy->isFavorite($user_id, $candy_id)) {
-                $candy->removeFromFavorites($user_id, $candy_id);
-                $message = "Candy removed from favorites.";
-            } else {
-                $candy->addToFavorites($user_id, $candy_id);
-                $message = "Candy added to favorites.";
+    if (isset($_POST['favorite'])) {
+        if ($user_id) {
+            try {
+                if ($candy->isFavorite($user_id, $candy_id)) {
+                    $candy->removeFromFavorites($user_id, $candy_id);
+                    $message = "Candy removed from favorites.";
+                } else {
+                    $candy->addToFavorites($user_id, $candy_id);
+                    $message = "Candy added to favorites.";
+                }
+            } catch (Exception $e) {
+                $error_message = "Error: " . $e->getMessage();
             }
-        } catch (Exception $e) {
-            $error_message = "Error: " . $e->getMessage();
+        } else {
+            $error_message = "Please log in to add to favorites.";
         }
-    } else {
-        $error_message = "Please log in to add to favorites.";
+    } elseif (isset($_POST['add_to_cart'])) {
+        $candy_details = $candy->getcandyById($candy_id);
+        if ($candy_details) {
+            $item = array(
+                'id' => $candy_details['id'],
+                'name' => $candy_details['name'],
+                'price' => $candy_details['price'],
+                'quantity' => 1
+            );
+
+            // Check if the item is already in the basket
+            $found = false;
+            foreach ($_SESSION['basket'] as &$basket_item) {
+                if ($basket_item['id'] === $item['id']) {
+                    $basket_item['quantity'] += 1;
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                $_SESSION['basket'][] = $item;
+            }
+        }
     }
 }
 
@@ -94,14 +119,20 @@ if (isset($candy_details) && $candy_details) {
         if (in_array($candy_id, $favorites)) {
             echo "<form method='post' action=''>
                     <input type='hidden' name='candy_id' value='$candy_id'>
-                    <input type='submit' value='Remove from Favorites'>
+                    <input type='submit' name='favorite' value='Remove from Favorites'>
                   </form>";
         } else {
             echo "<form method='post' action=''>
                     <input type='hidden' name='candy_id' value='$candy_id'>
-                    <input type='submit' value='Add to Favorites'>
+                    <input type='submit' name='favorite' value='Add to Favorites'>
                   </form>";
         }
+
+        // Add to Basket button
+        echo "<form method='post' action=''>
+                <input type='hidden' name='candy_id' value='$candy_id'>
+                <input type='submit' name='add_to_cart' value='Add to Basket'>
+              </form>";
 
         echo "</div>";
         ?>
@@ -154,7 +185,7 @@ if (isset($candy_details) && $candy_details) {
             .candy p {
                 margin: 5px 0;
             }
-            .favorite-form {
+            .favorite-form, .cart-form {
                 display: inline-block;
                 margin-left: 10px;
             }
@@ -172,7 +203,13 @@ if (isset($candy_details) && $candy_details) {
                 // Add to Favorites button
                 echo "<form method='post' class='favorite-form'>
                         <input type='hidden' name='candy_id' value='" . $row["id"] . "'>
-                        <input type='submit' value='Add to Favorites'>
+                        <input type='submit' name='favorite' value='Add to Favorites'>
+                      </form>";
+
+                // Add to Basket button
+                echo "<form method='post' class='cart-form'>
+                        <input type='hidden' name='candy_id' value='" . $row["id"] . "'>
+                        <input type='submit' name='add_to_cart' value='Add to Basket'>
                       </form>";
 
                 echo "</div>";

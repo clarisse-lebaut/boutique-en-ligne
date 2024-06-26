@@ -1,10 +1,11 @@
 <?php
 include_once "./assets/scripts/constants.php";
-
 include_once "./classes/bdd.php";
 include_once "./classes/request.php";
 
-session_start();
+include_once "./enzo-function/candy.php";
+
+
 $request = new Request();
 
 include_once "./assets/components/header.php";
