@@ -24,8 +24,10 @@ include "../assets/components/footer.php";
 <link rel="stylesheet" href="../assets/css/formContact.css">
 <script src="../assets/script/slider.js" defer></script>
 <script src="../assets/script/search.js" defer></script>
+
 <a href="./create_account.php">Se créer un compte</a>
 <a href="./404.php">Test page 404</a>
+<a href="./basket.php">Panier</a>
 <a href="../config/disconnect.php">Déconnexion</a>
 
 <?php
