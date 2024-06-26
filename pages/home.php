@@ -4,7 +4,6 @@ $pageTitle = "Accueil";
 include "./assets/components/search.php";
 // Appelle la fonction pour obtenir les produits
 $request = new Request();
-$account = $request->getAccountById($_SESSION["accountId"]);
 $products = $request->getProductsCarousel();
 $productsDamier = $request->getProductsCheckerBoard();
 // Appelle la classe de la barre de recherche
@@ -29,6 +28,8 @@ $searchForm->render();
     }
     // Exécution conditionnelle en fonction de l'état de connexion
     if (isLoggedIn()) {
+        $account = $request->getAccountById($_SESSION["accountId"]);
+
         // Action à prendre si l'utilisateur est connecté
         echo "Quelle sera votre péché " . $account['firstname'] . " ?";
         // Ajoutez ici les actions que vous souhaitez prendre si l'utilisateur est connecté
