@@ -24,12 +24,12 @@
   <ul>
     <li><a href="./index.php?page=<?= PAGE_HOME ?>">Accueil</a></li>
     <li><a href="./index.php?page=<?= PAGE_BASKET ?>">Panier</a></li>
-    <li>Découvrire les bonbons</li>
+    <li><a href="./index.php?page=<?= PAGE_PRODUCTS ?>">Produits</a></li>
     <?php if (!isset($_SESSION["accountId"])) { ?>
       <li><a href="./index.php?page=<?= PAGE_CONNECTION ?>">Connexion</a></li>
       <li><a href="./index.php?page=<?= PAGE_REGISTER ?>">Se créer un compte</a></li>
     <?php } else { ?>
-      <li><a>Favoris</a></li>
+      <li><a href="./index.php?page=<?= PAGE_FAVORITE ?>">Favoris</a></li>
       <li><a href="./index.php?page=<?= PAGE_PROFILE ?>">Profil</a></li>
       <li><a href="./index.php?page=<?= DISCONNECTION ?>">Deconnexion</a></li>
     <?php } ?>

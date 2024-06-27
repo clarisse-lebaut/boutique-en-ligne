@@ -166,5 +166,37 @@ class Request extends BDD
       return false;
     }
   }
+
+  public function getAllCandies()
+  {
+    $query = "SELECT * FROM candy";
+    $result = $this->connection->query($query);
+    return $result->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function getCandyById(int $id)
+  {
+    $query = "SELECT * FROM candy WHERE id = :id";
+    $stmt = $this->connection->prepare($query);
+    $stmt->execute([":id" => $id]);
+
+    return $stmt->fetch();
+  }
+
+  public function isFavorite($user_id, $candy_id)
+  {
+    // Dummy logic for demonstration (you need to implement this based on your favorites table structure)
+    return false;
+  }
+
+  public function addToFavorites($user_id, $candy_id)
+  {
+    // Dummy logic for demonstration (you need to implement this based on your favorites table structure)
+  }
+
+  public function removeFromFavorites($user_id, $candy_id)
+  {
+    // Dummy logic for demonstration (you need to implement this based on your favorites table structure)
+  }
 }
 
