@@ -31,6 +31,12 @@ switch ($_GET["page"]) {
   case PAGE_REGISTER:
     include "./pages/create_account.php";
     break;
+  case PAGE_CONDITIONS:
+    include "./pages/create_account.php";
+    break;
+  case PAGE_ABOUTUS:
+    include "./pages/create_account.php";
+    break;
   case PAGE_PRODUCTS:
     $candies = $request->getAllCandies();
     $favorites = json_decode($_COOKIE["favorite" . $_SESSION["accountId"]]);

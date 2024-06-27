@@ -9,6 +9,8 @@ define("PAGE_REGISTER", 5);
 define("PAGE_BASKET", 6);
 define("PAGE_PRODUCTS", 7);
 define("PAGE_FAVORITE", 8);
+define("PAGE_ABOUTUS", 9);
+define("PAGE_CONDITIONS", 10);
 
 // ACTION ID
 define("CONNECTION", 100);
