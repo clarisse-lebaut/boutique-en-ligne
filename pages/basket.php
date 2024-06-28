@@ -1,104 +1,132 @@
-<?php
-$pageTitle = "Panier";
-// Initialiser le panier s'il n'existe pas
-if (!isset($_SESSION['basket'])) {
-    $_SESSION['basket'] = array();
-}
+<!-- panier.php -->
+<!DOCTYPE html>
+<html lang="fr">
 
-// Commencer la session si elle n'a pas déjà été démarrée
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Panier</title>
+    <!-- Inclure vos styles CSS ou Bootstrap ici -->
+</head>
 
-// Fonction pour vérifier si un utilisateur est connecté
-function isLoggedIn()
-{
-    return isset($_SESSION['user_id']);
-}
+<body>
+    <h1>Votre Panier</h1>
 
-// Supprimer un article du panier
-if (isset($_POST['delete_item'])) {
-    $index = $_POST['delete_item'];
-    if (isset($_SESSION['basket'][$index])) {
-        unset($_SESSION['basket'][$index]);
-        // Ré-indexer le tableau après suppression
-        $_SESSION['basket'] = array_values($_SESSION['basket']);
-    }
-}
-
-// Vider complètement le panier
-if (isset($_POST['clear_cart'])) {
-    $_SESSION['basket'] = array(); // Réinitialiser le panier à un tableau vide
-}
-
-// Si un utilisateur est connecté, sauvegarder le panier dans un cookie
-if (isLoggedIn()) {
-    $cookie_name = 'user_basket';
-    $cookie_value = json_encode($_SESSION['basket']);
-    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // cookie valide pendant 30 jours
-}
-
-// Charger le panier à partir du cookie si disponible
-if (isset($_COOKIE['user_basket'])) {
-    $_SESSION['basket'] = json_decode($_COOKIE['user_basket'], true);
-}
-?>
-
-
-<title><?php echo htmlspecialchars($pageTitle); ?></title>
-<h1 class="user-name">
-    <?php
-    if (isLoggedIn()) {
-        echo "" . htmlspecialchars($_SESSION['firstname']) . ", quelques clics et ces sucreries sont à vous !";
-    } else {
-        echo "Si vous souhaitez passer commande, connectez-vous ou créez un compte.";
-    }
-    ?>
-</h1>
-
-<div class="container mt-4 agency">
-    <h3>Votre Panier</h3>
-    <?php
-    if (empty($_SESSION['basket'])) {
-        echo "<p>Votre panier est vide.</p>";
-    } else {
-        $totalAmount = 0;
-        echo "<div class='cart-items'>";
-        foreach ($_SESSION['basket'] as $index => $item) {
-            $itemTotal = $item['quantity'] * $item['price'];
-            $totalAmount += $itemTotal;
-            echo "<div class='cart-item'>";
-            echo "<h2>" . htmlspecialchars($item['name']) . "</h2>";
-            echo "<span class='quantity'>Quantité: " . htmlspecialchars($item['quantity']) . "</span>";
-            echo "<span class='price'>Prix: " . htmlspecialchars(number_format($item['price'], 2)) . " €</span>";
-            echo "<span class='item-total'>Total: " . htmlspecialchars(number_format($itemTotal, 2)) . " €</span>";
-            echo "<form action='' method='post'>";
-            echo "<input type='hidden' name='delete_item' value='" . htmlspecialchars($index) . "'>";
-            echo "<input type='submit' value='Supprimer'>";
-            echo "</form>";
-            echo "</div>";
-        }
-        echo "</div>";
-        echo "<div class='total-amount'>Montant total: " . htmlspecialchars(number_format($totalAmount, 2)) . " €</div>";
-        echo "<form action='' method='post'>";
-        echo "<input type='submit' name='clear_cart' value='Vider le panier'>";
-        echo "</form>";
-    }
-    ?>
-    <?php if (isLoggedIn()): ?>
-        <form action="order.php" method="POST">
-            <input type="submit" value="Passer commande">
-        </form>
-    <?php else: ?>
-        <p><a href="./login.php">Connectez-vous</a> pour passer commande.</p>
-    <?php endif; ?>
-
-    <div class="link">
-        <a href="./products.php">Retour aux produits</a>
-        <a href="./index.php?page=<?= PAGE_HOME ?>">Revenir sur la page d'accueil</a>
+    <div id="cart-items">
+        <!-- Contenu du panier sera inséré ici dynamiquement -->
     </div>
-</div>
 
+    <div id="cart-total">
+        Montant total du panier: <span id="total">0.00 €</span>
+    </div>
+
+    <button onclick="clearCart()">Vider le panier</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            displayCartItems();
+            updateTotal();
+        });
+
+        function displayCartItems() {
+            const cartItems = getCartFromCookie();
+            const cartContainer = document.getElementById('cart-items');
+            cartContainer.innerHTML = ''; // Clear previous items
+
+            if (cartItems.length === 0) {
+                cartContainer.innerHTML = '<p>Votre panier est vide.</p>';
+            } else {
+                cartItems.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    const quantity = item.quantity !== undefined ? item.quantity : 1;
+                    const totalPrice = item.price * quantity; // Calcul du prix total pour cet article
+                    itemElement.textContent = `${item.name} - ${item.price} € (Quantité: ${quantity}, Prix total: ${totalPrice.toFixed(2)} €)`;
+
+                    // Bouton pour supprimer l'élément du panier
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Supprimer';
+                    deleteButton.addEventListener('click', function () {
+                        removeFromCart(item.id);
+                    });
+                    itemElement.appendChild(deleteButton);
+
+                    // Bouton pour augmenter la quantité
+                    const increaseButton = document.createElement('button');
+                    increaseButton.textContent = '+';
+                    increaseButton.addEventListener('click', function () {
+                        increaseQuantity(item.id);
+                    });
+                    itemElement.appendChild(increaseButton);
+
+                    // Bouton pour diminuer la quantité
+                    const decreaseButton = document.createElement('button');
+                    decreaseButton.textContent = '-';
+                    decreaseButton.addEventListener('click', function () {
+                        decreaseQuantity(item.id);
+                    });
+                    itemElement.appendChild(decreaseButton);
+
+                    cartContainer.appendChild(itemElement);
+                });
+            }
+        }
+
+        function clearCart() {
+            // Effacez le cookie 'cart' pour vider le panier
+            document.cookie = 'cart=; Max-Age=-1; path=/';
+            displayCartItems(); // Actualiser l'affichage du panier
+            updateTotal(); // Actualiser le montant total
+        }
+
+        function removeFromCart(productId) {
+            let cart = getCartFromCookie();
+            cart = cart.filter(item => item.id !== productId);
+            document.cookie = `cart=${JSON.stringify(cart)}; path=/;`;
+            displayCartItems(); // Actualiser l'affichage du panier
+            updateTotal(); // Actualiser le montant total
+        }
+
+        function increaseQuantity(productId) {
+            let cart = getCartFromCookie();
+            const index = cart.findIndex(item => item.id === productId);
+            if (index !== -1) {
+                cart[index].quantity = cart[index].quantity ? cart[index].quantity + 1 : 2;
+            }
+            document.cookie = `cart=${JSON.stringify(cart)}; path=/;`;
+            displayCartItems(); // Actualiser l'affichage du panier
+            updateTotal(); // Actualiser le montant total
+        }
+
+        function decreaseQuantity(productId) {
+            let cart = getCartFromCookie();
+            const index = cart.findIndex(item => item.id === productId);
+            if (index !== -1 && cart[index].quantity > 1) {
+                cart[index].quantity--;
+            }
+            document.cookie = `cart=${JSON.stringify(cart)}; path=/;`;
+            displayCartItems(); // Actualiser l'affichage du panier
+            updateTotal(); // Actualiser le montant total
+        }
+
+        function updateTotal() {
+            const cartItems = getCartFromCookie();
+            let total = 0;
+            cartItems.forEach(item => {
+                const quantity = item.quantity !== undefined ? item.quantity : 1;
+                total += item.price * quantity;
+            });
+            document.getElementById('total').textContent = `${total.toFixed(2)} €`;
+        }
+
+        function getCartFromCookie() {
+            const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+            const cartCookie = cookies.find(cookie => cookie.startsWith('cart='));
+            if (cartCookie) {
+                return JSON.parse(cartCookie.split('=')[1]);
+            }
+            return [];
+        }
+    </script>
 </body>
 
 </html>
