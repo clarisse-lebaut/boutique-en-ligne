@@ -1,5 +1,14 @@
 <main>
     <h1>Nos produits</h1>
+    
+    <label for="category-filter">Filtrer par catégorie :</label>
+    <select id="category-filter">
+        <option value="all">Toutes les catégories</option>
+        <option value="chocolate">Chocolat</option>
+        <option value="caramel">Caramel</option>
+        <!-- Ajouter d'autres options de catégorie au besoin -->
+    </select>
+
     <?php if (count($candies) == 0) { ?>
         <div>Pas de bonbon</div>
         <?php
