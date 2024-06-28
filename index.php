@@ -39,7 +39,6 @@ switch ($_GET["page"]) {
     break;
   case PAGE_PRODUCTS:
     $candies = $request->getAllCandies();
-    $favorites = json_decode($_COOKIE["favorite" . $_SESSION["accountId"]]);
     include "./pages/candy.php";
     break;
   case PAGE_BASKET:
