@@ -1,7 +1,25 @@
 <?php
 
-class SearchForm
+class SearchForm extends BDD
 {
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function getSuggestions()
+    {
+        $query = "SELECT name FROM candy";  // Assurez-vous que 'name' correspond à votre colonne dans la table
+        $stmt = $this->connection->query($query);
+        $suggestions = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $suggestions[] = $row['name'];  // Utilisez 'name' pour récupérer la suggestion
+        }
+
+        return $suggestions;
+    }
+
     public function render()
     {
         ?>
@@ -40,9 +58,17 @@ class SearchForm
                 <img class="candy_shop_pic" src="../assets/images/search/candy-shop.png" alt="">
                 <div class="search">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Rechercher" aria-label="Recipient's username"
-                            aria-describedby="button-addon2" method="POST">
-                        <button type="button" id="button-addon2" class="btn btn-primary"><img src="../../assets/images/icon/search.svg"></button>
+                        <input type="text" class="form-control" placeholder="Rechercher" list="suggestions">
+                        <datalist id="suggestions">
+                            <?php
+                            $suggestions = $this->getSuggestions();
+                            foreach ($suggestions as $suggestion) {
+                                echo "<option value='" . htmlspecialchars($suggestion) . "'>";
+                            }
+                            ?>
+                        </datalist>
+                        <button type="button" id="button-addon2" class="btn btn-primary"><img
+                                src="../../assets/images/icon/search.svg"></button>
                     </div>
                 </div>
             </div>
