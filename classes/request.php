@@ -179,8 +179,21 @@ class Request extends BDD
     $query = "SELECT * FROM candy WHERE id = :id";
     $stmt = $this->connection->prepare($query);
     $stmt->execute([":id" => $id]);
-
     return $stmt->fetch();
+  }
+
+  public function getCategoryCandy()
+  {
+    $query = "SELECT * FROM category";
+    $result = $this->connection->query($query);
+    return $result->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function getClassificationCandy()
+  {
+    $query = "SELECT * FROM classification";
+    $result = $this->connection->query($query);
+    return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 }
 

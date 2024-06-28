@@ -1,14 +1,32 @@
+<?php
+// Instanciation de la classe Requete
+$requete = new Request();
+
+// Appel de la méthode pour récupérer les catégories
+$categories = $requete->getCategoryCandy();
+$classification = $requete->getClassificationCandy();
+?>
+
 <main>
     <h1>Nos produits</h1>
+    <h1>Catégories de Bonbons</h1>
+    <div class="filter-bar">
+        <?php foreach ($categories as $category): ?>
+            <button class="category-button" data-category-id="<?php echo htmlspecialchars($category['id']); ?>">
+                <?php echo htmlspecialchars($category['name']); ?>
+            </button>
+        <?php endforeach; ?>
+    </div>
     
-    <label for="category-filter">Filtrer par catégorie :</label>
-    <select id="category-filter">
-        <option value="all">Toutes les catégories</option>
-        <option value="chocolate">Chocolat</option>
-        <option value="caramel">Caramel</option>
-        <!-- Ajouter d'autres options de catégorie au besoin -->
-    </select>
-
+    <style>
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 50px;
+        }
+    </style>
+    <h1>Nos produits</h1>
     <?php if (count($candies) == 0) { ?>
         <div>Pas de bonbon</div>
         <?php
