@@ -13,4 +13,10 @@ class BDD
       throw new Error($e->getMessage());
     }
   }
+
+  // Add this new method
+  public function getConnection(): PDO
+  {
+    return $this->connection;
+  }
 }

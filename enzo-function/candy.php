@@ -1,237 +1,113 @@
 <?php
-session_start();
+require_once __DIR__ . '/../enzo-function/candy_class.php';
+require_once __DIR__ . '/../classes/request.php';
 
-require_once 'db.php';
-require_once 'candy_class.php';
+$candy = new Candy();
+$request = new Request();
 
-$candy = new candy();
+$page = isset($_GET['page_num']) ? (int)$_GET['page_num'] : 1;
+$candys_per_page = 10;
+$category = isset($_GET['category']) ? $_GET['category'] : null;
+$min_price = isset($_GET['min_price']) ? (float)$_GET['min_price'] : null;
+$max_price = isset($_GET['max_price']) ? (float)$_GET['max_price'] : null;
+$sort_by = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'name';
+$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
 
-// Handle adding/removing from favorites and basket
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['candy_id'])) {
-    $candy_id = $_POST['candy_id'];
+$candys = $candy->getPaginatedCandy($page, $candys_per_page, $category, $min_price, $max_price, $sort_by, $order);
+$total_candys = $candy->getTotalCandyCount($category, $min_price, $max_price);
+$total_pages = ceil($total_candys / $candys_per_page);
+
+// Handle adding/removing from favorites
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['candy_id'], $_POST['action'])) {
+    $candy_id = (int)$_POST['candy_id'];
     $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
-    if (isset($_POST['favorite'])) {
-        if ($user_id) {
-            try {
-                if ($candy->isFavorite($user_id, $candy_id)) {
-                    $candy->removeFromFavorites($user_id, $candy_id);
-                    $message = "Candy removed from favorites.";
-                } else {
-                    $candy->addToFavorites($user_id, $candy_id);
-                    $message = "Candy added to favorites.";
-                }
-            } catch (Exception $e) {
-                $error_message = "Error: " . $e->getMessage();
-            }
-        } else {
-            $error_message = "Please log in to add to favorites.";
+    if ($user_id) {
+        if ($_POST['action'] === 'favorite') {
+            $candy->toggleFavorite($user_id, $candy_id);
+        } elseif ($_POST['action'] === 'add_to_cart') {
+            $candy->addToCart($user_id, $candy_id);
         }
-    } elseif (isset($_POST['add_to_cart'])) {
-        $candy_details = $candy->getcandyById($candy_id);
-        if ($candy_details) {
-            $item = array(
-                'id' => $candy_details['id'],
-                'name' => $candy_details['name'],
-                'price' => $candy_details['price'],
-                'quantity' => 1
-            );
-
-            // Check if the item is already in the basket
-            $found = false;
-            foreach ($_SESSION['basket'] as &$basket_item) {
-                if ($basket_item['id'] === $item['id']) {
-                    $basket_item['quantity'] += 1;
-                    $found = true;
-                    break;
-                }
-            }
-            if (!$found) {
-                $_SESSION['basket'][] = $item;
-            }
-        }
+    } else {
+        $error_message = "Please log in to perform this action.";
     }
 }
 
-// Define number of candies per page
-$candys_per_page = 5;
-
-// Get current page number
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
-// Check if candy details are requested
-if (isset($_GET['id'])) {
-    $candy_id = (int)$_GET['id'];
-    $candy_details = $candy->getcandyById($candy_id);
-}
-
-// Display candies or candy details based on request
-if (isset($candy_details) && $candy_details) {
-    // candy details page
-    ?>
-
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title><?php echo isset($candy_details["name"]) ? $candy_details["name"] : "Candy Details"; ?></title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-            }
-            .candy {
-                border: 1px solid #ddd;
-                padding: 10px;
-                margin-top: 20px;
-            }
-            .candy img {
-                max-width: 200px;
-                max-height: 200px;
-            }
-            .candy h1 {
-                margin: 0;
-            }
-            .candy p {
-                margin: 5px 0;
-            }
-        </style>
-    </head>
-    <body>
-        <?php
-        echo "<div class='candy'>";
-        echo "<h1>" . $candy_details["name"] . "</h1>";
-        if (!empty($candy_details["image"])) {
-            echo "<img src='" . $candy_details["image"] . "' alt='" . $candy_details["name"] . "'><br>";
-        }
-        echo "<p>Price: $" . $candy_details["price"] . "</p>";
-        echo "<p>Stock: " . $candy_details["nb_stock"] . " units available</p>";
-        echo "<p>Mark: " . $candy_details["mark_name"] . "</p>";
-        echo "<p>Created at: " . $candy_details["created_at"] . "</p>";
-
-        // Show message or error
-        if (isset($message)) {
-            echo "<p>$message</p>";
-        } elseif (isset($error_message)) {
-            echo "<p>$error_message</p>";
-        }
-
-        // Check if candy is in favorites
-        $favorites = isset($_COOKIE['favorites']) ? unserialize($_COOKIE['favorites']) : [];
-        if (in_array($candy_id, $favorites)) {
-            echo "<form method='post' action=''>
-                    <input type='hidden' name='candy_id' value='$candy_id'>
-                    <input type='submit' name='favorite' value='Remove from Favorites'>
-                  </form>";
-        } else {
-            echo "<form method='post' action=''>
-                    <input type='hidden' name='candy_id' value='$candy_id'>
-                    <input type='submit' name='favorite' value='Add to Favorites'>
-                  </form>";
-        }
-
-        // Add to Basket button
-        echo "<form method='post' action=''>
-                <input type='hidden' name='candy_id' value='$candy_id'>
-                <input type='submit' name='add_to_cart' value='Add to Basket'>
-              </form>";
-
-        echo "</div>";
-        ?>
-    </body>
-    </html>
-
-    <?php
-} else {
-    // candy listing page
-
-    // Get paginated candies
-    $candys = $candy->getPaginatedcandy($page, $candys_per_page);
-
-    // Get total number of candies
-    $total_candys = $candy->getTotalcandyCount();
-
-    // Calculate total number of pages
-    $total_pages = ceil($total_candys / $candys_per_page);
-
-    ?>
-
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Candy Listing</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-            }
-            .pagination {
-                margin: 20px 0;
-            }
-            .pagination a, .pagination strong {
-                padding: 5px 10px;
-                text-decoration: none;
-                border: 1px solid #ccc;
-                margin-right: 5px;
-            }
-            .pagination strong {
-                background-color: #f0f0f0;
-            }
-            .candy {
-                border: 1px solid #ddd;
-                padding: 10px;
-                margin-bottom: 10px;
-            }
-            .candy h2 {
-                margin: 0;
-            }
-            .candy p {
-                margin: 5px 0;
-            }
-            .favorite-form, .cart-form {
-                display: inline-block;
-                margin-left: 10px;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Candies</h1>
-        <?php
-        if (count($candys) > 0) {
-            foreach ($candys as $row) {
-                echo "<div class='candy'>";
-                echo "<h2><a href='?id=" . $row["id"] . "'>" . $row["name"] . "</a></h2>";
-                echo "<p>Price: $" . $row["price"] . "</p>";
-
-                // Add to Favorites button
-                echo "<form method='post' class='favorite-form'>
-                        <input type='hidden' name='candy_id' value='" . $row["id"] . "'>
-                        <input type='submit' name='favorite' value='Add to Favorites'>
-                      </form>";
-
-                // Add to Basket button
-                echo "<form method='post' class='cart-form'>
-                        <input type='hidden' name='candy_id' value='" . $row["id"] . "'>
-                        <input type='submit' name='add_to_cart' value='Add to Basket'>
-                      </form>";
-
-                echo "</div>";
-            }
-
-            // Display pagination links
-            echo "<div class='pagination'>";
-            for ($i = 1; $i <= $total_pages; $i++) {
-                if ($i == $page) {
-                    echo "<strong>$i</strong> ";
-                } else {
-                    echo "<a href='?page=$i'>$i</a> ";
-                }
-            }
-            echo "</div>";
-        } else {
-            echo "<p>No candies available.</p>";
-        }
-        ?>
-    </body>
-    </html>
-
-    <?php
-}
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Shop</title>
+    <link rel="stylesheet" href="/path/to/your/css/file.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Discover Our Candies</h1>
+
+        <?php if (isset($error_message)): ?>
+            <div class="alert alert-danger"><?php echo $error_message; ?></div>
+        <?php endif; ?>
+
+        <form method="get" class="filter-form">
+            <input type="hidden" name="page" value="<?php echo PAGE_CANDY; ?>">
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category" value="<?php echo htmlspecialchars($category); ?>">
+            </div>
+            <div class="form-group">
+                <label for="min_price">Min Price:</label>
+                <input type="number" id="min_price" name="min_price" value="<?php echo htmlspecialchars($min_price); ?>">
+            </div>
+            <div class="form-group">
+                <label for="max_price">Max Price:</label>
+                <input type="number" id="max_price" name="max_price" value="<?php echo htmlspecialchars($max_price); ?>">
+            </div>
+            <div class="form-group">
+                <label for="sort_by">Sort By:</label>
+                <select id="sort_by" name="sort_by">
+                    <option value="name" <?php echo $sort_by === 'name' ? 'selected' : ''; ?>>Name</option>
+                    <option value="price" <?php echo $sort_by === 'price' ? 'selected' : ''; ?>>Price</option>
+                    <option value="created_at" <?php echo $sort_by === 'created_at' ? 'selected' : ''; ?>>Date Added</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="order">Order:</label>
+                <select id="order" name="order">
+                    <option value="asc" <?php echo $order === 'asc' ? 'selected' : ''; ?>>Ascending</option>
+                    <option value="desc" <?php echo $order === 'desc' ? 'selected' : ''; ?>>Descending</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </form>
+
+        <div class="candy-grid">
+            <?php foreach ($candys as $candy_item): ?>
+                <div class="candy-item">
+                    <h2><?php echo htmlspecialchars($candy_item['name']); ?></h2>
+                    <p>Price: $<?php echo number_format($candy_item['price'], 2); ?></p>
+                    <form method="post">
+                        <input type="hidden" name="candy_id" value="<?php echo $candy_item['id']; ?>">
+                        <button type="submit" name="action" value="favorite" class="btn btn-secondary">
+                            <?php echo $candy->isFavorite($_SESSION['user_id'] ?? null, $candy_item['id']) ? 'Remove from Favorites' : 'Add to Favorites'; ?>
+                        </button>
+                        <button type="submit" name="action" value="add_to_cart" class="btn btn-primary">Add to Cart</button>
+                    </form>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="pagination">
+            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                <a href="?page=<?php echo PAGE_CANDY; ?>&page_num=<?php echo $i; ?>&category=<?php echo urlencode($category); ?>&min_price=<?php echo urlencode($min_price); ?>&max_price=<?php echo urlencode($max_price); ?>&sort_by=<?php echo urlencode($sort_by); ?>&order=<?php echo urlencode($order); ?>"
+                   class="<?php echo $i === $page ? 'active' : ''; ?>">
+                    <?php echo $i; ?>
+                </a>
+            <?php endfor; ?>
+        </div>
+    </div>
+    <script src="/path/to/your/js/file.js"></script>
+</body>
+</html>
