@@ -20,7 +20,8 @@
         Montant total du panier: <span id="total">0.00 €</span>
     </div>
 
-    <button onclick="clearCart()">Vider le panier</button>
+    <button id="clear-cart-btn" onclick="clearCart()" style="display: none;">Vider le panier</button>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -31,11 +32,14 @@
         function displayCartItems() {
             const cartItems = getCartFromCookie();
             const cartContainer = document.getElementById('cart-items');
+            const clearCartBtn = document.getElementById('clear-cart-btn');
             cartContainer.innerHTML = ''; // Clear previous items
 
             if (cartItems.length === 0) {
                 cartContainer.innerHTML = '<p>Votre panier est vide.</p>';
+                clearCartBtn.style.display = 'none'; // Masquer le bouton si le panier est vide
             } else {
+                clearCartBtn.style.display = 'block';
                 cartItems.forEach(item => {
                     const itemElement = document.createElement('div');
                     const quantity = item.quantity !== undefined ? item.quantity : 1;
