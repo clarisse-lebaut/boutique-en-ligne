@@ -1,42 +1,52 @@
-<main>
-    <h1>Vos favoris</h1>
-    <?php
-    if (count($favorite) == 0) {
-        ?>
-        <div>
-            Pas de favoris
-        </div>
-        <?php
-    } else {
-        foreach ($favorite as $candy) {
-            ?>
-            <div><?= $candy["name"] ?></div>
-            <?php
-        }
-    }
-    ?>
-</main>
+<!-- favorites.php -->
 
-<?php
-// if (!empty($favorites)) {
-//     foreach ($favorites as $candy_id) {
-//         // Assuming getProductById method retrieves candy details based on $candy_id
-//         $candy_details = $product->getProductById($candy_id);
-//         if ($candy_details) {
-//             echo "<div class='candy'>";
-//             echo "<h2><a href='candy_details.php?id=" . htmlspecialchars($candy_details["id"]) . "'>" . htmlspecialchars($candy_details["name"]) . "</a></h2>";
-//             if (!empty($candy_details["image"])) {
-//                 echo "<img src='" . htmlspecialchars($candy_details["image"]) . "' alt='" . htmlspecialchars($candy_details["name"]) . "'>";
-//             }
-//             echo "<p>Price: $" . htmlspecialchars($candy_details["price"]) . "</p>";
-//             echo "<form method='post' action='favorite_toggle.php'>
-//                           <input type='hidden' name='candy_id' value='" . htmlspecialchars($candy_details["id"]) . "'>
-//                           <input type='submit' value='Remove from Favorites'>
-//                         </form>";
-//             echo "</div>";
-//         }
-//     }
-// } else {
-//     echo "<p>You have no favorite candies.</p>";
-// }
-?>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes favoris</title>
+</head>
+
+<body>
+    <h1>Mes favoris</h1>
+
+    <div id="favorites-list">
+        <!-- Ici seront affichés les favoris -->
+    </div>
+
+    <script>
+        // JavaScript pour récupérer et afficher les favoris depuis le cookie
+        document.addEventListener('DOMContentLoaded', function () {
+            const favorites = getFavorite(); // Utilisation de la fonction getFavorite() définie dans votre script précédent
+
+            const favoritesList = document.getElementById('favorites-list');
+
+            if (favorites.length === 0) {
+                favoritesList.innerHTML = '<p>Aucun favori pour le moment.</p>';
+            } else {
+                const ul = document.createElement('ul');
+
+                favorites.forEach(favorite => {
+                    const li = document.createElement('li');
+                    li.textContent = `${favorite.name} - ${favorite.price} €`;
+                    ul.appendChild(li);
+                });
+
+                favoritesList.appendChild(ul);
+            }
+        });
+
+        function getFavorite() {
+            const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+            const favoritesCookie = cookies.find(cookie => cookie.startsWith('favorite='));
+            if (favoritesCookie) {
+                return JSON.parse(favoritesCookie.split('=')[1]);
+            }
+            return [];
+        }
+    </script>
+</body>
+
+</html>

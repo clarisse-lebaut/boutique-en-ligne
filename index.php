@@ -40,7 +40,6 @@ switch ($_GET["page"]) {
     include "./pages/basket.php";
     break;
   case PAGE_FAVORITE:
-    $favorite = json_decode($_COOKIE["favorite" . $_SESSION["accountId"]]);
     include "./pages/favorites.php";
     break;
   case PAGE_PROFILE:
@@ -125,29 +124,7 @@ switch ($_GET["page"]) {
     $request->updateAccount($account["id"], $newFirstname, $newLastname, $newAddress, $newZipcode, $newEmail, $newPassword);
     header("Location: index.php?page=" . PAGE_PROFILE);
     break;
-  case ADD_FAVORITES:
-    $favorites = json_decode($_COOKIE["favorite" . $_SESSION["accountId"]]);
-    $candy = $request->getCandyById($_POST["candy"]);
 
-    if (isset($_POST["removeFavorite"])) {
-      if (in_array($candy, $favorites)) {
-        array_splice($favorites, array_search($candy, $favorites) - 1, 1);
-        setcookie($_COOKIE["favorite" . $_SESSION["accountId"]], json_encode($favorites));
-      }
-
-      // header("Location: index.php?page=" . PAGE_PRODUCTS);
-    }
-
-    if (isset($_POST["addFavorite"])) {
-      var_dump(in_array($candy, $favorites) == false);
-      if (in_array($candy, $favorites) == false) {
-        array_push($favorites, $candy);
-        setcookie($_COOKIE["favorite" . $_SESSION["accountId"]], json_encode($favorites));
-      }
-
-      // header("Location: index.php?page=" . PAGE_PRODUCTS);
-    }
-    break;
   default:
     include "./pages/404.php";
     break;
