@@ -4,9 +4,9 @@ body {
   flex-direction: column;
 }
 
-/* .lastout {
-    
-} */
+.lastout {
+    margin-top: 50px;
+}
 
 .loved {
   background-color: #ffffff;

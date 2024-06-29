@@ -18,73 +18,47 @@
   <link rel="stylesheet" href="./assets/css/formContact.css">
   <link rel="stylesheet" href="./assets/css/home.css">
   <link rel="stylesheet" href="./assets/css/slider.css"> -->
+    <link rel="stylesheet" href="./assets/css/footer.css">
 </head>
 
-<style>
-    .footer_container {
-        display: flex;
-        flex-direction: column;
-        gap: 50px;
-        justify-content: center;
-    }
-
-    .link {
-        display: flex;
-        gap: 50px;
-    }
-
-    .logos{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .social {
-        display: flex;
-        gap: 20px;
-    }
-
-    .payment{
-        display: flex;
-        gap: 20px;
-    }
-
-    img {
-        width: 40px;
-    }
-</style>
-
 <section class="footer_container">
-    <article class="link">
-        <ul>
+    <section class="link">
+        <ul class="ul_style">
             <li>Liens utiles</li>
-            <li><a href="./index.php?page=<?= PAGE_HOME ?>">Accueil</a></li>
-            <li><a href="./index.php?page=<?= PAGE_BASKET ?>">Panier</a></li>
-            <li><a href="./index.php?page=<?= PAGE_PRODUCTS ?>">Produits</a></li>
-            <?php if (!isset($_SESSION["accountId"])) { ?>
-                <li><a href="./index.php?page=<?= PAGE_CONNECTION ?>">Connexion</a></li>
-                <li><a href="./index.php?page=<?= PAGE_REGISTER ?>">Se créer un compte</a></li>
-            <?php } else { ?>
-                <li><a href="./index.php?page=<?= PAGE_FAVORITE ?>">Favoris</a></li>
-                <li><a href="./index.php?page=<?= PAGE_PROFILE ?>">Profil</a></li>
-                <li><a href="./index.php?page=<?= DISCONNECTION ?>">Deconnexion</a></li>
-            <?php } ?>
+            <div>
+                <li><a class="link_style" class="link-style" href="./index.php?page=<?= PAGE_HOME ?>">Accueil</a></li>
+                <li><a class="link_style" href="./index.php?page=<?= PAGE_BASKET ?>">Panier</a></li>
+                <li><a class="link_style" href="./index.php?page=<?= PAGE_PRODUCTS ?>">Produits</a></li>
+                <?php if (!isset($_SESSION["accountId"])) { ?>
+                    <li><a class="link_style" href="./index.php?page=<?= PAGE_CONNECTION ?>">Connexion</a></li>
+                    <li><a class="link_style" href="./index.php?page=<?= PAGE_REGISTER ?>">Se créer un compte</a></li>
+                <?php } else { ?>
+                    <li><a class="link_style" href="./index.php?page=<?= PAGE_FAVORITE ?>">Favoris</a></li>
+                    <li><a class="link_style" href="./index.php?page=<?= PAGE_PROFILE ?>">Profil</a></li>
+                    <li><a class="link_style" href="./index.php?page=<?= DISCONNECTION ?>">Deconnexion</a></li>
+                <?php } ?>
+            </div>
         </ul>
 
-        <ul>
+        <ul class="ul_style">
             <li>Mentions légales</li>
-            <li>Politique de confidentialités</a></li>
-            <li><a href="./index.php?page=<?= PAGE_CONDITIONS ?>">Conditions d'utilisations</a></li>
-            <li><a href="./index.php?page=<?= PAGE_ABOUTUS ?>">A propos</a></li>
+            <div>
+                <li>Politique de confidentialités</a></li>
+                <li><a class="link_style" href="./index.php?page=<?= PAGE_CONDITIONS ?>">Conditions d'utilisations</a>
+                </li>
+                <li><a class="link_style" href="./index.php?page=<?= PAGE_ABOUTUS ?>">A propos</a></li>
+            </div>
         </ul>
-        <ul>
+        <ul class="ul_style">
             <li>Contact</li>
-            <li>123-456-789</a></li>
-            <li>n° rue ville code postale</a></li>
-            <li>newsletter</a></li>
+            <div>
+                <li>123-456-789</a></li>
+                <li>n° rue ville code postale</a></li>
+                <li>newsletter</a></li>
+            </div>
         </ul>
-    </article>
-    <article class="logos">
+    </section>
+    <section class="logos">
         <div class="social">
             <div class="picture">
                 <img src="../assets/images/icon/instagram.svg" alt="">
@@ -113,8 +87,8 @@
                 <img src="../assets/images/icon/credit-card-solid.svg" alt="">
             </div>
         </div>
-    </article>
-    <article class="copy">
+    </section>
+    <section class="copy">
         <p>&copy; 2024 CandyShop. Tous droits réservés.</p>
-    </article>
+    </section>
 </section>

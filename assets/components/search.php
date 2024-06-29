@@ -35,7 +35,7 @@ class SearchForm extends BDD
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    padding: 100px;
+                    padding: 50px;
                     position: relative;
                 }
 
@@ -47,8 +47,8 @@ class SearchForm extends BDD
                     display: flex;
                     gap: 5px;
                     position: absolute;
-                    bottom: 24.3%;
-                    left: 41%;
+                    bottom: 17%;
+                    left: 40%;
                 }
             </style>
         </head>
