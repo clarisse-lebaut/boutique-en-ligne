@@ -1,28 +1,17 @@
-<!-- panier.php -->
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votre Panier</title>
-    <!-- Inclure vos styles CSS ou Bootstrap ici -->
-</head>
-
 <body>
     <h1>Votre Panier</h1>
 
-    <div id="cart-items">
-        <!-- Contenu du panier sera inséré ici dynamiquement -->
+    <div class="text-center m-auto d-flex flex-column justify-content-center align-items-center gap-3">
+        <div id="cart-items" class="container m-auto mb-4 mt-4">
+            <!-- Contenu du panier sera inséré ici dynamiquement -->
+        </div>
+
+        <div id="cart-total">
+            Montant total du panier: <span id="total">0.00 €</span>
+        </div>
+
+        <button id="clear-cart-btn" class="btn btn-primary" onclick="clearCart()" style="display: none;">Vider le panier</button>
     </div>
-
-    <div id="cart-total">
-        Montant total du panier: <span id="total">0.00 €</span>
-    </div>
-
-    <button id="clear-cart-btn" onclick="clearCart()" style="display: none;">Vider le panier</button>
-
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             displayCartItems();
@@ -42,33 +31,70 @@
                 clearCartBtn.style.display = 'block';
                 cartItems.forEach(item => {
                     const itemElement = document.createElement('div');
+                    itemElement.className = 'card';
+
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'card-content';
+
+                    const nameElement = document.createElement('div');
+                    nameElement.textContent = `Produit: ${item.name}`;
+
+                    const priceElement = document.createElement('div');
+                    priceElement.textContent = `Prix: ${item.price} €`;
+
+                    const quantityElement = document.createElement('div');
                     const quantity = item.quantity !== undefined ? item.quantity : 1;
-                    const totalPrice = item.price * quantity; // Calcul du prix total pour cet article
-                    itemElement.textContent = `${item.name} - ${item.price} € (Quantité: ${quantity}, Prix total: ${totalPrice.toFixed(2)} €)`;
+                    const totalPrice = item.price * quantity;
+
+                    // Utilisation de plusieurs divs pour afficher les lignes l'une en dessous de l'autre
+                    const quantityText = document.createElement('div');
+                    quantityText.className = 'quantity';
+                    quantityText.textContent = `Quantité: ${quantity}`;
+                    const totalPriceText = document.createElement('div');
+                    totalPriceText.className = 'total';
+                    totalPriceText.textContent = `Prix total: ${totalPrice.toFixed(2)} €`;
+
+                    quantityElement.appendChild(quantityText);
+                    quantityElement.appendChild(totalPriceText);
+
+                    contentDiv.appendChild(nameElement);
+                    contentDiv.appendChild(priceElement);
+                    contentDiv.appendChild(quantityElement);
 
                     // Bouton pour supprimer l'élément du panier
                     const deleteButton = document.createElement('button');
-                    deleteButton.textContent = 'Supprimer';
+                    deleteButton.textContent = 'x';
+                    deleteButton.className = 'deleteP';
                     deleteButton.addEventListener('click', function () {
                         removeFromCart(item.id);
                     });
-                    itemElement.appendChild(deleteButton);
+
+                    // Actions
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'card-actions';
 
                     // Bouton pour augmenter la quantité
                     const increaseButton = document.createElement('button');
                     increaseButton.textContent = '+';
+                    increaseButton.className = 'add';
                     increaseButton.addEventListener('click', function () {
                         increaseQuantity(item.id);
                     });
-                    itemElement.appendChild(increaseButton);
 
                     // Bouton pour diminuer la quantité
                     const decreaseButton = document.createElement('button');
                     decreaseButton.textContent = '-';
+                    decreaseButton.className = 'less';
                     decreaseButton.addEventListener('click', function () {
                         decreaseQuantity(item.id);
                     });
-                    itemElement.appendChild(decreaseButton);
+
+                    actionsDiv.appendChild(increaseButton);
+                    actionsDiv.appendChild(decreaseButton);
+
+                    itemElement.appendChild(contentDiv);
+                    itemElement.appendChild(actionsDiv);
+                    itemElement.appendChild(deleteButton); // Ajout du bouton supprimer en haut à droite
 
                     cartContainer.appendChild(itemElement);
                 });

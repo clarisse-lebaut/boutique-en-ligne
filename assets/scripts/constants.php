@@ -11,6 +11,7 @@ define("PAGE_PRODUCTS", 7);
 define("PAGE_FAVORITE", 8);
 define("PAGE_ABOUTUS", 9);
 define("PAGE_CONDITIONS", 10);
+define("PAGE_CONTACT", 11);
 
 // ACTION ID
 define("CONNECTION", 100);

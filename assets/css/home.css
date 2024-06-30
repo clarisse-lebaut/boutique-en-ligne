@@ -1,21 +1,108 @@
-/* general CSS for the home.php page */
 body {
   display: flex;
   flex-direction: column;
 }
 
-.lastout {
-    margin-top: 50px;
+.user-name {
+  text-align: center;
+  padding: 100px;
 }
+
+/* PART : last product add in database */
+
+.lastOut {
+  margin-top: 50px;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 370px;
+  display: flex;
+}
+
+.item {
+  position: absolute;
+  width: 200px;
+  height: 320px;
+  text-align: justify;
+  border-radius: 10px;
+  padding: 20px;
+  transition: 0.5s;
+  left: calc(50% - 110px);
+  top: 0;
+  background-color: #ffadd9;
+}
+
+#next,
+#prev {
+  position: absolute;
+  top: 30%;
+  color: red;
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  left: 50px;
+  width: 100px;
+  height: 100px;
+}
+
+#next {
+  left: unset;
+  right: 50px;
+}
+
+#prev:hover,
+#next:hover {
+  background-color: #ffadd9;
+  box-shadow: 0 0 10px 10px #ffadd9;
+  border-radius: 100px;
+}
+
+#prev:active {
+  transform: translateX(-20px);
+}
+
+#next:active {
+  transform: translateX(20px);
+}
+
+/* PART : loved product (random product each F5) */
 
 .loved {
   background-color: #ffffff;
 }
 
-/* .news {
-} */
+.grid-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
 
-.user-name {
-  text-align: center;
-  padding: 100px;
+.card_style {
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 5px 5px 5px 1px gray;
+  border-radius: 10px;
+}
+
+.card-color-1 {
+  background-color: #fffafa; /* Couleur 1 */
+}
+
+.card-color-2 {
+  background-color: #ffadd9; /* Couleur 2 */
+}
+
+.card-body {
+  height: 350px;
+}
+
+.card-title {
+  font-size: 50px;
+}
+
+.card-text {
+  font-family: "Courier New", Courier, monospace;
 }

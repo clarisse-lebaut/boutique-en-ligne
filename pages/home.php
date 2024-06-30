@@ -103,78 +103,24 @@ $searchForm->render();
     .pic {
         width: 100%;
     }
-
 </style>
-<div class="container-fluid mt-4 news">
-    <h2>Actualité sucrée</h2>
-    <hr width="250px">
+<div class="container mt-4 news">
     <div class="container">
-        <div class="d-flex gap-5">
-            <div class="card">
-                <img class="pic" src="../assets/readme/readme.jpeg" alt="">
-                <p class="text-center">actu 1</p>
-            </div>
-            <div class="card">
-                <img class="pic" src="../assets/readme/readme.jpeg" alt="">
-                <p class="text-center">actu 1</p>
-            </div>
-            <div class="card">
-                <img class="pic" src="../assets/readme/readme.jpeg" alt="">
-                <p class="text-center">actu 1</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- PART : form to contact us -->
-<div class="container mt-4">
-    <div class="container">
+        <h2>ACTUALITEES SUCREES</h2>
+        <hr width="250px">
         <div class="container">
-            <div class="container">
-                <h2>Contactez-nous</h2>
-                <?php
-                if ($_POST) {
-                    // Récupération des données du formulaire
-                    $name = htmlspecialchars($_POST['name']);
-                    $email = htmlspecialchars($_POST['email']);
-                    $subject = htmlspecialchars($_POST['subject']);
-                    $message = htmlspecialchars($_POST['message']);
-
-                    // Validation simple (vous pouvez ajouter plus de validation)
-                    if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
-                        // Traitement des données, par exemple, les enregistrer dans une base de données ou les envoyer par email
-                        // Pour l'instant, nous allons simplement les afficher
-                        echo "Nom: " . $name . "<br>";
-                        echo "Email: " . $email . "<br>";
-                        echo "Sujet: " . $subject . "<br>";
-                        echo "Message: " . $message . "<br>";
-                    } else {
-                        echo "Données invalides.";
-                    }
-                } else {
-                    echo "Méthode de requête non autorisée.";
-                }
-                ?>
-                <div class="container contact-form">
-                    <form action="" method="POST">
-                        <div class="form-group">
-                            <label for="name">Nom</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Sujet</label>
-                            <input type="text" class="form-control" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Envoyer</button>
-                    </form>
+            <div class="d-flex gap-5">
+                <div class="card">
+                    <img class="pic" src="../assets/readme/readme.jpeg" alt="">
+                    <p class="text-center">actu 1</p>
+                </div>
+                <div class="card">
+                    <img class="pic" src="../assets/readme/readme.jpeg" alt="">
+                    <p class="text-center">actu 1</p>
+                </div>
+                <div class="card">
+                    <img class="pic" src="../assets/readme/readme.jpeg" alt="">
+                    <p class="text-center">actu 1</p>
                 </div>
             </div>
         </div>

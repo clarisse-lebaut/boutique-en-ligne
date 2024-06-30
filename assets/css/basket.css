@@ -1,38 +1,77 @@
-.cart-item {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px 0;
+#cart-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 50px;
+}
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 0 10px 1px lightgray;
+  gap: 20px;
+}
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+.card-actions button {
+  padding: 4px 8px;
+  cursor: pointer;
 }
 
-.cart-item h2 {
-  margin: 0;
+button {
+  background-color: greenyellow;
+  border: solid lightgray 1px;
+  border-radius: 5px;
+  width: 30%;
 }
 
-.cart-item .quantity,
-.cart-item .price {
-  font-weight: bold;
+.deleteP {
+  background-color: red;
+  border: solid lightgray 1px;
+  border-radius: 5px;
 }
 
-.total-amount {
-  font-size: 1.2em;
-  font-weight: bold;
+.quantity,
+.totalPriceText {
+  padding: 15px 0 15px 0;
 }
 
-.user-name{
-    text-align: center;
+.add,
+.less {
+  text-align: center;
+  width: 100px;
 }
 
-.agency{
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
+.button:active,
+.add:active,
+.less:active {
+  text-align: center;
+  width: 100px;
+  background-color: green;
+  transform: translateY(10px);
 }
 
-.link{
-    display: flex;
-    gap: 50px;
+.button:hover,
+.add:hover,
+.less:hover {
+  text-align: center;
+  width: 100px;
+  background-color: green;
+}
+
+.deleteP:hover {
+  background-color: crimson;
+}
+.deleteP:active {
+  transform: translateY(10px);
 }

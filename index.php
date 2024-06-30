@@ -32,10 +32,13 @@ switch ($_GET["page"]) {
     include "./pages/create_account.php";
     break;
   case PAGE_CONDITIONS:
-    include "./pages/create_account.php";
+    include "./pages/404.php";
     break;
   case PAGE_ABOUTUS:
-    include "./pages/create_account.php";
+    include "./pages/404.php";
+    break;
+  case PAGE_CONTACT:
+    include "./pages/contact.php";
     break;
   case PAGE_PRODUCTS:
     $candies = $request->getAllCandies();

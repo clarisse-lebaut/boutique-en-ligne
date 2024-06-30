@@ -1,0 +1,47 @@
+.request-test {
+  text-align: center;
+  margin: 20px 0 20px 0;
+}
+.h2 {
+  padding-top: 40px;
+  text-align: center;
+  color: red;
+  font-size: 35px;
+}
+hr {
+  margin: 0 25% 0 25%;
+  color: red;
+}
+.form {
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: white;
+  padding-bottom: 25px;
+}
+.contact-form {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 30px 30px 30px 30px;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+.form-control {
+  background-color: #fffafa;
+  width: 300px;
+}
+textarea {
+  height: 250px;
+}

@@ -1,26 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CandyShop</title>
-
-    <link rel="stylesheet" href="./vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
-    <script src="./vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
-
-    <link rel="stylesheet" href="./assets/css/global.css">
-
-    <!-- <link rel="stylesheet" href="./assets/css/404.css">
-  <link rel="stylesheet" href="./assets/css/basket.css">
-  <link rel="stylesheet" href="./assets/css/checkboard.css">
-  <link rel="stylesheet" href="./assets/css/createAccount.css">
-  <link rel="stylesheet" href="./assets/css/formContact.css">
-  <link rel="stylesheet" href="./assets/css/home.css">
-  <link rel="stylesheet" href="./assets/css/slider.css"> -->
-    <link rel="stylesheet" href="./assets/css/footer.css">
-</head>
-
 <section class="footer_container">
     <section class="link">
         <ul class="ul_style">
@@ -55,6 +32,7 @@
                 <li>123-456-789</a></li>
                 <li>n° rue ville code postale</a></li>
                 <li>newsletter</a></li>
+                <li><a class="link_style" href="./index.php?page=<?= PAGE_CONTACT ?>">Contact</a></li>
             </div>
         </ul>
     </section>
