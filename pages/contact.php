@@ -1,6 +1,6 @@
 <div class="">
     <div>
-        <h2 class="h2">Contactez-nous</h2>
+        <h2 class="title text-center mt-3 mb-4">Contactez-nous</h2>
         <hr>
     </div>
     <?php

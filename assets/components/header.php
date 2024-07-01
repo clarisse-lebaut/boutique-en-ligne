@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="./assets/css/footer.css">
 
   <link rel="stylesheet" href="./assets/css/home.css">
-
+  <link rel="stylesheet" href="./assets/css/candy.css">
   <link rel="stylesheet" href="./assets/css/basket.css">
   <link rel="stylesheet" href="./assets/css/create_account.css">
   <link rel="stylesheet" href="./assets/css/contact.css">
@@ -31,13 +31,16 @@
         <div class="collapse navbar-collapse container-style" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="link-style" href="./index.php?page=<?= PAGE_HOME ?>">LOGO</a>
-            </li>
-            <li class="nav-item">
               <a class="link-style" href="./index.php?page=<?= PAGE_BASKET ?>">Panier</a>
             </li>
             <li class="nav-item">
               <a class="link-style" href="./index.php?page=<?= PAGE_PRODUCTS ?>">Produits</a>
+            </li>
+            <li class="nav-item">
+              <a class="link-style" href="./index.php?page=<?= PAGE_CONTACT ?>">Nous contacter</a>
+            </li>
+            <li class="nav-item">
+              <a class="mx-5" href="./index.php?page=<?= PAGE_HOME ?>"><img src="../assets/images/search/candy-shop.png" alt=""></a>
             </li>
             <li class="nav-item">
               <?php if (!isset($_SESSION["accountId"])) { ?>
@@ -49,9 +52,7 @@
               <li><a class="link-style" href="./index.php?page=<?= DISCONNECTION ?>">Deconnexion</a></li>
             <?php } ?>
             </li>
-            <li class="nav-item">
-              <a class="link-style" href="./index.php?page=<?= PAGE_CONTACT ?>">Nous contacter</a>
-            </li>
+
           </ul>
         </div>
       </div>

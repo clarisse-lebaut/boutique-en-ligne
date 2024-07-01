@@ -1,16 +1,19 @@
 <body>
-    <h1>Votre Panier</h1>
+    <h2 class="title text-center mt-3 mb-4">Panier</h2>
+    <hr>
+    <div class="container">
+        <div class="text-center m-auto d-flex flex-column justify-content-center align-items-center gap-3">
+            <div id="cart-items" class="container m-auto mb-4 mt-4">
+                <!-- Contenu du panier sera inséré ici dynamiquement -->
+            </div>
 
-    <div class="text-center m-auto d-flex flex-column justify-content-center align-items-center gap-3">
-        <div id="cart-items" class="container m-auto mb-4 mt-4">
-            <!-- Contenu du panier sera inséré ici dynamiquement -->
+            <div id="cart-total">
+                Montant total du panier: <span id="total">0.00 €</span>
+            </div>
+
+            <button id="clear-cart-btn" class="btn btn-primary" onclick="clearCart()" style="display: none;">Vider le
+                panier</button>
         </div>
-
-        <div id="cart-total">
-            Montant total du panier: <span id="total">0.00 €</span>
-        </div>
-
-        <button id="clear-cart-btn" class="btn btn-primary" onclick="clearCart()" style="display: none;">Vider le panier</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -61,12 +64,16 @@
                     contentDiv.appendChild(priceElement);
                     contentDiv.appendChild(quantityElement);
 
-                    // Bouton pour supprimer l'élément du panier
+                    // Bouton pour supprimer l'article
                     const deleteButton = document.createElement('button');
-                    deleteButton.textContent = 'x';
                     deleteButton.className = 'deleteP';
+                    // Créer une balise img pour le bouton augmenter
+                    const deleteImg = document.createElement('img');
+                    deleteImg.src = '../assets/images/icon/delete.svg'; // Notez que l'image pour augmenter devrait être différente
+                    // Ajouter l'image au bouton augmenter
+                    deleteButton.appendChild(deleteImg);
                     deleteButton.addEventListener('click', function () {
-                        removeFromCart(item.id);
+                        removeFromCart(item.id); // Corriger pour appeler la fonction augmenter
                     });
 
                     // Actions
@@ -75,19 +82,28 @@
 
                     // Bouton pour augmenter la quantité
                     const increaseButton = document.createElement('button');
-                    increaseButton.textContent = '+';
                     increaseButton.className = 'add';
+                    // Créer une balise img pour le bouton augmenter
+                    const increaseImg = document.createElement('img');
+                    increaseImg.src = '../assets/images/icon/add.svg'; // Notez que l'image pour augmenter devrait être différente
+                    // Ajouter l'image au bouton augmenter
+                    increaseButton.appendChild(increaseImg);
                     increaseButton.addEventListener('click', function () {
-                        increaseQuantity(item.id);
+                        increaseQuantity(item.id); // Corriger pour appeler la fonction augmenter
                     });
 
                     // Bouton pour diminuer la quantité
                     const decreaseButton = document.createElement('button');
-                    decreaseButton.textContent = '-';
                     decreaseButton.className = 'less';
+                    // Créer une balise img pour le bouton diminuer
+                    const decreaseImg = document.createElement('img');
+                    decreaseImg.src = '../assets/images/icon/remove.svg';
+                    // Ajouter l'image au bouton diminuer
+                    decreaseButton.appendChild(decreaseImg);
                     decreaseButton.addEventListener('click', function () {
                         decreaseQuantity(item.id);
                     });
+
 
                     actionsDiv.appendChild(increaseButton);
                     actionsDiv.appendChild(decreaseButton);

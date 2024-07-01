@@ -126,15 +126,9 @@ class Request extends BDD
     $stmt->bindParam(':role', $role);
 
     if ($stmt->execute()) {
-
-      // Démarrer une session pour l'utilisateur
-      // session_start();
-      // $_SESSION['user_id'] = $this->connection->lastInsertId(); // ID du nouvel utilisateur
-      // $_SESSION['firstname'] = $firstname;
-
       // Rediriger vers la page d'accueil
-      echo "Utilsateur ajouté à la base de donnée";
-      // header ('../pages/home.php');
+      // echo "Utilsateur ajouté à la base de donnée";
+      header('Location: index.php?page=' . PAGE_CONNECTION);
       exit(); // Assurez-vous de quitter le script après la redirection
     } else {
       return 'Failed to add user';

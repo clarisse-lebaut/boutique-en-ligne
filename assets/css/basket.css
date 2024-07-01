@@ -6,8 +6,7 @@
 .card {
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 16px;
-  margin: 8px 0;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,27 +27,22 @@
   cursor: pointer;
 }
 
-button {
-  background-color: greenyellow;
-  border: solid lightgray 1px;
-  border-radius: 5px;
-  width: 30%;
-}
-
-.deleteP {
-  background-color: red;
-  border: solid lightgray 1px;
-  border-radius: 5px;
-}
-
 .quantity,
 .totalPriceText {
   padding: 15px 0 15px 0;
 }
-
+.deleteP {
+  background-color: red;
+  border: solid lightgray 1px;
+  border-radius: 5px;
+  width: 30%;
+}
 .add,
 .less {
+  background-color: greenyellow;
   text-align: center;
+  border: solid lightgray 1px;
+  border-radius: 5px;
   width: 100px;
 }
 

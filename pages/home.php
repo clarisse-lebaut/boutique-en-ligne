@@ -43,7 +43,8 @@ $searchForm->render();
 
 <!-- PART : slider to make appear the last add products -->
 <div class="container mb-4 lastOut">
-    <h1>NOS DERNIERES SORTIES</h1>
+    <h2 class="title text-center mt-3 mb-4">Nos dernières sorties</h2>
+    <hr>
     <hr width="250px" style="margin-bottom:100px;">
     <?php if ($products !== false && count($products) > 0) { ?>
         <div id="slider_products" class="container mb-4">
@@ -74,8 +75,8 @@ $searchForm->render();
 <!-- PART : checkerboard to make appeart the most loved products -->
 <div class="container-fluid mt-4 loved">
     <div class="container py-4">
-        <h1>LES PLUS AIMEES</h1>
-        <hr width="250px">
+        <h2 class="title text-center mt-3 mb-4">Les plus aimées</h2>
+        <hr>
         <div class="grid-box">
             <?php if ($productsDamier !== false && count($productsDamier) > 0): ?>
                 <?php $index = 0; ?>
@@ -106,9 +107,9 @@ $searchForm->render();
 </style>
 <div class="container mt-4 news">
     <div class="container">
-        <h2>ACTUALITEES SUCREES</h2>
-        <hr width="250px">
-        <div class="container">
+        <h2 class="title text-center mt-3 mb-4">Actualitées sucrées</h2>
+        <hr>
+        <div class="container mb-4 mt-4">
             <div class="d-flex gap-5">
                 <div class="card">
                     <img class="pic" src="../assets/readme/readme.jpeg" alt="">

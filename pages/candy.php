@@ -8,51 +8,53 @@ $classification = $requete->getClassificationCandy();
 ?>
 
 <main>
-    <h1>Nos produits</h1>
-    <h1>Catégories de Bonbons</h1>
-    <div class="filter-bar">
-        <?php foreach ($categories as $category): ?>
-            <button class="category-button" data-category-id="<?php echo htmlspecialchars($category['id']); ?>">
-                <?php echo htmlspecialchars($category['name']); ?>
-            </button>
-        <?php endforeach; ?>
+    <h2 class="title text-center mt-3 mb-4">Les douceurs de notre catalogue</h2>
+    <hr>
+
+    <div class="container">
+        <div class="text-center mt-5">Filtres</div>
+        <div class="filter-bar mt-3">
+            <?php foreach ($categories as $category): ?>
+                <button class="category-button" data-category-id="<?php echo htmlspecialchars($category['id']); ?>">
+                    <?php echo htmlspecialchars($category['name']); ?>
+                </button>
+            <?php endforeach; ?>
+        </div>
+
+        <h1>Nos produits</h1>
+
+        <div class="product-grid container m-auto">
+            <?php if (count($candies) == 0) { ?>
+                <div>Pas de bonbon</div>
+            <?php } else { ?>
+                <?php foreach ($candies as $index => $candy):
+                    $colorClass = ($index % 2 == 0) ? 'card-even' : 'card-odd'; // Définir la classe basée sur l'index
+                    ?>
+                    <div class="card <?= $colorClass ?> container m-auto card-container">
+                        <input type="hidden" name="candy" value='<?= $candy["id"] ?>'>
+                        <input class="name" type="hidden" name="candy_name" value='<?= htmlspecialchars($candy["name"]) ?>'>
+                        <input class="price" type="hidden" name="candy_price" value='<?= htmlspecialchars($candy["price"]) ?>'>
+
+                        <div class="card-body">
+                            <h5 class="card-title"><?= htmlspecialchars($candy["name"]) ?></h5>
+                            <p class="card-text"><?= htmlspecialchars($candy["price"]) ?> €</p>
+                            <button type="button" data-id="<?= $candy["id"] ?>" data-name="<?= $candy["name"] ?>"
+                                data-price="<?= $candy["price"] ?>" class="btn btn-primary add-to-favorites"><img
+                                    src="../assets/images/icon/favorite.svg" alt=""></button>
+                            <button type="button" class="btn btn-secondary add-to-cart"
+                                data-id="<?= htmlspecialchars($candy["id"]) ?>"
+                                data-name="<?= htmlspecialchars($candy["name"]) ?>"
+                                data-price="<?= htmlspecialchars($candy["price"]) ?>"><img
+                                    src="../assets/images/icon/basket.svg" alt=""></button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php } ?>
+        </div>
     </div>
-    
-    <style>
-        .filter-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin: 50px;
-        }
-    </style>
-    <h1>Nos produits</h1>
-    <?php if (count($candies) == 0) { ?>
-        <div>Pas de bonbon</div>
-        <?php
-    } else {
-        foreach ($candies as $candy) {
-            ?>
-            <input type="hidden" name="candy" value='<?= $candy["id"] ?>'>
-            <input type="hidden" name="candy_name" value='<?= htmlspecialchars($candy["name"]) ?>'>
-            <input type="hidden" name="candy_price" value='<?= htmlspecialchars($candy["price"]) ?>'>
-
-            <?= $candy["name"] ?> - <?= $candy["price"] ?> €
-
-            <button type="button" data-id="<?= $candy["id"] ?>" data-name="<?= $candy["name"] ?>"
-                data-price="<?= $candy["price"] ?>" class="add-to-favorites">Ajouter au favoris</button>
-
-            <button type="button" class="btn btn-secondary add-to-cart" data-id="<?= htmlspecialchars($candy["id"]) ?>"
-                data-name="<?= htmlspecialchars($candy["name"]) ?>"
-                data-price="<?= htmlspecialchars($candy["price"]) ?>">Ajouter au panier</button>
-            <?php
-        }
-    }
-    ?>
 </main>
 
 <script>
-
     document.addEventListener('DOMContentLoaded', function () {
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
         const addToFavoritesButtons = document.querySelectorAll(".add-to-favorites");
@@ -118,7 +120,6 @@ $classification = $requete->getClassificationCandy();
             return [];
         }
 
-
         // FAVORITE PART
 
         addToFavoritesButtons.forEach(button => {
@@ -142,14 +143,14 @@ $classification = $requete->getClassificationCandy();
 
                     if (response.ok) {
                         // Afficher un message de succès
-                        alert(`${candyName} a été ajouté au panier !`);
+                        alert(`${candyName} a été ajouté aux favoris !`);
                     } else {
                         // Gérer les erreurs de la réponse
-                        alert(`Erreur lors de l'ajout de ${candyName} au panier.`);
+                        alert(`Erreur lors de l'ajout de ${candyName} aux favoris.`);
                     }
                 } catch (error) {
                     // Gérer les erreurs de la requête
-                    alert(`Erreur réseau lors de l'ajout de ${candyName} au panier.`);
+                    alert(`Erreur réseau lors de l'ajout de ${candyName} aux favoris.`);
                 }
             });
         });
@@ -162,14 +163,14 @@ $classification = $requete->getClassificationCandy();
             if (existingProductIndex !== -1) {
                 // Si le produit existe déjà, augmenter la quantité ou gérer comme nécessaire
                 // Par exemple, ici, nous n'ajoutons qu'une seule fois le même produit
-                alert(`${product.name} est déjà dans le panier.`);
+                alert(`${product.name} est déjà dans les favoris.`);
                 return;
             }
 
-            // Ajouter le produit au panier
+            // Ajouter le produit aux favoris
             favorite.push(product);
 
-            // Mettre à jour le cookie avec le panier mis à jour
+            // Mettre à jour le cookie avec les favoris mis à jour
             document.cookie = `favorite=${JSON.stringify(favorite)}; path=/;`;
         }
 
@@ -182,5 +183,4 @@ $classification = $requete->getClassificationCandy();
             return [];
         }
     });
-
 </script>

@@ -95,10 +95,6 @@ body {
   background-color: #ffadd9; /* Couleur 2 */
 }
 
-.card-body {
-  height: 350px;
-}
-
 .card-title {
   font-size: 50px;
 }
