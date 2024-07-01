@@ -149,7 +149,7 @@ class Request extends BDD
 
   public function getProductsCheckerBoard()
   {
-    $sql = 'SELECT name, price FROM candy ORDER BY RAND() LIMIT 9';
+    $sql = 'SELECT * FROM candy ORDER BY RAND() LIMIT 9';
     $stmt = $this->connection->prepare($sql);
 
     if ($stmt->execute()) {
@@ -165,6 +165,15 @@ class Request extends BDD
     $query = "SELECT * FROM candy";
     $result = $this->connection->query($query);
     return $result->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function getCommentary($id)
+  {
+    $query = "SELECT * FROM comment WHERE id_candy = :id;";
+    $stmt = $this->connection->prepare($query);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $stmt->execute([":id" => $id]);
+    return $stmt->fetchAll();
   }
 
   public function getCandyById(int $id)

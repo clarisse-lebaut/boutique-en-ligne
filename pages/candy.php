@@ -29,6 +29,41 @@ $classification = $requete->getClassificationCandy();
                 <?php foreach ($candies as $index => $candy):
                     $colorClass = ($index % 2 == 0) ? 'card-even' : 'card-odd'; // Définir la classe basée sur l'index
                     ?>
+                    <div class="modal fade" id="candyInfos<?= $candy["id"] ?>" tabindex="-1"
+                        aria-labelledby="candyInfos<?= $candy["id"] ?>Label" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $candy["name"] ?></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><?= htmlspecialchars($candy["price"]) ?> €</p>
+                                    <p><?= htmlspecialchars($candy["image"]) ?></p>
+                                    <p><?= htmlspecialchars($candy["description"]) ?></p>
+                                    <h1>Commentaires</h1>
+                                    <?php
+                                    $comments = $request->getCommentary($candy["id"]);
+                                    if (count($comments) == 0) {
+                                        ?>
+                                        <p>Pas</p>
+                                        <?php
+                                    } else {
+                                        foreach ($comments as $comment) {
+                                            ?>
+                                            <p><?= htmlspecialchars($comment["content"]) ?></p>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card <?= $colorClass ?> container m-auto card-container">
                         <input type="hidden" name="candy" value='<?= $candy["id"] ?>'>
                         <input class="name" type="hidden" name="candy_name" value='<?= htmlspecialchars($candy["name"]) ?>'>
@@ -37,20 +72,27 @@ $classification = $requete->getClassificationCandy();
                         <div class="card-body">
                             <h5 class="card-title title-candy"><?= htmlspecialchars($candy["name"]) ?></h5>
                             <p class="card-text text-candy"><?= htmlspecialchars($candy["price"]) ?> €</p>
-                            <button type="button" data-id="<?= $candy["id"] ?>" data-name="<?= $candy["name"] ?>"
-                                data-price="<?= $candy["price"] ?>" class="btn btn-primary add-to-favorites"><img
-                                    class="svg-candy" src="../assets/images/icon/favorite.svg" alt=""></button>
+                            <img class="candy-pic-style" src="./assets/images/candies/<?= $candy["image"] ?>" alt="">
+                            <?php if (isset($_SESSION["accountId"])) { ?>
+                                <button type="button" data-id="<?= $candy["id"] ?>" data-name="<?= $candy["name"] ?>"
+                                    data-price="<?= $candy["price"] ?>" class="btn btn-primary add-to-favorites"><img
+                                        class="svg-candy" src="../assets/images/icon/favorite.svg" alt=""></button>
+                            <?php } ?>
                             <button type="button" class="btn btn-secondary add-to-cart"
                                 data-id="<?= htmlspecialchars($candy["id"]) ?>"
                                 data-name="<?= htmlspecialchars($candy["name"]) ?>"
                                 data-price="<?= htmlspecialchars($candy["price"]) ?>"><img class="svg-candy"
                                     src="../assets/images/icon/basket.svg" alt=""></button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#candyInfos<?= $candy["id"] ?>">
+                                Voir plus
+                            </button>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php } ?>
         </div>
-    </div>
+        </div>
 </main>
 
 <script>

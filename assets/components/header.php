@@ -33,17 +33,18 @@
         <div class="collapse navbar-collapse container-style" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="link-style" href="./index.php?page=<?= PAGE_BASKET ?>">Panier</a>
+              <a class="logo-nav mx-5" href="./index.php?page=<?= PAGE_HOME ?>">HOME</a>
             </li>
             <li class="nav-item">
               <a class="link-style" href="./index.php?page=<?= PAGE_PRODUCTS ?>">Produits</a>
             </li>
             <li class="nav-item">
-              <a class="link-style" href="./index.php?page=<?= PAGE_CONTACT ?>">Nous contacter</a>
+              <a class="link-style" href="./index.php?page=<?= PAGE_BASKET ?>">Panier</a>
             </li>
             <li class="nav-item">
-              <a class="logo-nav mx-5" href="./index.php?page=<?= PAGE_HOME ?>">HOME</a>
+              <a class="link-style" href="./index.php?page=<?= PAGE_CONTACT ?>">Nous contacter</a>
             </li>
+
             <li class="nav-item">
               <?php if (!isset($_SESSION["accountId"])) { ?>
               <li><a class="link-style" href="./index.php?page=<?= PAGE_CONNECTION ?>">Connexion</a></li>

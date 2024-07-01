@@ -43,7 +43,7 @@ if ($_POST) {
 }
 ?>
 <div class="mb-5">
-    <h2 class="title text-center mt-4 mb-4">Créez vous un compte !</h2>
+    <h2 class="title text-center mt-3 mb-4">Créez vous un compte !</h2>
     <hr>
 </div>
 

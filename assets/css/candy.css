@@ -47,7 +47,11 @@
   font-size: 1.25em;
   margin-bottom: 10px;
 }
-.svg-candy{
+.svg-candy {
   width: 100%;
 }
-
+.candy-pic-style {
+  width: 100%;
+  height: 150px;
+  display: block;
+}

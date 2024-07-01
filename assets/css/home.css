@@ -97,3 +97,13 @@ body {
 .card-title {
   font-size: 50px;
 }
+
+.news {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pic {
+  width: 100%;
+}

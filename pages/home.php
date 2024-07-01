@@ -100,27 +100,28 @@ $searchForm->render();
 
 
 <!-- PART :carousel to make appeart the last news -->
-<style>
-    .pic {
-        width: 100%;
-    }
-</style>
-<div class="container mt-4 news">
-    <div class="container">
+<div class="container mt-4">
+    <div class="container w-100">
         <h2 class="title text-center mt-3 mb-4">Actualitées sucrées</h2>
         <hr>
-        <div class="container mb-4 mt-4">
+        <div class="container mb-4 mt-4 news">
             <div class="d-flex gap-5">
                 <div class="card">
-                    <img class="pic" src="../assets/readme/readme.jpeg" alt="">
+                    <img class="pic" src="../assets/images/news/woke.jpg" alt="">
+                    <a
+                        href="https://www.bfmtv.com/economie/consommation/m-m-s-renonce-a-ses-mascottes-jugees-woke-par-la-droite-americaine_AD-202301240045.html" target="_blank">Woke par les ricains</a>
                     <p class="text-center">actu 1</p>
                 </div>
                 <div class="card">
-                    <img class="pic" src="../assets/readme/readme.jpeg" alt="">
+                    <img class="pic" src="../assets/images/news/cbd.webp" alt="">
+                    <a href="https://www.20minutes.fr/societe/4050765-20230830-bonbons-cbd-contiennent-trop-thc-rappeles-toute-france" target="_blank">CBD dans les bonbons</a>
                     <p class="text-center">actu 1</p>
                 </div>
                 <div class="card">
-                    <img class="pic" src="../assets/readme/readme.jpeg" alt="">
+                    <img class="pic" src="../assets/images/news/inflation.webp" alt="">
+                    <a href="https://www.20minutes.fr/economie/4059441-20231025-halloween-prix-bonbons-bondi-21-an-selon-ufc-choisir" target="_blank">Mon dieux que c'est hors de prix</a>
+                    <time datetime="01/01/1997">01/01/1997</time>
+                    <blockquote>20minutes.fr</blockquote>
                     <p class="text-center">actu 1</p>
                 </div>
             </div>
