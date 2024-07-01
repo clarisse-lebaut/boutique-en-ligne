@@ -59,7 +59,7 @@ if ($_POST) {
     <form class="container_form" action="" method="POST">
 
         <div class="header_section">
-            <p>VOS INFORMATIONS</p>
+            <h3 class="title text-center mt-4 mb-4 fs-4">VOS INFORMATIONS</h3>
             <hr>
         </div>
 
@@ -91,7 +91,7 @@ if ($_POST) {
         </div>
 
         <div class="header_section">
-            <p>MOT DE PASSE</p>
+            <h3 class="title text-center mt-4 mb-4 fs-4">MOT DE PASSE</h3>
             <hr>
         </div>
 

@@ -6,13 +6,12 @@ $requete = new Request();
 $categories = $requete->getCategoryCandy();
 $classification = $requete->getClassificationCandy();
 ?>
-
 <main>
     <h2 class="title text-center mt-3 mb-4">Les douceurs de notre catalogue</h2>
     <hr>
 
-    <div class="container">
-        <div class="text-center mt-5">Filtres</div>
+    <h3 class="container">
+        <h3 class="title text-center mt-3 mb-4">Filtres</h3>
         <div class="filter-bar mt-3">
             <?php foreach ($categories as $category): ?>
                 <button class="category-button" data-category-id="<?php echo htmlspecialchars($category['id']); ?>">
@@ -21,7 +20,7 @@ $classification = $requete->getClassificationCandy();
             <?php endforeach; ?>
         </div>
 
-        <h1>Nos produits</h1>
+        <h3 class="title text-center mt-5 mb-5">Nos produits</h3>
 
         <div class="product-grid container m-auto">
             <?php if (count($candies) == 0) { ?>
@@ -36,15 +35,15 @@ $classification = $requete->getClassificationCandy();
                         <input class="price" type="hidden" name="candy_price" value='<?= htmlspecialchars($candy["price"]) ?>'>
 
                         <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($candy["name"]) ?></h5>
-                            <p class="card-text"><?= htmlspecialchars($candy["price"]) ?> €</p>
+                            <h5 class="card-title title-candy"><?= htmlspecialchars($candy["name"]) ?></h5>
+                            <p class="card-text text-candy"><?= htmlspecialchars($candy["price"]) ?> €</p>
                             <button type="button" data-id="<?= $candy["id"] ?>" data-name="<?= $candy["name"] ?>"
                                 data-price="<?= $candy["price"] ?>" class="btn btn-primary add-to-favorites"><img
-                                    src="../assets/images/icon/favorite.svg" alt=""></button>
+                                    class="svg-candy" src="../assets/images/icon/favorite.svg" alt=""></button>
                             <button type="button" class="btn btn-secondary add-to-cart"
                                 data-id="<?= htmlspecialchars($candy["id"]) ?>"
                                 data-name="<?= htmlspecialchars($candy["name"]) ?>"
-                                data-price="<?= htmlspecialchars($candy["price"]) ?>"><img
+                                data-price="<?= htmlspecialchars($candy["price"]) ?>"><img class="svg-candy"
                                     src="../assets/images/icon/basket.svg" alt=""></button>
                         </div>
                     </div>
@@ -121,7 +120,6 @@ $classification = $requete->getClassificationCandy();
         }
 
         // FAVORITE PART
-
         addToFavoritesButtons.forEach(button => {
             button.addEventListener('click', async function () {
                 const candyId = this.dataset.id;

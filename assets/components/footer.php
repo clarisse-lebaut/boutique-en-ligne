@@ -39,30 +39,30 @@
     <section class="logos">
         <div class="social">
             <div class="picture">
-                <img src="../assets/images/icon/instagram.svg" alt="">
+                <img class="svg-footer" src="../assets/images/icon/instagram.svg" alt="">
             </div>
             <div class="picture">
-                <img src="../assets/images/icon/whatsapp.svg" alt="">
+                <img class="svg-footer" src="../assets/images/icon/whatsapp.svg" alt="">
             </div>
             <div class="picture">
-                <img src="../assets/images/icon/x-twitter.svg" alt="">
+                <img class="svg-footer" src="../assets/images/icon/x-twitter.svg" alt="">
             </div>
             <div class="picture">
-                <img src="../assets/images/icon/tiktok.svg" alt="">
+                <img class="svg-footer" src="../assets/images/icon/tiktok.svg" alt="">
             </div>
             <div class="picture">
-                <img src="../assets/images/icon/linkedin.svg" alt="">
+                <img class="svg-footer" src="../assets/images/icon/linkedin.svg" alt="">
             </div>
         </div>
         <div class="payment">
             <div class="picture">
-                <img src="../assets/images/icon/cc-paypal.svg" alt="">
+                <img class="svg-footer" src="../assets/images/icon/cc-paypal.svg" alt="">
             </div>
             <div class="picture">
-                <img src="../assets/images/icon/credit-card-regular.svg" alt="">
+                <img class="svg-footer" src="../assets/images/icon/credit-card-regular.svg" alt="">
             </div>
             <div class="picture">
-                <img src="../assets/images/icon/credit-card-solid.svg" alt="">
+                <img class="svg-footer" src="../assets/images/icon/credit-card-solid.svg" alt="">
             </div>
         </div>
     </section>

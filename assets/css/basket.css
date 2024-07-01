@@ -6,7 +6,6 @@
 .card {
   border: 1px solid #ccc;
   border-radius: 8px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,6 +30,9 @@
 .totalPriceText {
   padding: 15px 0 15px 0;
 }
+.svg{
+  width: 30%;
+}
 .deleteP {
   background-color: red;
   border: solid lightgray 1px;
@@ -45,27 +47,22 @@
   border-radius: 5px;
   width: 100px;
 }
-
 .button:active,
 .add:active,
 .less:active {
   text-align: center;
-  width: 100px;
   background-color: green;
   transform: translateY(10px);
 }
-
 .button:hover,
 .add:hover,
 .less:hover {
   text-align: center;
-  width: 100px;
   background-color: green;
 }
-
 .deleteP:hover {
   background-color: crimson;
 }
 .deleteP:active {
-  transform: translateY(10px);
+  transform: translateY(-10px);
 }

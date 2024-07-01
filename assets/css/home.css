@@ -9,7 +9,6 @@ body {
 }
 
 /* PART : last product add in database */
-
 .lastOut {
   margin-top: 50px;
 }
@@ -97,8 +96,4 @@ body {
 
 .card-title {
   font-size: 50px;
-}
-
-.card-text {
-  font-family: "Courier New", Courier, monospace;
 }

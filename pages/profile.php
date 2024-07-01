@@ -6,9 +6,11 @@ $updatedAt = new DateTime($account["updated_at"]);
 $createdAt = new DateTime($account["created_at"]);
 ?>
 
-<main style="margin-block:100px;">
-  <div class="my-4 w-50 mx-auto d-flex flex-column bg-white rounded-4" style="gap:50px; padding:100px; box-shadow: 10px -5px 5px hsla(0, 0%, 50%, 50%); background-color:var(--primary-clr);">
-    <h1 class="text-center py-4" style="font-family: var(--ff-inknut-antiqua);">Profil</h1>
+<main>
+  <h2 class="title text-center mt-3 mb-4">Profil</h2>
+  <hr>
+  <div class="my-4 w-50 mx-auto d-flex flex-column bg-white rounded-4"
+    style="gap:50px; padding:100px; box-shadow: 10px -5px 5px hsla(0, 0%, 50%, 50%); background-color:var(--primary-clr);">
     <table class="table table-bordered">
       <tbody>
         <tr>
@@ -32,10 +34,12 @@ $createdAt = new DateTime($account["created_at"]);
           <td><?= $account["zipcode"] ?></td>
         </tr>
         <tr>
-          <td colspan="2" class="text-center">Compte mise à jour le <abbr title="<?= date_format($updatedAt, $simpleDateFormat) ?>"><?= date_format($updatedAt, $dateFormat) ?></td>
+          <td colspan="2" class="text-center">Compte mise à jour le <abbr
+              title="<?= date_format($updatedAt, $simpleDateFormat) ?>"><?= date_format($updatedAt, $dateFormat) ?></td>
         </tr>
         <tr>
-          <td colspan="2" class="text-center">Compte créer le <abbr title="<?= date_format($createdAt, $simpleDateFormat) ?>"><?= date_format($createdAt, $dateFormat) ?></td>
+          <td colspan="2" class="text-center">Compte créer le <abbr
+              title="<?= date_format($createdAt, $simpleDateFormat) ?>"><?= date_format($createdAt, $dateFormat) ?></td>
         </tr>
       </tbody>
     </table>

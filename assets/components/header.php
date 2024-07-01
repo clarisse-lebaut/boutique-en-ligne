@@ -13,9 +13,11 @@
   <link rel="stylesheet" href="./assets/css/header.css">
   <link rel="stylesheet" href="./assets/css/footer.css">
 
+  <link rel="stylesheet" href="./assets/css/404.css">
   <link rel="stylesheet" href="./assets/css/home.css">
   <link rel="stylesheet" href="./assets/css/candy.css">
   <link rel="stylesheet" href="./assets/css/basket.css">
+  <link rel="stylesheet" href="./assets/css/favorite.css">
   <link rel="stylesheet" href="./assets/css/create_account.css">
   <link rel="stylesheet" href="./assets/css/contact.css">
 </head>
@@ -40,7 +42,7 @@
               <a class="link-style" href="./index.php?page=<?= PAGE_CONTACT ?>">Nous contacter</a>
             </li>
             <li class="nav-item">
-              <a class="mx-5" href="./index.php?page=<?= PAGE_HOME ?>"><img src="../assets/images/search/candy-shop.png" alt=""></a>
+              <a class="logo-nav mx-5" href="./index.php?page=<?= PAGE_HOME ?>">HOME</a>
             </li>
             <li class="nav-item">
               <?php if (!isset($_SESSION["accountId"])) { ?>

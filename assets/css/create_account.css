@@ -8,10 +8,6 @@ hr {
   margin: 0 25% 0 25%;
   color: red;
 }
-p {
-  text-align: center;
-  color: red;
-}
 .box-_form {
   display: flex;
   justify-content: center;

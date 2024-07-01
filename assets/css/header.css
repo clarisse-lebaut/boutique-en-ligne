@@ -47,4 +47,13 @@
 .nav-item {
   text-decoration: none;
   list-style: none;
+  text-align: center;
+}
+.logo-nav{
+  text-decoration: none;
+  list-style: none;
+  text-align: center;
+}
+.svg-nav{
+  width: 20%;
 }
