@@ -33,7 +33,7 @@
         gap: 50px;
     }
 
-    .logos{
+    .logos {
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -44,7 +44,7 @@
         gap: 20px;
     }
 
-    .payment{
+    .payment {
         display: flex;
         gap: 20px;
     }

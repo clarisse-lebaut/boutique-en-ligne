@@ -7,7 +7,6 @@ $createdAt = new DateTime($account["created_at"]);
 ?>
 
 <main style="margin-block:100px;">
-
   <div class="my-4 w-50 mx-auto d-flex flex-column bg-white rounded-4" style="gap:50px; padding:100px; box-shadow: 10px -5px 5px hsla(0, 0%, 50%, 50%); background-color:var(--primary-clr);">
     <h1 class="text-center py-4" style="font-family: var(--ff-inknut-antiqua);">Profil</h1>
     <table class="table table-bordered">
