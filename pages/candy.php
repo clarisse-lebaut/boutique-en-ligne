@@ -15,7 +15,7 @@ $classification = $requete->getClassificationCandy();
         <form type="submit" action="index.php?page=<?= FILTER_PRODUCTS ?>" method="POST">
             <select name="sltFilter">
                 <option value="all">Afficher tous les produits</option>
-                <?php foreach ($categories as $category): ?>
+                <?php foreach ($categories as $category) : ?>
                     <option value="<?= $category["id"] ?>"><?php echo htmlspecialchars($category['name']); ?></option>
                 <?php endforeach; ?>
             </select>
@@ -27,11 +27,10 @@ $classification = $requete->getClassificationCandy();
             <?php if (count($candies) == 0) { ?>
                 <div>Pas de bonbon</div>
             <?php } else { ?>
-                <?php foreach ($candies as $index => $candy):
+                <?php foreach ($candies as $index => $candy) :
                     $colorClass = ($index % 2 == 0) ? 'card-even' : 'card-odd'; // Définir la classe basée sur l'index
-                    ?>
-                    <div class="modal fade" id="candyInfos<?= $candy["id"] ?>" tabindex="-1"
-                        aria-labelledby="candyInfos<?= $candy["id"] ?>Label" aria-hidden="true">
+                ?>
+                    <div class="modal fade" id="candyInfos<?= $candy["id"] ?>" tabindex="-1" aria-labelledby="candyInfos<?= $candy["id"] ?>Label" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -47,18 +46,18 @@ $classification = $requete->getClassificationCandy();
                                     <?php
                                     $comments = $request->getCommentary($candy["id"]);
                                     if (count($comments) == 0) {
-                                        ?>
+                                    ?>
                                         <p>Pas</p>
                                         <?php
                                     } else {
                                         foreach ($comments as $comment) {
-                                            ?>
+                                        ?>
                                             <p><?= htmlspecialchars($comment["content"]) ?></p>
                                             <p><?= htmlspecialchars($comment["created_at"]) ?></p>
                                             <p><?= htmlspecialchars($comment["updated_at"]) ?></p>
                                             <p><?= htmlspecialchars($comment["creator_firstname"]) ?></p>
                                             <p><?= htmlspecialchars($comment["creator_lastname"]) ?></p>
-                                            <?php
+                                    <?php
                                         }
                                     }
                                     ?>
@@ -80,17 +79,10 @@ $classification = $requete->getClassificationCandy();
                             <p class="card-text text-candy"><?= htmlspecialchars($candy["price"]) ?> €</p>
                             <img class="candy-pic-style" src="./assets/images/candies/<?= $candy["image"] ?>" alt="">
                             <?php if (isset($_SESSION["accountId"])) { ?>
-                                <button type="button" data-id="<?= $candy["id"] ?>" data-name="<?= $candy["name"] ?>"
-                                    data-price="<?= $candy["price"] ?>" class="btn btn-primary add-to-favorites"><img
-                                        class="svg-candy" src="../assets/images/icon/favorite.svg" alt=""></button>
+                                <button type="button" data-id="<?= $candy["id"] ?>" data-name="<?= $candy["name"] ?>" data-price="<?= $candy["price"] ?>" class="btn btn-primary add-to-favorites"><img class="svg-candy" src="../assets/images/icon/favorite.svg" alt=""></button>
                             <?php } ?>
-                            <button type="button" class="btn btn-secondary add-to-cart"
-                                data-id="<?= htmlspecialchars($candy["id"]) ?>"
-                                data-name="<?= htmlspecialchars($candy["name"]) ?>"
-                                data-price="<?= htmlspecialchars($candy["price"]) ?>"><img class="svg-candy"
-                                    src="../assets/images/icon/basket.svg" alt=""></button>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#candyInfos<?= $candy["id"] ?>">
+                            <button type="button" class="btn btn-secondary add-to-cart" data-id="<?= htmlspecialchars($candy["id"]) ?>" data-name="<?= htmlspecialchars($candy["name"]) ?>" data-price="<?= htmlspecialchars($candy["price"]) ?>"><img class="svg-candy" src="../assets/images/icon/basket.svg" alt=""></button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#candyInfos<?= $candy["id"] ?>">
                                 Voir plus
                             </button>
                         </div>
@@ -102,18 +94,22 @@ $classification = $requete->getClassificationCandy();
 </main>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
         const addToFavoritesButtons = document.querySelectorAll(".add-to-favorites");
 
         addToCartButtons.forEach(button => {
-            button.addEventListener('click', async function () {
+            button.addEventListener('click', async function() {
                 const candyId = this.dataset.id;
                 const candyName = this.dataset.name;
                 const candyPrice = this.dataset.price;
 
                 // Ajouter le produit au panier avec ID, nom et prix
-                addToCart({ id: candyId, name: candyName, price: candyPrice });
+                addToCart({
+                    id: candyId,
+                    name: candyName,
+                    price: candyPrice
+                });
 
                 // Simuler une requête réseau asynchrone pour ajouter le produit au panier
                 try {
@@ -122,7 +118,11 @@ $classification = $requete->getClassificationCandy();
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ id: candyId, name: candyName, price: candyPrice })
+                        body: JSON.stringify({
+                            id: candyId,
+                            name: candyName,
+                            price: candyPrice
+                        })
                     });
 
                     if (response.ok) {
@@ -169,13 +169,17 @@ $classification = $requete->getClassificationCandy();
 
         // FAVORITE PART
         addToFavoritesButtons.forEach(button => {
-            button.addEventListener('click', async function () {
+            button.addEventListener('click', async function() {
                 const candyId = this.dataset.id;
                 const candyName = this.dataset.name;
                 const candyPrice = this.dataset.price;
 
                 // Ajouter le produit au panier avec ID, nom et prix
-                addToFavorites({ id: candyId, name: candyName, price: candyPrice });
+                addToFavorites({
+                    id: candyId,
+                    name: candyName,
+                    price: candyPrice
+                });
 
                 // Simuler une requête réseau asynchrone pour ajouter le produit au panier
                 try {
@@ -184,7 +188,11 @@ $classification = $requete->getClassificationCandy();
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ id: candyId, name: candyName, price: candyPrice })
+                        body: JSON.stringify({
+                            id: candyId,
+                            name: candyName,
+                            price: candyPrice
+                        })
                     });
 
                     if (response.ok) {
