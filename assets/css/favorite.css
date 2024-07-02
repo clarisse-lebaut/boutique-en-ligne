@@ -8,10 +8,10 @@
 
 .favorite-card {
   text-align: center;
-  padding: 30px 50px 30px 50px;
+  padding: 50px 50px 50px 50px;
   margin: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -38,7 +38,7 @@
   color: white;
   border: none;
   padding: 5px 10px;
-  border-radius: 3px;
+  border-radius: 10px;
   cursor: pointer;
 }
 .delete-button:active{
