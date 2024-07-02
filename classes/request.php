@@ -162,14 +162,14 @@ class Request extends BDD
 
   public function getAllCandies()
   {
-    $query = "SELECT * FROM candy";
+    $query = "SELECT candy.*, mark.name as mark_name FROM candy INNER JOIN mark ON candy.id_mark = mark.id;";
     $result = $this->connection->query($query);
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function getCommentary($id)
   {
-    $query = "SELECT * FROM comment WHERE id_candy = :id;";
+    $query = "SELECT comment.content, comment.updated_at, comment.created_at, account.firstname as creator_firstname, account.lastname as creator_lastname FROM comment inner join candy on comment.id_candy = candy.id inner join account on comment.id_account = account.id WHERE id_candy = :id;";
     $stmt = $this->connection->prepare($query);
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $stmt->execute([":id" => $id]);
@@ -184,11 +184,27 @@ class Request extends BDD
     return $stmt->fetch();
   }
 
-  public function getCategoryCandy()
+  public function getCategories()
   {
     $query = "SELECT * FROM category";
     $result = $this->connection->query($query);
     return $result->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function getCandiesByCategory(int $id = null)
+  {
+    if ($id == null) {
+      return $this->getAllCandies();
+    } else {
+      if ($id >= 1) {
+        $query = "SELECT candy.* FROM classification INNER JOIN candy ON classification.id_candy = candy.id WHERE classification.id_category = :id;";
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute([":id" => $id]);
+        return $stmt->fetchAll();
+      } else {
+        throw new Exception("The id have to be greater or equal to 1!");
+      }
+    }
   }
 
   public function getClassificationCandy()

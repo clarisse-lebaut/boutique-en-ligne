@@ -3,7 +3,7 @@
 $requete = new Request();
 
 // Appel de la méthode pour récupérer les catégories
-$categories = $requete->getCategoryCandy();
+$categories = $requete->getCategories();
 $classification = $requete->getClassificationCandy();
 ?>
 <main>
@@ -12,14 +12,15 @@ $classification = $requete->getClassificationCandy();
 
     <h3 class="container">
         <h3 class="title text-center mt-3 mb-4">Filtres</h3>
-        <div class="filter-bar mt-3">
-            <?php foreach ($categories as $category): ?>
-                <button class="category-button" data-category-id="<?php echo htmlspecialchars($category['id']); ?>">
-                    <?php echo htmlspecialchars($category['name']); ?>
-                </button>
-            <?php endforeach; ?>
-        </div>
-
+        <form type="submit" action="index.php?page=<?= FILTER_PRODUCTS ?>" method="POST">
+            <select name="sltFilter">
+                <option value="all">Afficher tous les produits</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= $category["id"] ?>"><?php echo htmlspecialchars($category['name']); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <input type="submit" name="btnFilter" value="Filtrer">
+        </form>
         <h3 class="title text-center mt-5 mb-5">Nos produits</h3>
 
         <div class="product-grid container m-auto">
@@ -39,6 +40,7 @@ $classification = $requete->getClassificationCandy();
                                 </div>
                                 <div class="modal-body">
                                     <p><?= htmlspecialchars($candy["price"]) ?> €</p>
+                                    <p><?= htmlspecialchars($candy["mark_name"]) ?></p>
                                     <p><?= htmlspecialchars($candy["image"]) ?></p>
                                     <p><?= htmlspecialchars($candy["description"]) ?></p>
                                     <h1>Commentaires</h1>
@@ -52,6 +54,10 @@ $classification = $requete->getClassificationCandy();
                                         foreach ($comments as $comment) {
                                             ?>
                                             <p><?= htmlspecialchars($comment["content"]) ?></p>
+                                            <p><?= htmlspecialchars($comment["created_at"]) ?></p>
+                                            <p><?= htmlspecialchars($comment["updated_at"]) ?></p>
+                                            <p><?= htmlspecialchars($comment["creator_firstname"]) ?></p>
+                                            <p><?= htmlspecialchars($comment["creator_lastname"]) ?></p>
                                             <?php
                                         }
                                     }

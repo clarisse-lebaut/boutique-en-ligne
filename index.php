@@ -41,7 +41,7 @@ switch ($_GET["page"]) {
     include "./pages/contact.php";
     break;
   case PAGE_PRODUCTS:
-    $candies = $request->getAllCandies();
+    $candies = $request->getCandiesByCategory();
     include "./pages/candy.php";
     break;
   case PAGE_BASKET:
@@ -132,7 +132,10 @@ switch ($_GET["page"]) {
     $request->updateAccount($account["id"], $newFirstname, $newLastname, $newAddress, $newZipcode, $newEmail, $newPassword);
     header("Location: index.php?page=" . PAGE_PROFILE);
     break;
-
+  case FILTER_PRODUCTS:
+    $candies = $request->getCandiesByCategory($_POST["sltFilter"] == "all" ? null : $_POST["sltFilter"]);
+    include "./pages/candy.php";
+    break;
   default:
     include "./pages/404.php";
     break;
