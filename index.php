@@ -93,9 +93,9 @@ switch ($_GET["page"]) {
 
       $_SESSION["accountId"] = $account["id"];
 
-      if (isset($_COOKIE["favorite" . $_SESSION["accountId"]]) == false) {
-        setcookie("favorite" . $_SESSION["accountId"], json_encode([]));
-      }
+      //   if (isset($_COOKIE["favorite" . $_SESSION["accountId"]]) == false) {
+      //     setcookie("favorite" . $_SESSION["accountId"], json_encode([]));
+      //   }
 
       header("Location: index.php?page=1");
     }
