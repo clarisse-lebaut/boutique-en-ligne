@@ -46,6 +46,7 @@ class Request extends BDD
     }
   }
 
+
   function updateAccount(int $id, string $firstname, string $lastname, string $address, string $zipcode, string $email, string $password): void
   {
     try {
@@ -213,5 +214,107 @@ class Request extends BDD
     $result = $this->connection->query($query);
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
-}
 
+  public function getCandyMark(int $idCandy): string
+  {
+    try {
+      $query = "SELECT mark.name FROM candy INNER JOIN mark ON candy.id_mark = mark.id WHERE candy.id = :idCandy;";
+      $stmt = $this->connection->prepare($query);
+      $stmt->bindParam("idCandy", $idCandy, PDO::PARAM_INT);
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $stmt->execute();
+      return $stmt->fetch()["name"];
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get the mark of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getCandyCategoriesInString(int $idCandy): string
+  {
+    try {
+      $query = "SELECT category.name as category_name FROM classification INNER JOIN category ON classification.id_category = category.id WHERE classification.id_candy = :idCandy;";
+      $stmt = $this->connection->prepare($query);
+      $stmt->bindParam("idCandy", $idCandy, PDO::PARAM_INT);
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $stmt->execute();
+
+      $data = $stmt->fetchAll();
+      $categories = [];
+
+      foreach ($data as $category) {
+        array_push($categories, $category["category_name"]);
+      }
+
+      return implode(", ", $categories);
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get categories of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getMarks()
+  {
+    try {
+      $query = "SELECT * FROM mark ORDER BY mark.name ASC;";
+      $stmt = $this->connection->prepare($query);
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $stmt->execute();
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get all mark!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function addCandy(string $name, string $description, float $price, int $nbStock, string $image, int $idMark)
+  {
+    try {
+      $query = "INSERT INTO candy (name, description, price, nb_stock, image, id_mark) VALUES (:name, :description, :price, :nb_stock, :image, :id_mark);";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+      $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+      $stmt->bindParam(":price", $price, PDO::PARAM_STR);
+      $stmt->bindParam(":nb_stock", $nbStock, PDO::PARAM_INT);
+      $stmt->bindParam(":image", $image, PDO::PARAM_STR);
+      $stmt->bindParam(":id_mark", $idMark, PDO::PARAM_INT);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to add a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function addClassification(int $idCategory, int $idCandy)
+  {
+    try {
+      $query = "INSERT INTO classification (id_category, id_candy) VALUES (:id_category, :id_candy);";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id_category", $idCategory, PDO::PARAM_INT);
+      $stmt->bindParam(":id_candy", $idCandy, PDO::PARAM_INT);
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to add a classification!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getCandyByName(string $name)
+  {
+    try {
+      $query = "SELECT * FROM candy WHERE candy.name = :name";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+}

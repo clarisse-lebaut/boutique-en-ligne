@@ -23,41 +23,53 @@
 </head>
 
 <body>
-  <main>
-    <nav class="navbar navbar-expand-lg nav-style">
-      <div class="container-fluid item-style">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse container-style" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="logo-nav mx-5" href="./index.php?page=<?= PAGE_HOME ?>">HOME</a>
-            </li>
-            <li class="nav-item">
-              <a class="link-style" href="./index.php?page=<?= PAGE_PRODUCTS ?>">Produits</a>
-            </li>
-            <li class="nav-item">
-              <a class="link-style" href="./index.php?page=<?= PAGE_BASKET ?>">Panier</a>
-            </li>
-            <li class="nav-item">
-              <a class="link-style" href="./index.php?page=<?= PAGE_CONTACT ?>">Nous contacter</a>
-            </li>
+  <nav class="navbar navbar-expand-lg nav-style">
+    <div class="container-fluid item-style">
+      </button>
+      <div class="collapse navbar-collapse container-style" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="logo-nav mx-5" href="./index.php?page=<?= PAGE_HOME ?>">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="link-style" href="./index.php?page=<?= PAGE_PRODUCTS ?>">Produits</a>
+          </li>
+          <li class="nav-item">
+            <a class="link-style" href="./index.php?page=<?= PAGE_BASKET ?>">Panier</a>
+          </li>
+          <li class="nav-item">
+            <a class="link-style" href="./index.php?page=<?= PAGE_CONTACT ?>">Nous contacter</a>
+          </li>
 
+          <?php if (!isset($_SESSION["accountId"])) { ?>
             <li class="nav-item">
-              <?php if (!isset($_SESSION["accountId"])) { ?>
-              <li><a class="link-style" href="./index.php?page=<?= PAGE_CONNECTION ?>">Connexion</a></li>
-              <li><a class="link-style" href="./index.php?page=<?= PAGE_REGISTER ?>">Se créer un compte</a></li>
-            <?php } else { ?>
-              <li><a class="link-style" href="./index.php?page=<?= PAGE_FAVORITE ?>">Favoris</a></li>
-              <li><a class="link-style" href="./index.php?page=<?= PAGE_PROFILE ?>">Profil</a></li>
-              <li><a class="link-style" href="./index.php?page=<?= DISCONNECTION ?>">Deconnexion</a></li>
+            <li><a class="link-style" href="./index.php?page=<?= PAGE_CONNECTION ?>">Connexion</a></li>
+            <li><a class="link-style" href="./index.php?page=<?= PAGE_REGISTER ?>">Se créer un compte</a></li>
+          <?php } else { ?>
+            <li><a class="link-style" href="./index.php?page=<?= PAGE_FAVORITE ?>">Favoris</a></li>
+            <li><a class="link-style" href="./index.php?page=<?= PAGE_PROFILE ?>">Profil</a></li>
+            <!-- Admin -->
+            <?php if ($request->getAccountById($_SESSION["accountId"])["role"] == "Admin") { ?>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Panel d'administration
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_CANDIES ?>">Liste des bonbons</a></li>
+                  <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_ADD_CANDIES ?>">Ajouter un bonbon</a></li>
+                  <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_MODIFY_CANDIES ?>">Modifier un bonbon</a></li>
+                  <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_DELETE_CANDIES ?>">Supprimer un bonbon</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_USERS ?>">Liste des utilisateurs</a></li>
+                </ul>
+              </li>
             <?php } ?>
-            </li>
-
-          </ul>
-        </div>
+            <li><a class="link-style" href="./index.php?page=<?= DISCONNECTION ?>">Deconnexion</a></li>
+          <?php } ?>
+          </li>
+        </ul>
       </div>
-    </nav>
-  </main>
+    </div>
+  </nav>

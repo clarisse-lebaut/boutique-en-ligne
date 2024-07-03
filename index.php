@@ -66,6 +66,31 @@ switch ($_GET["page"]) {
     $account = $request->getAccountById($_SESSION["accountId"]);
     include "./pages/modify.php";
     break;
+  case PAGE_ADMIN_CANDIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $candies = $request->getAllCandies();
+    include "./pages/admin_candies.php";
+    break;
+  case PAGE_ADMIN_USERS:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $accounts = $request->getAccounts();
+    include "./pages/admin_users.php";
+    break;
+  case PAGE_ADMIN_ADD_CANDIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categories = $request->getCategories();
+    $marks = $request->getMarks();
+    include "./pages/admin_add_candy.php";
+    break;
   case CONNECTION: // =======> ACTIONS
     // Go to the home page when the user is already connected
     if (isset($_SESSION["accountId"])) {
@@ -135,6 +160,24 @@ switch ($_GET["page"]) {
   case FILTER_PRODUCTS:
     $candies = $request->getCandiesByCategory($_POST["sltFilter"] == "all" ? null : $_POST["sltFilter"]);
     include "./pages/candy.php";
+    break;
+  case ADD_CANDY:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    // $request->addCandy($_POST["candyName"], trim($_POST["candyDescription"]), $_POST["candyPrice"], $_POST["candyNbStock"], $_FILES["candyImage"]["name"], $_POST["candyMark"]);
+
+    if (isset($_POST["candyCategories"])) {
+      // $currentAddedCandy = $request->getCandyByName($_POST["candyName"]);
+
+      foreach ($_POST["candyCategories"] as $idCategory) {
+        echo $idCategory;
+        // $request->addClassification($idCategory, $currentAddedCandy["id"]);
+      }
+    }
+
+    // header("Location: index.php?page=" . PAGE_ADMIN_ADD_CANDIES);
     break;
   default:
     include "./pages/404.php";

@@ -12,6 +12,11 @@ define("PAGE_FAVORITE", 8);
 define("PAGE_ABOUTUS", 9);
 define("PAGE_CONDITIONS", 10);
 define("PAGE_CONTACT", 11);
+define("PAGE_ADMIN_CANDIES", 12);
+define("PAGE_ADMIN_USERS", 13);
+define("PAGE_ADMIN_ADD_CANDIES", 14);
+define("PAGE_ADMIN_MODIFY_CANDIES", 16);
+define("PAGE_ADMIN_DELETE_CANDIES", 17);
 
 // ACTION ID
 define("CONNECTION", 100);
@@ -19,3 +24,4 @@ define("DISCONNECTION", 101);
 define("MODIFICATION_OF_PROFILE", 102);
 define("ADD_FAVORITES", 103);
 define("FILTER_PRODUCTS", 104);
+define("ADD_CANDY", 105);
