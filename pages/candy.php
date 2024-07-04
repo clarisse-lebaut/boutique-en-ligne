@@ -45,14 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     <!-- PART : for the filter et get prodcut in db by category -->
     <h3 class="container">
         <h3 class="title text-center mt-3 mb-4">Filtres</h3>
-        <form type="submit" action="index.php?page=<?= FILTER_PRODUCTS ?>" method="POST">
-            <select name="sltFilter">
-                <option value="all">Afficher tous les produits</option>
+        <form class="filter-form" type="submit" action="index.php?page=<?= FILTER_PRODUCTS ?>" method="POST">
+            <select class="filter" name="sltFilter">
+                <option class="option-filter" value="all">Afficher tous les produits</option>
                 <?php foreach ($categories as $category): ?>
                     <option value="<?= $category["id"] ?>"><?php echo htmlspecialchars($category['name']); ?></option>
                 <?php endforeach; ?>
             </select>
-            <input type="submit" name="btnFilter" value="Filtrer">
+            <input class="btn btn-primary shadow input-filter" type="submit" name="btnFilter" value="Filtrer">
         </form>
 
         <!-- PART : to make appears all the products in db and by category with filter -->

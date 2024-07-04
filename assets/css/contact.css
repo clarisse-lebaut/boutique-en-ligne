@@ -42,6 +42,35 @@ hr {
   background-color: #fffafa;
   width: 300px;
 }
-textarea {
+.textarea {
   height: 250px;
+}
+
+@media screen and (max-width: 425px) {
+  .form {
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: white;
+    padding-bottom: 25px;
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+  }
+  .input-form {
+    width: 100%;
+  }
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .textarea {
+    width: 100%;
+    height: 20%;
+  }
 }

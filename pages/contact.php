@@ -30,23 +30,26 @@
         echo "</div>";
     }
     ?>
-    <div class="container w-50 form">
+    <div class="m-auto w-50 form">
         <form action="" method="POST">
             <div class="contact-form">
                 <div class="left">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Nom" required>
+                        <input type="text" class="form-control input-form" id="name" name="name" placeholder="Nom"
+                            required>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" required>
+                        <input type="email" class="form-control input-form" id="email" name="email" placeholder="E-mail"
+                            required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Sujet" required>
+                        <input type="text" class="form-control input-form" id="subject" name="subject"
+                            placeholder="Sujet" required>
                     </div>
                 </div>
                 <div class="right">
                     <div class="form-group">
-                        <textarea class="form-control" id="message" name="message" rows="5"
+                        <textarea class="textarea" id="message" name="message" rows="5"
                             placeholder="Tapez votre message..." required></textarea>
                     </div>
                 </div>

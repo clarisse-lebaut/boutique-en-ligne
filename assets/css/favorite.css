@@ -41,10 +41,17 @@
   border-radius: 10px;
   cursor: pointer;
 }
-.delete-button:active{
+.delete-button:active {
   transform: translateY(-10px);
 }
 
 .svgFavorite {
   width: 100%;
+}
+.card-container.white {
+  background-color: #fffafa; /* Couleur de fond pour les cartes paires */
+}
+
+.card-container.pink {
+  background-color: #ffadd9; /* Couleur de fond pour les cartes impaires */
 }

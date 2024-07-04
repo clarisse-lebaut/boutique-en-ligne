@@ -4,6 +4,7 @@
         <div class="error">
             <h1>Erreur 404</h1>
             <p class="error_text">😭 Il n'y a aucune sucreries sur cette page ! 😭</p>
+            <a class="come-back" href="./index.php?page=<?= PAGE_REGISTER ?>">Accueil</a>
         </div>
         <img class="pic404" src="./assets/images/btn/blue-candy.png" alt="">
     </div>

@@ -17,6 +17,9 @@ h1 {
 .pic404 {
   width: 150px;
 }
+.come-back {
+  display: none;
+}
 
 @keyframes shadow-pulse {
   0% {
@@ -25,5 +28,24 @@ h1 {
 
   100% {
     box-shadow: 0 0 70px rgba(255, 0, 217, 100);
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .error_text {
+    font-size: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    word-break: keep-all;
+  }
+  .pic404 {
+    display: none;
+  }
+  .come-back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: red;
   }
 }
