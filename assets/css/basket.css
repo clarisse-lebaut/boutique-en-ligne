@@ -3,6 +3,11 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 50px;
 }
+.product-box {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
 .card {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -10,6 +15,11 @@
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 0 10px 1px lightgray;
+  gap: 20px;
+}
+.card-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
 }
 .card-content {
@@ -30,7 +40,7 @@
 .totalPriceText {
   padding: 15px 0 15px 0;
 }
-.svg{
+.svg {
   width: 30%;
 }
 .deleteP {
@@ -65,4 +75,21 @@
 }
 .deleteP:active {
   transform: translateY(-10px);
+}
+.card-container.even {
+  background-color: #fffafa;
+  /* Couleur de fond pour les cartes avec index pair */
+}
+
+.card-container.odd {
+  background-color: #ffadd9;
+  /* Couleur de fond pour les cartes avec index impair */
+}
+
+@media screen and (max-width: 425px) {
+  .card-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 }
