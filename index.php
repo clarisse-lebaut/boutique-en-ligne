@@ -166,18 +166,18 @@ switch ($_GET["page"]) {
       header("Location: index.php?page=" . PAGE_HOME);
     }
 
-    // $request->addCandy($_POST["candyName"], trim($_POST["candyDescription"]), $_POST["candyPrice"], $_POST["candyNbStock"], $_FILES["candyImage"]["name"], $_POST["candyMark"]);
+    $request->addCandy($_POST["candyName"], trim($_POST["candyDescription"]), $_POST["candyPrice"], $_POST["candyNbStock"], $_FILES["candyImage"]["name"], $_POST["candyMark"]);
 
     if (isset($_POST["candyCategories"])) {
-      // $currentAddedCandy = $request->getCandyByName($_POST["candyName"]);
+      $currentAddedCandy = $request->getCandyByName($_POST["candyName"]);
 
       foreach ($_POST["candyCategories"] as $idCategory) {
         echo $idCategory;
-        // $request->addClassification($idCategory, $currentAddedCandy["id"]);
+        $request->addClassification($idCategory, $currentAddedCandy["id"]);
       }
     }
 
-    // header("Location: index.php?page=" . PAGE_ADMIN_ADD_CANDIES);
+    header("Location: index.php?page=" . PAGE_ADMIN_ADD_CANDIES);
     break;
   default:
     include "./pages/404.php";
