@@ -9,7 +9,10 @@ body {
 }
 
 /* PART : last product add in database */
-.lastOut {
+.lastOut-mobil {
+  display: none;
+}
+.lastOut-laptop {
   margin-top: 50px;
 }
 
@@ -78,7 +81,6 @@ body {
   gap: 10px;
   padding: 10px;
 }
-
 .card_style {
   margin: 10px;
   padding: 10px;
@@ -100,10 +102,45 @@ body {
 
 .news {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 .pic {
   width: 100%;
+}
+
+@media screen and (max-width: 425px) {
+  /* PART : last product add in database */
+  .lastOut-laptop {
+    display: none;
+  }
+
+  .lastOut-mobile{
+    visibility: visible;
+  }
+
+  /* PART : loved product (random product each F5) */
+  .loved {
+    background-color: #ffffff;
+  }
+
+  .grid-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  /* part news */
+  .news {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  .pic {
+    width: 100%;
+  }
 }

@@ -42,7 +42,7 @@ $searchForm->render();
 </h1>
 
 <!-- PART : slider to make appear the last add products -->
-<div class="container mb-4 lastOut">
+<div class="container mb-4 lastOut-laptop">
     <h2 class="title text-center mt-3 mb-4">Nos dernières sorties</h2>
     <hr>
     <hr width="250px" style="margin-bottom:100px;">
@@ -71,6 +71,24 @@ $searchForm->render();
         <p>Failed to get products or no products found</p>
     <?php } ?>
 </div>
+
+<div class="container mb-4 lastOut-mobile">
+    <h2 class="title text-center mt-3 mb-4">Nos dernières sorties</h2>
+    <hr>
+    <div class="container row m-auto">
+        <?php foreach ($products as $row): ?>
+            <div class="card d-flex g-3">
+                <div class="card-body">
+                    <h2><?php echo htmlspecialchars($row["name"]); ?></h2>
+                    <p>Prix : $<?php echo htmlspecialchars($row["price"]); ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+</div>
+
 
 <!-- PART : checkerboard to make appeart the most loved products -->
 <div class="container-fluid mt-4 loved">
@@ -104,22 +122,28 @@ $searchForm->render();
     <div class="container w-100">
         <h2 class="title text-center mt-3 mb-4">Actualitées sucrées</h2>
         <hr>
-        <div class="container mb-4 mt-4 news">
-            <div class="d-flex gap-5">
+        <div class="container mb-4 mt-4 ">
+            <div class="news">
                 <div class="card">
                     <img class="pic" src="../assets/images/news/woke.jpg" alt="">
-                    <a
-                        href="https://www.bfmtv.com/economie/consommation/m-m-s-renonce-a-ses-mascottes-jugees-woke-par-la-droite-americaine_AD-202301240045.html" target="_blank">Woke par les ricains</a>
+                    <a href="https://www.bfmtv.com/economie/consommation/m-m-s-renonce-a-ses-mascottes-jugees-woke-par-la-droite-americaine_AD-202301240045.html"
+                        target="_blank">Woke par les ricains</a>
+                    <time datetime="01/01/1997">01/01/1997</time>
+                    <blockquote>20minutes.fr</blockquote>
                     <p class="text-center">actu 1</p>
                 </div>
                 <div class="card">
                     <img class="pic" src="../assets/images/news/cbd.webp" alt="">
-                    <a href="https://www.20minutes.fr/societe/4050765-20230830-bonbons-cbd-contiennent-trop-thc-rappeles-toute-france" target="_blank">CBD dans les bonbons</a>
+                    <a href="https://www.20minutes.fr/societe/4050765-20230830-bonbons-cbd-contiennent-trop-thc-rappeles-toute-france"
+                        target="_blank">CBD dans les bonbons</a>
+                    <time datetime="01/01/1997">01/01/1997</time>
+                    <blockquote>20minutes.fr</blockquote>
                     <p class="text-center">actu 1</p>
                 </div>
                 <div class="card">
                     <img class="pic" src="../assets/images/news/inflation.webp" alt="">
-                    <a href="https://www.20minutes.fr/economie/4059441-20231025-halloween-prix-bonbons-bondi-21-an-selon-ufc-choisir" target="_blank">Mon dieux que c'est hors de prix</a>
+                    <a href="https://www.20minutes.fr/economie/4059441-20231025-halloween-prix-bonbons-bondi-21-an-selon-ufc-choisir"
+                        target="_blank">Mon dieux que c'est hors de prix</a>
                     <time datetime="01/01/1997">01/01/1997</time>
                     <blockquote>20minutes.fr</blockquote>
                     <p class="text-center">actu 1</p>
