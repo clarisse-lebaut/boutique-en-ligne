@@ -8,18 +8,18 @@ hr {
   margin: 0 25% 0 25%;
   color: red;
 }
-.box-_form {
+
+.box_form {
   display: flex;
   justify-content: center;
-}
-.container_form {
   background-color: white;
-  box-shadow: 0 10px 5px 1px lightgray;
-  display: flex;
+  box-shadow: 0 0 10px 1px lightgray;
   flex-direction: column;
   gap: 10px;
   border-radius: 20px;
+  width: 50%;
 }
+
 .header_section {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -30,6 +30,7 @@ hr {
   flex-direction: column;
   gap: 30px;
 }
+
 .box {
   display: flex;
   flex-direction: column;
@@ -42,7 +43,7 @@ hr {
   gap: 10px;
 }
 
-input{
+input {
   background-color: #fffafa;
   border: solid gray 1px;
   border-radius: 10px;
@@ -57,10 +58,46 @@ input{
   display: flex;
   flex-direction: column;
 }
-.a{
+.a {
   color: red;
   text-decoration: none;
 }
-.a:hover{
+.a:hover {
   color: blueviolet;
+}
+
+@media screen and (max-width: 425px) {
+  .h2 {
+    padding-top: 40px;
+    text-align: center;
+    color: red;
+    font-size: 35px;
+  }
+  hr {
+    margin: 0 25% 0 25%;
+    color: red;
+  }
+  .box_form {
+    border-radius: 0px;
+    width: 100%;
+  }
+  .header_section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  input {
+    box-shadow: inset 0 0 5px 1px lightgray;
+    border: solid lightgray 1px;
+  }
 }

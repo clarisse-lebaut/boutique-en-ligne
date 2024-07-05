@@ -41,23 +41,19 @@ if ($_POST) {
         $message = $result;
     }
 }
+
 ?>
 <div class="mb-5">
     <h2 class="title text-center mt-3 mb-4">Créez vous un compte !</h2>
     <hr>
 </div>
 
-<div class="navigate m-auto mb-5">
-    <a class="a" href="./index?page=<?= PAGE_CONNECTION ?>">Déjà un compte ? Se connecter</a>
-</div>
-
 <?php if ($message): ?>
     <p><?php echo htmlspecialchars($message); ?></p>
 <?php endif; ?>
 
-<div class="container box_form w-50">
-    <form class="container_form" action="" method="POST">
-
+<div class="box_form m-auto">
+    <form class="m-auto text-center" action="" method="POST">
         <div class="header_section">
             <h3 class="title text-center mt-4 mb-4 fs-4">VOS INFORMATIONS</h3>
             <hr>
@@ -100,20 +96,21 @@ if ($_POST) {
                 <label for="password">Mot de passe</label>
                 <div class="input-wrapper">
                     <input type="password" id="password" name="password" required>
-                    <span id="toggle-password" class="input-group-text toggle-password"
+                    <span id="toggle-password" class="input-group-text toggle-password m-auto"
                         onclick="togglePassword('password', 'toggle-password')">Voir</span>
                 </div>
                 <label for="confirm_password">Confirmer le mot de passe</label>
                 <div class="input-wrapper">
                     <input type="password" id="confirm_password" name="confirm_password" required>
-                    <span id="toggle-confirm-password" class="input-group-text toggle-password"
+                    <span id="toggle-confirm-password" class="input-group-text toggle-password m-auto"
                         onclick="togglePassword('confirm_password', 'toggle-confirm-password')">Voir</span>
                 </div>
             </div>
         </div>
 
-        <button class="btn btn-primary m-auto mt-5 mb-5" type="submit">Créer</button>
-
+        <div class="m-auto">
+            <button class="btn btn-primary mt-5 mb-5" type="submit">Créer</button>
+        </div>
     </form>
 </div>
 <div class="navigate m-auto text-center mt-5 gap-3">
