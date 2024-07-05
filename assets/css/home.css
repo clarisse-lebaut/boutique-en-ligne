@@ -9,11 +9,12 @@ body {
 }
 
 /* PART : last product add in database */
-.lastOut-mobil {
-  display: none;
-}
 .lastOut-laptop {
   margin-top: 50px;
+  display: block;
+}
+.lastOut-mobile {
+  display: none;
 }
 
 .slider {
@@ -112,12 +113,11 @@ body {
 
 @media screen and (max-width: 425px) {
   /* PART : last product add in database */
+  .lastOut-mobile {
+    display: block;
+  }
   .lastOut-laptop {
     display: none;
-  }
-
-  .lastOut-mobile{
-    visibility: visible;
   }
 
   /* PART : loved product (random product each F5) */
@@ -142,5 +142,12 @@ body {
   }
   .pic {
     width: 100%;
+  }
+  .card-color-1 {
+    background-color: #fffafa; /* Couleur 1 */
+  }
+
+  .card-color-2 {
+    background-color: #ffadd9; /* Couleur 2 */
   }
 }

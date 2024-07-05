@@ -42,6 +42,7 @@ $searchForm->render();
 </h1>
 
 <!-- PART : slider to make appear the last add products -->
+<!-- laptop version -->
 <div class="container mb-4 lastOut-laptop">
     <h2 class="title text-center mt-3 mb-4">Nos dernières sorties</h2>
     <hr>
@@ -71,13 +72,18 @@ $searchForm->render();
         <p>Failed to get products or no products found</p>
     <?php } ?>
 </div>
-
+<!-- mobile version -->
 <div class="container mb-4 lastOut-mobile">
     <h2 class="title text-center mt-3 mb-4">Nos dernières sorties</h2>
     <hr>
     <div class="container row m-auto">
-        <?php foreach ($products as $row): ?>
-            <div class="card d-flex g-3">
+        <?php
+        $counter = 0; // Initialize a counter
+        foreach ($products as $row):
+            $counter++;
+            $class = ($counter % 2 == 0) ? 'card-color-1' : 'card-color-2';
+            ?>
+            <div class="card d-flex g-3 <?php echo $class; ?>">
                 <div class="card-body">
                     <h2><?php echo htmlspecialchars($row["name"]); ?></h2>
                     <p>Prix : $<?php echo htmlspecialchars($row["price"]); ?></p>
@@ -87,7 +93,6 @@ $searchForm->render();
     </div>
 </div>
 
-</div>
 
 
 <!-- PART : checkerboard to make appeart the most loved products -->
