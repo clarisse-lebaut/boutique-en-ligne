@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="./assets/css/global.css">
   <link rel="stylesheet" href="./assets/css/header.css">
   <link rel="stylesheet" href="./assets/css/footer.css">
-
+  <link rel="stylesheet" href="./assets/css/modify.css">
   <link rel="stylesheet" href="./assets/css/404.css">
   <link rel="stylesheet" href="./assets/css/home.css">
   <link rel="stylesheet" href="./assets/css/candy.css">
