@@ -108,7 +108,7 @@ switch ($_GET["page"]) {
     $sltCandyNbStock = "";
     $sltCandyImage = "";
     $sltCandyCategories = [];
-    $sltCandyMark = "";
+    $sltCandyMark = [];
     $oldCategories = json_encode([]);
 
     if (isset($_POST["btnSelectCandy"])) {
