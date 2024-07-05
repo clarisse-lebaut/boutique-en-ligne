@@ -22,7 +22,7 @@
             <td class="align-middle"><?= htmlspecialchars($candy["name"]) ?></td>
             <td class="align-middle"><?= htmlspecialchars($candy["price"]) ?> €</td>
             <td class="align-middle"><?= htmlspecialchars($candy["nb_stock"]) ?></td>
-            <td class="align-middle"><?= $request->getCandyMark($candy["id"]) ?></td>
+            <td class="align-middle"><?= $request->getCandyMark($candy["id"])["name"] ?></td>
             <td class="align-middle"><?= $request->getCandyCategoriesInString($candy["id"]) ?></td>
             <td class="align-middle"><img class="d-block w-100 mx-auto" style="max-width: 100px;" src="./assets/images/candies/<?= htmlspecialchars($candy["image"]) ?>" alt=""></td>
             <td class="align-middle"><?= htmlspecialchars($candy["updated_at"]) ?></td>
