@@ -30,31 +30,28 @@
         echo "</div>";
     }
     ?>
-    <div class="m-auto w-50 form">
-        <form action="" method="POST">
-            <div class="contact-form">
-                <div class="left">
-                    <div class="form-group">
-                        <input type="text" class="form-control input-form" id="name" name="name" placeholder="Nom"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control input-form" id="email" name="email" placeholder="E-mail"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control input-form" id="subject" name="subject"
-                            placeholder="Sujet" required>
-                    </div>
-                </div>
-                <div class="right">
-                    <div class="form-group">
-                        <textarea class="textarea" id="message" name="message" rows="5"
-                            placeholder="Tapez votre message..." required></textarea>
-                    </div>
-                </div>
+    <div class="">
+        <form class="form m-auto gap-4" action="" method="POST">
+            <div class="d-flex flex-column gap-1">
+                <label for="name">Nom</label>
+                <input type="text" class="input-form" id="name" name="name" placeholder="Nom" required>
             </div>
-            <button type="submit" class="btn btn-primary">Envoyer</button>
+            <div class="d-flex flex-column gap-1">
+                <label for="email">Email</label>
+                <input type="email" class="input-form" id="email" name="email" placeholder="E-mail" required>
+            </div>
+            <div class="d-flex flex-column gap-1">
+                <label for="subject">Sujet</label>
+                <input type="text" class="input-form" id="subject" name="subject" placeholder="Sujet" required>
+            </div>
+            <div class="d-flex flex-column gap-1">
+                <label for="message">Message</label>
+                <textarea class="textarea" id="message" name="message" rows="5" placeholder="Tapez votre message..."
+                    required></textarea>
+            </div>
+            <div class="m-auto">
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            </div>
         </form>
     </div>
 </div>

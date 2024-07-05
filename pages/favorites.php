@@ -2,8 +2,6 @@
 // Instanciation de la classe Requete
 $requete = new Request();
 
-
-
 // Vérifie si l'identifiant du bonbon à supprimer est présent
 if (isset($_POST['candyId'])) {
     $candyIdToRemove = $_POST['candyId'];
