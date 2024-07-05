@@ -160,14 +160,79 @@ switch ($_GET["page"]) {
 
     include "./pages/admin_modify_candy.php";
     break;
+  case PAGE_ADMIN_ADD_CATEGORIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    include "./pages/admin_add_category.php";
+    break;
   case PAGE_ADMIN_DELETE_CANDIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
     $candies = $request->getAllCandies();
     include "./pages/admin_delete_candy.php";
     break;
   case PAGE_ADMIN_DELETE_CANDIES_COMFIRM:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
     $candyId = $_POST["sltCandies"];
     $candyName = $request->getCandyById($candyId)["name"];
     include "./pages/admin_delete_candy_confirm.php";
+    break;
+  case PAGE_ADMIN_CATEGORIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categories = $request->getCategories();
+    include "./pages/admin_categories.php";
+    break;
+  case PAGE_ADMIN_MODIFY_CATEGORIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categories = $request->getCategories();
+    $sltCategoryId = null;
+    $sltCategoryInfos = "";
+    $sltCategoryName = "";
+
+    if (isset($_POST["btnSelectCategory"])) {
+      $sltCategoryId = $_POST["sltCategories"];
+      $sltCategoryInfos = $request->getCategoryById($sltCategoryId);
+      $sltCategoryName = htmlspecialchars($sltCategoryInfos["name"]);
+    }
+
+    if (isset($_POST["btnModifyCategory"])) {
+      $sltCategoryId = $_POST["sltCategories"];
+      $sltCategoryName = $_POST["categoryName"];
+
+      $request->updateCategory($sltCategoryId, $sltCategoryName);
+    }
+
+    include "./pages/admin_modify_category.php";
+    break;
+  case PAGE_ADMIN_DELETE_CATEGORIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categories = $request->getCategories();
+    include "./pages/admin_delete_category.php";
+    break;
+  case PAGE_ADMIN_DELETE_CATEGORIES_COMFIRM:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categoryId = $_POST["sltCategories"];
+    $categoryName = $request->getCategoryById($categoryId)["name"];
+    include "./pages/admin_delete_category_confirm.php";
     break;
   case CONNECTION: // =======> ACTIONS
     // Go to the home page when the user is already connected
@@ -263,8 +328,20 @@ switch ($_GET["page"]) {
     $request->deleteCandy($_POST["candyId"]);
     header("Location: index.php?page=" . PAGE_ADMIN_DELETE_CANDIES);
     break;
+  case ADD_CATEGORY:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $request->addCategory($_POST["categoryName"]);
+    header("Location: index.php?page=" . PAGE_ADMIN_ADD_CATEGORIES);
+    break;
   default:
     include "./pages/404.php";
+    break;
+  case DELETE_CATEGORY:
+    $request->deleteCategory($_POST["categoryId"]);
+    header("Location: index.php?page=" . PAGE_ADMIN_DELETE_CATEGORIES);
     break;
 }
 

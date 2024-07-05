@@ -62,6 +62,13 @@
                   <li>
                     <hr class="dropdown-divider">
                   </li>
+                  <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_CATEGORIES ?>">Liste des catégories</a></li>
+                  <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_ADD_CATEGORIES ?>">Ajouter une catégorie</a></li>
+                  <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_MODIFY_CATEGORIES ?>">Modifier une catégorie</a></li>
+                  <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_DELETE_CATEGORIES ?>">Supprimer une catégorie</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
                   <li><a class="dropdown-item" href="./index.php?page=<?= PAGE_ADMIN_USERS ?>">Liste des utilisateurs</a></li>
                 </ul>
               </li>

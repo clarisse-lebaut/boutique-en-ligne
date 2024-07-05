@@ -445,4 +445,66 @@ class Request extends BDD
       throw new Exception($e->getMessage());
     }
   }
+
+  public function addCategory(string $name)
+  {
+    try {
+      $query = "INSERT INTO category (name) VALUES (:name);";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to add a category!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function updateCategory(int $id, string $name)
+  {
+    try {
+      $query = "UPDATE category SET category.name = :name WHERE category.id = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+      $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to modify a category!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function deleteCategory(int $id)
+  {
+    try {
+      $query = "DELETE FROM category WHERE category.id = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to delete a category!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getCategoryById(int $id)
+  {
+    try {
+      $query = "SELECT * FROM category WHERE category.id = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get a category!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
 }
