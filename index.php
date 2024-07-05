@@ -66,6 +66,174 @@ switch ($_GET["page"]) {
     $account = $request->getAccountById($_SESSION["accountId"]);
     include "./pages/modify.php";
     break;
+  case PAGE_ADMIN_CANDIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $candies = $request->getAllCandies();
+    include "./pages/admin_candies.php";
+    break;
+  case PAGE_ADMIN_USERS:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $accounts = $request->getAccounts();
+    include "./pages/admin_users.php";
+    break;
+  case PAGE_ADMIN_ADD_CANDIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categories = $request->getCategories();
+    $marks = $request->getMarks();
+    include "./pages/admin_add_candy.php";
+    break;
+  case PAGE_ADMIN_MODIFY_CANDIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $candies = $request->getAllCandies();
+    $categories = $request->getCategories();
+    $marks = $request->getMarks();
+
+    $sltCandyId = null;
+    $sltCandyInfos = "";
+    $sltCandyName = "";
+    $sltCandyDescription = "";
+    $sltCandyPrice = "";
+    $sltCandyNbStock = "";
+    $sltCandyImage = "";
+    $sltCandyCategories = [];
+    $sltCandyMark = "";
+    $oldCategories = json_encode([]);
+
+    if (isset($_POST["btnSelectCandy"])) {
+      $sltCandyId = $_POST["sltCandies"];
+      $sltCandyInfos = $request->getCandyById($sltCandyId);
+      $sltCandyName = htmlspecialchars($sltCandyInfos["name"]);
+      $sltCandyDescription = htmlspecialchars($sltCandyInfos["description"]);
+      $sltCandyPrice = htmlspecialchars($sltCandyInfos["price"]);
+      $sltCandyNbStock = htmlspecialchars($sltCandyInfos["nb_stock"]);
+      $sltCandyImage = htmlspecialchars($sltCandyInfos["image"]);
+      $sltCandyCategories = explode(", ", $request->getCandyCategoriesInString($sltCandyId));
+      $sltCandyMark = $request->getCandyMark($sltCandyId);
+
+      $currentCategories = $request->getCandyCategories($sltCandyId);
+      $olds = [];
+
+      foreach ($currentCategories as $category) {
+        array_push($olds, $category["id_category"]);
+      }
+
+      $oldCategories = json_encode($olds);
+    }
+
+    if (isset($_POST["btnModifyCandy"])) {
+      $sltCandyId = $_POST["sltCandies"];
+      $sltCandyName = $_POST["candyName"];
+      $sltCandyDescription = $_POST["candyDescription"];
+      $sltCandyPrice = $_POST["candyPrice"];
+      $sltCandyNbStock = $_POST["candyNbStock"];
+      $sltCandyImage = $_FILES["candyImage"]["name"];
+      $sltCandyMark = $_POST["candyMarks"];
+
+      $sltCandyCategories = isset($_POST["candyCategories"]) ? $_POST["candyCategories"] : [];
+      $nbClassification = $request->getCandyNbClassification($sltCandyId);
+
+      $oldCategories = json_decode($_POST["oldCategories"]);
+      if (count($sltCandyCategories) == $nbClassification) {
+        // Updates the candy
+        $request->updateCandy($sltCandyId, $sltCandyName, $sltCandyDescription, $sltCandyPrice, $sltCandyNbStock, $sltCandyImage, $sltCandyMark);
+
+        // Updates all classification of that candy
+        foreach ($sltCandyCategories as $key => $sltCandyCategory) {
+          $request->updateCandyClassification($oldCategories[$key], $sltCandyId, $sltCandyCategory);
+        }
+      } else {
+        echo '<p color="red">Le candy à ' . $nbClassification . $nbClassification > 1 ? "bonbons selectionnés" : "bonbon selectionné" . ' dans la base de données !</p>' . "\n";
+      }
+    }
+
+    include "./pages/admin_modify_candy.php";
+    break;
+  case PAGE_ADMIN_ADD_CATEGORIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    include "./pages/admin_add_category.php";
+    break;
+  case PAGE_ADMIN_DELETE_CANDIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $candies = $request->getAllCandies();
+    include "./pages/admin_delete_candy.php";
+    break;
+  case PAGE_ADMIN_DELETE_CANDIES_COMFIRM:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $candyId = $_POST["sltCandies"];
+    $candyName = $request->getCandyById($candyId)["name"];
+    include "./pages/admin_delete_candy_confirm.php";
+    break;
+  case PAGE_ADMIN_CATEGORIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categories = $request->getCategories();
+    include "./pages/admin_categories.php";
+    break;
+  case PAGE_ADMIN_MODIFY_CATEGORIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categories = $request->getCategories();
+    $sltCategoryId = null;
+    $sltCategoryInfos = "";
+    $sltCategoryName = "";
+
+    if (isset($_POST["btnSelectCategory"])) {
+      $sltCategoryId = $_POST["sltCategories"];
+      $sltCategoryInfos = $request->getCategoryById($sltCategoryId);
+      $sltCategoryName = htmlspecialchars($sltCategoryInfos["name"]);
+    }
+
+    if (isset($_POST["btnModifyCategory"])) {
+      $sltCategoryId = $_POST["sltCategories"];
+      $sltCategoryName = $_POST["categoryName"];
+
+      $request->updateCategory($sltCategoryId, $sltCategoryName);
+    }
+
+    include "./pages/admin_modify_category.php";
+    break;
+  case PAGE_ADMIN_DELETE_CATEGORIES:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categories = $request->getCategories();
+    include "./pages/admin_delete_category.php";
+    break;
+  case PAGE_ADMIN_DELETE_CATEGORIES_COMFIRM:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $categoryId = $_POST["sltCategories"];
+    $categoryName = $request->getCategoryById($categoryId)["name"];
+    include "./pages/admin_delete_category_confirm.php";
+    break;
   case CONNECTION: // =======> ACTIONS
     // Go to the home page when the user is already connected
     if (isset($_SESSION["accountId"])) {
@@ -97,7 +265,7 @@ switch ($_GET["page"]) {
       //     setcookie("favorite" . $_SESSION["accountId"], json_encode([]));
       //   }
 
-      header("Location: index.php?page=1");
+      header("Location: index.php?page=" . PAGE_HOME);
     }
     break;
   case DISCONNECTION:
@@ -136,8 +304,44 @@ switch ($_GET["page"]) {
     $candies = $request->getCandiesByCategory($_POST["sltFilter"] == "all" ? null : $_POST["sltFilter"]);
     include "./pages/candy.php";
     break;
+  case ADD_CANDY:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $request->addCandy($_POST["candyName"], trim($_POST["candyDescription"]), $_POST["candyPrice"], $_POST["candyNbStock"], $_FILES["candyImage"]["name"], $_POST["candyMark"]);
+
+    if (isset($_POST["candyCategories"])) {
+      $currentAddedCandy = $request->getLatestCandy();
+
+      foreach ($_POST["candyCategories"] as $idCategory) {
+        echo $idCategory;
+        $request->addClassification($idCategory, $currentAddedCandy["id"]);
+      }
+    }
+
+    header("Location: index.php?page=" . PAGE_ADMIN_ADD_CANDIES);
+    break;
+  case DELETE_CANDY:
+    $request->deleteCandyComments($_POST["candyId"]);
+    $request->deleteCandyClassifications($_POST["candyId"]);
+    $request->deleteCandy($_POST["candyId"]);
+    header("Location: index.php?page=" . PAGE_ADMIN_DELETE_CANDIES);
+    break;
+  case ADD_CATEGORY:
+    if (!isset($_SESSION["accountId"])) {
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
+
+    $request->addCategory($_POST["categoryName"]);
+    header("Location: index.php?page=" . PAGE_ADMIN_ADD_CATEGORIES);
+    break;
   default:
     include "./pages/404.php";
+    break;
+  case DELETE_CATEGORY:
+    $request->deleteCategory($_POST["categoryId"]);
+    header("Location: index.php?page=" . PAGE_ADMIN_DELETE_CATEGORIES);
     break;
 }
 

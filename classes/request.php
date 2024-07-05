@@ -46,6 +46,7 @@ class Request extends BDD
     }
   }
 
+
   function updateAccount(int $id, string $firstname, string $lastname, string $address, string $zipcode, string $email, string $password): void
   {
     try {
@@ -214,15 +215,296 @@ class Request extends BDD
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function getCandyDetailsByName($name)
+  public function getCandyMark(int $idCandy)
   {
-    $query = "SELECT * FROM candy WHERE name = :name LIMIT 1";
-    $stmt = $this->connection->prepare($query);
-    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-    $stmt->execute();
-
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    try {
+      $query = "SELECT * FROM candy INNER JOIN mark ON candy.id_mark = mark.id WHERE candy.id = :idCandy;";
+      $stmt = $this->connection->prepare($query);
+      $stmt->bindParam("idCandy", $idCandy, PDO::PARAM_INT);
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $stmt->execute();
+      return $stmt->fetch();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get the mark of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
   }
 
-}
+  public function getCandyCategories(int $idCandy)
+  {
+    try {
+      $query = "SELECT * FROM classification INNER JOIN category ON classification.id_category = category.id WHERE classification.id_candy = :idCandy;";
+      $stmt = $this->connection->prepare($query);
+      $stmt->bindParam("idCandy", $idCandy, PDO::PARAM_INT);
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $stmt->execute();
 
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get categories of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getCandyCategoriesInString(int $idCandy): string
+  {
+    try {
+      $query = "SELECT category.name as category_name FROM classification INNER JOIN category ON classification.id_category = category.id WHERE classification.id_candy = :idCandy;";
+      $stmt = $this->connection->prepare($query);
+      $stmt->bindParam("idCandy", $idCandy, PDO::PARAM_INT);
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $stmt->execute();
+
+      $data = $stmt->fetchAll();
+      $categories = [];
+
+      foreach ($data as $category) {
+        array_push($categories, $category["category_name"]);
+      }
+
+      return implode(", ", $categories);
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get categories of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getMarks()
+  {
+    try {
+      $query = "SELECT * FROM mark ORDER BY mark.name ASC;";
+      $stmt = $this->connection->prepare($query);
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $stmt->execute();
+      return $stmt->fetchAll();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get all mark!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function addCandy(string $name, string $description, float $price, int $nbStock, string $image, int $idMark)
+  {
+    try {
+      $query = "INSERT INTO candy (name, description, price, nb_stock, image, id_mark) VALUES (:name, :description, :price, :nb_stock, :image, :id_mark);";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+      $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+      $stmt->bindParam(":price", $price, PDO::PARAM_STR);
+      $stmt->bindParam(":nb_stock", $nbStock, PDO::PARAM_INT);
+      $stmt->bindParam(":image", $image, PDO::PARAM_STR);
+      $stmt->bindParam(":id_mark", $idMark, PDO::PARAM_INT);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to add a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function addClassification(int $idCategory, int $idCandy)
+  {
+    try {
+      $query = "INSERT INTO classification (id_category, id_candy) VALUES (:id_category, :id_candy);";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id_category", $idCategory, PDO::PARAM_INT);
+      $stmt->bindParam(":id_candy", $idCandy, PDO::PARAM_INT);
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to add a classification!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getLatestCandy()
+  {
+    try {
+      $query = "SELECT * FROM candy ORDER BY candy.created_at DESC LIMIT 1;";
+      $stmt = $this->connection->prepare($query);
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getCandyComments(int $id)
+  {
+    try {
+      $query = "SELECT * FROM comment WHERE comment.id_candy = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+      $stmt->execute();
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get all comment of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getCandyNbClassification(int $id): int
+  {
+    try {
+      $query = "SELECT COUNT(classification.id) as nb_classification FROM classification WHERE classification.id_candy = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC)["nb_classification"];
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get all comment of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function updateCandy(int $id, string $name, string $description, float $price, int $nbStock, string $image, int $idMark)
+  {
+    try {
+      $query = "UPDATE candy SET candy.name = :name, candy.description = :description, candy.price = :price, candy.nb_stock = :nb_stock, candy.image = :image, candy.id_mark = :id_mark, candy.updated_at = CURRENT_TIMESTAMP WHERE candy.id = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+      $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+      $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+      $stmt->bindParam(":price", $price, PDO::PARAM_STR);
+      $stmt->bindParam(":nb_stock", $nbStock, PDO::PARAM_INT);
+      $stmt->bindParam(":image", $image, PDO::PARAM_STR);
+      $stmt->bindParam(":id_mark", $idMark, PDO::PARAM_INT);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to update a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function updateCandyClassification(int $oldIdCategory, int $idCandy, int $newIdCategory)
+  {
+    try {
+      $query = "UPDATE classification SET classification.id_category = :new_id_category WHERE classification.id_category = :id_category AND classification.id_candy = :id_candy;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id_category", $oldIdCategory, PDO::PARAM_INT);
+      $stmt->bindParam(":id_candy", $idCandy, PDO::PARAM_INT);
+      $stmt->bindParam(":new_id_category", $newIdCategory, PDO::PARAM_INT);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to update a classification of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function deleteCandy(int $id)
+  {
+    try {
+      $query = "DELETE FROM candy WHERE candy.id = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to delete a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function deleteCandyClassifications(int $id)
+  {
+    try {
+      $query = "DELETE FROM classification WHERE classification.id_candy = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to delete all classification of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function deleteCandyComments(int $id)
+  {
+    try {
+      $query = "DELETE FROM comment WHERE comment.id_candy = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to delete all comment of a candy!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function addCategory(string $name)
+  {
+    try {
+      $query = "INSERT INTO category (name) VALUES (:name);";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to add a category!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function updateCategory(int $id, string $name)
+  {
+    try {
+      $query = "UPDATE category SET category.name = :name WHERE category.id = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+      $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to modify a category!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function deleteCategory(int $id)
+  {
+    try {
+      $query = "DELETE FROM category WHERE category.id = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to delete a category!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function getCategoryById(int $id)
+  {
+    try {
+      $query = "SELECT * FROM category WHERE category.id = :id;";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      echo '<p style="color:red">Impossible to get a category!</p>' . "\n";
+      throw new Exception($e->getMessage());
+    }
+  }
+}

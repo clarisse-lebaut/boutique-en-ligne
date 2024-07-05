@@ -76,18 +76,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
                                     <?php
                                     $comments = $request->getCommentary($candy["id"]);
                                     if (count($comments) == 0) {
-                                        ?>
+                                    ?>
                                         <p>Pas</p>
                                         <?php
                                     } else {
                                         foreach ($comments as $comment) {
-                                            ?>
+                                        ?>
                                             <p><?= htmlspecialchars($comment["content"]) ?></p>
                                             <p><?= htmlspecialchars($comment["created_at"]) ?></p>
                                             <p><?= htmlspecialchars($comment["updated_at"]) ?></p>
                                             <p><?= htmlspecialchars($comment["creator_firstname"]) ?></p>
                                             <p><?= htmlspecialchars($comment["creator_lastname"]) ?></p>
-                                            <?php
+                                    <?php
                                         }
                                     }
                                     ?>
