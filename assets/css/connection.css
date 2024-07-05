@@ -1,0 +1,31 @@
+.connection {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  gap: 50px;
+  box-shadow: 0 0 10px 1px lightgray;
+  padding: 20px;
+  width: 50%;
+}
+
+.connection-input {
+  height: 50px;
+  box-shadow: inset 0 0 5px 1px lightgray;
+  padding: 20px;
+  border: 10px;
+  border: lightgray solid 1px;
+}
+
+.box-input {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media screen and (max-width: 425px) {
+  .connection {
+    width: 100%;
+    border-radius: 0px;
+  }
+}
