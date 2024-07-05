@@ -18,7 +18,9 @@
   <link rel="stylesheet" href="./assets/css/candy.css">
   <link rel="stylesheet" href="./assets/css/basket.css">
   <link rel="stylesheet" href="./assets/css/favorite.css">
+  <link rel="stylesheet" href="./assets/css/profil.css">
   <link rel="stylesheet" href="./assets/css/create_account.css">
+  <link rel="stylesheet" href="./assets/css/connection.css">
   <link rel="stylesheet" href="./assets/css/contact.css">
 </head>
 

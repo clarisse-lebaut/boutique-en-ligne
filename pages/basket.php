@@ -38,6 +38,55 @@ $total = 0; // Initialisez le montant total du panier à 0
                     $subtotal = $candy["price"] * 1; // Multipliez le prix par la quantité (1 dans ce cas)
                     $total += $subtotal; // Ajoutez le sous-total au total
                     ?>
+                    <div class="modal fade" id="candyInfos<?= $candy["id"] ?>" tabindex="-1"
+                        aria-labelledby="candyInfos<?= $candy["id"] ?>Label" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $candy["name"] ?></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><?= htmlspecialchars($candy["price"]) ?> €</p>
+                                    <p><?= htmlspecialchars($candy["mark_name"]) ?></p>
+                                    <p><?= htmlspecialchars($candy["image"]) ?></p>
+                                    <p><?= htmlspecialchars($candy["description"]) ?></p>
+                                    <h1>Commentaires</h1>
+                                    <?php
+                                    $comments = $request->getCommentary($candy["id"]);
+                                    if (count($comments) == 0) {
+                                        ?>
+                                        <p>Soyez le premier à donner votre avis !</p>
+                                        <?php
+                                    } else {
+                                        foreach ($comments as $comment) {
+                                            ?>
+                                            <p><?= htmlspecialchars($comment["content"]) ?></p>
+                                            <p><?= htmlspecialchars($comment["created_at"]) ?></p>
+                                            <p><?= htmlspecialchars($comment["updated_at"]) ?></p>
+                                            <p><?= htmlspecialchars($comment["creator_firstname"]) ?></p>
+                                            <p><?= htmlspecialchars($comment["creator_lastname"]) ?></p>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="modal-footer">
+                                        <!-- bouton pour ajouter favoris -->
+                                        <?php if (isset($_SESSION["accountId"])) { ?>
+                                            <a href="index.php?page=<?= $_GET['page'] ?>&action=add_favorite&candy_id=<?= $candy["id"] ?>"
+                                                class="btn btn-primary">
+                                                <img class="svg-candy" src="../assets/images/icon/favorite.svg" alt="">
+                                            </a>
+                                        <?php } ?>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card container m-auto card-container <?php echo $key % 2 == 0 ? 'even' : 'odd'; ?>">
                         <div class="card-body">
                             <h5 class="card-title title-candy"><?= htmlspecialchars($candy["name"]) ?></h5>
@@ -50,7 +99,11 @@ $total = 0; // Initialisez le montant total du panier à 0
                                     <input type="number" name="quantity" value="1" min="1">
                                     <button type="submit" name="update" class="btn btn-primary">Mettre à jour</button>
                                     <button type="submit" name="remove" class="btn btn-danger">Supprimer</button>
-                                    <button type="button" class="btn btn-secondary">Voir plus</button>
+                                    <!-- bouton pour afficher le modal et faire apparaître les détails d'un produit -->
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#candyInfos<?= $candy["id"] ?>">
+                                        Voir plus
+                                    </button>
                                 </div>
                             </form>
                         </div>

@@ -213,5 +213,16 @@ class Request extends BDD
     $result = $this->connection->query($query);
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
+
+  public function getCandyDetailsByName($name)
+  {
+    $query = "SELECT * FROM candy WHERE name = :name LIMIT 1";
+    $stmt = $this->connection->prepare($query);
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
 }
 

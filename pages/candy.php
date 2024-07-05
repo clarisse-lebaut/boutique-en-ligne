@@ -6,43 +6,39 @@ $requete = new Request();
 $categories = $requete->getCategories();
 $classification = $requete->getClassificationCandy();
 
-// Ajouter un bonbon aux favoris
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_favorite'])) {
-    $candyId = $_POST['candy_id'];
+// Ajouter un bonbon aux favoris ou au panier
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
+    $action = $_GET['action'];
+    $candyId = $_GET['candy_id'];
 
-    // Initialiser le tableau des favoris s'il n'existe pas
-    if (!isset($_SESSION['favorites'])) {
-        $_SESSION['favorites'] = [];
-    }
+    if ($action === 'add_favorite') {
+        // Initialiser le tableau des favoris s'il n'existe pas
+        if (!isset($_SESSION['favorites'])) {
+            $_SESSION['favorites'] = [];
+        }
 
-    // Ajouter le bonbon aux favoris s'il n'est pas déjà présent
-    if (!in_array($candyId, $_SESSION['favorites'])) {
-        $_SESSION['favorites'][] = $candyId;
-    }
+        // Ajouter le bonbon aux favoris s'il n'est pas déjà présent
+        if (!in_array($candyId, $_SESSION['favorites'])) {
+            $_SESSION['favorites'][] = $candyId;
+        }
 
-}
+    } elseif ($action === 'add_to_cart') {
+        // Initialiser le panier s'il n'existe pas encore
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
 
-//Ajouter un bonbon au panier
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
-    $candyId = $_POST['candy_id'];
-
-    // Initialiser le panier s'il n'existe pas encore
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-
-    // Ajouter le bonbon au panier s'il n'est pas déjà présent
-    if (!in_array($candyId, $_SESSION['cart'])) {
-        $_SESSION['cart'][] = $candyId;
+        // Ajouter le bonbon au panier s'il n'est pas déjà présent
+        if (!in_array($candyId, $_SESSION['cart'])) {
+            $_SESSION['cart'][] = $candyId;
+        }
     }
 }
 ?>
-
 <main>
     <h2 class="title text-center mt-3 mb-4">Les douceurs de notre catalogue</h2>
     <hr>
 
-    <!-- PART : for the filter et get prodcut in db by category -->
     <h3 class="container">
         <h3 class="title text-center mt-3 mb-4">Filtres</h3>
         <form class="filter-form" type="submit" action="index.php?page=<?= FILTER_PRODUCTS ?>" method="POST">
@@ -55,16 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
             <input class="btn btn-primary shadow input-filter" type="submit" name="btnFilter" value="Filtrer">
         </form>
 
-        <!-- PART : to make appears all the products in db and by category with filter -->
         <h3 class="title text-center mt-5 mb-5">Nos produits</h3>
         <div class="product-grid container m-auto">
             <?php if (count($candies) == 0) { ?>
                 <div>Pas de bonbon</div>
             <?php } else { ?>
                 <?php foreach ($candies as $index => $candy):
-                    $colorClass = ($index % 2 == 0) ? 'card-even' : 'card-odd'; // Définir la classe basée sur l'index
+                    $colorClass = ($index % 2 == 0) ? 'card-even' : 'card-odd';
                     ?>
-                    <!-- ceci est le modal pour chaque carte -->
                     <div class="modal fade" id="candyInfos<?= $candy["id"] ?>" tabindex="-1"
                         aria-labelledby="candyInfos<?= $candy["id"] ?>Label" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -99,42 +93,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                                     ?>
                                 </div>
                                 <div class="modal-footer">
+                                    <!-- bouton pour ajouter favoris -->
+                                    <?php if (isset($_SESSION["accountId"])) { ?>
+                                        <a href="index.php?page=<?= $_GET['page'] ?>&action=add_favorite&candy_id=<?= $candy["id"] ?>"
+                                            class="btn btn-primary">
+                                            <img class="svg-candy" src="../assets/images/icon/favorite.svg" alt="">
+                                        </a>
+                                    <?php } ?>
+
+                                    <!-- bouton pour ajouter au panier -->
+                                    <a href="index.php?page=<?= $_GET['page'] ?>&action=add_to_cart&candy_id=<?= $candy["id"] ?>"
+                                        class="btn btn-secondary">
+                                        <img class="svg-candy" src="../assets/images/icon/basket.svg" alt="">
+                                    </a>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- ceci est la div dans laquelle il y a toutes les cards -->
+
                     <div class="card <?= $colorClass ?> container m-auto card-container">
                         <input type="hidden" name="candy" value='<?= $candy["id"] ?>'>
                         <input class="name" type="hidden" name="candy_name" value='<?= htmlspecialchars($candy["name"]) ?>'>
                         <input class="price" type="hidden" name="candy_price" value='<?= htmlspecialchars($candy["price"]) ?>'>
 
-                        <!-- PART : the card for each products on the page -->
                         <div class="card-body">
                             <h5 class="card-title title-candy"><?= htmlspecialchars($candy["name"]) ?></h5>
                             <p class="card-text text-candy"><?= htmlspecialchars($candy["price"]) ?> €</p>
                             <img class="candy-pic-style" src="./assets/images/candies/<?= $candy["image"] ?>" alt="">
 
-
                             <!-- bouton pour ajouter favoris -->
                             <?php if (isset($_SESSION["accountId"])) { ?>
-                                <form method="POST" action="index.php?page=<?= $_GET['page'] ?>">
-                                    <input type="hidden" name="candy_id" value="<?= $candy["id"] ?>">
-                                    <button type="submit" name="add_favorite" class="btn btn-primary">
-                                        <img class="svg-candy" src="../assets/images/icon/favorite.svg" alt="">
-                                    </button>
-                                </form>
+                                <a href="index.php?page=<?= $_GET['page'] ?>&action=add_favorite&candy_id=<?= $candy["id"] ?>"
+                                    class="btn btn-primary">
+                                    <img class="svg-candy" src="../assets/images/icon/favorite.svg" alt="">
+                                </a>
                             <?php } ?>
 
                             <!-- bouton pour ajouter au panier -->
-                            <form method="POST" action="index.php?page=<?= $_GET['page'] ?>">
-                                <input type="hidden" name="candy_id" value="<?= $candy["id"] ?>">
-                                <button type="submit" name="add_to_cart" class="btn btn-secondary">
-                                    <img class="svg-candy" src="../assets/images/icon/basket.svg" alt="">
-                                </button>
-                            </form>
+                            <a href="index.php?page=<?= $_GET['page'] ?>&action=add_to_cart&candy_id=<?= $candy["id"] ?>"
+                                class="btn btn-secondary">
+                                <img class="svg-candy" src="../assets/images/icon/basket.svg" alt="">
+                            </a>
 
                             <!-- bouton pour afficher le modal et faire apparaître les détails d'un produit -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
