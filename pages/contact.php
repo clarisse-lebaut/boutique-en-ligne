@@ -5,16 +5,13 @@
     </div>
     <?php
     if ($_POST) {
-        // Récupération des données du formulaire
+        // Get data's form
         $name = htmlspecialchars($_POST['name']);
         $email = htmlspecialchars($_POST['email']);
         $subject = htmlspecialchars($_POST['subject']);
         $message = htmlspecialchars($_POST['message']);
 
-        // Validation simple (vous pouvez ajouter plus de validation)
         if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
-            // Traitement des données, par exemple, les enregistrer dans une base de données ou les envoyer par email
-            // Pour l'instant, nous allons simplement les afficher
             echo "<div class='request-test'>";
             echo "Nom: " . $name . "<br>";
             echo "Email: " . $email . "<br>";

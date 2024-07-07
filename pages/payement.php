@@ -3,17 +3,14 @@ $total = isset($_SESSION['total']) ? $_SESSION['total'] : 0;
 $payment_success = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupération des données du formulaire
+    // Get date from the form
     $amount = $_POST['amount'];
     $card_number = $_POST['card_number'];
 
-    // Logique de traitement de paiement fictif
-    // Ici, vous pouvez ajouter votre propre logique pour traiter les données de paiement
+    // False success or failure
+    $payment_success = true; // or false for failure, just for the test
 
-    // Simuler un succès ou un échec de paiement
-    $payment_success = true; // ou false pour simuler un échec
-
-    // Affichage du résultat du paiement
+    // show th result
     if ($payment_success) {
         $message = 'PAIEMENT OK !';
     } else {
@@ -29,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p>Montant de votre panier</p>
         <p class="amount"><?= htmlspecialchars($total) ?> €</p>
 
-        <!-- Formulaire de paiement -->
+        <!-- Payement form -->
         <form class="d-flex flex-column" action="" method="post">
             <input type="hidden" name="amount" value="<?= htmlspecialchars($total) ?>">
             <label class="mb-2" for="card_number">Numéro de carte:</label>
@@ -38,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
     <div>
-        <!-- Affichage du message de résultat du paiement -->
+        <!-- Show result msg for payement -->
         <?php if ($payment_success !== null): ?>
             <p class="payment-message"><?= $message ?></p>
         <?php endif; ?>

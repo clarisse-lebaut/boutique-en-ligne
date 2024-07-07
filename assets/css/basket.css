@@ -78,12 +78,10 @@
 }
 .card-container.even {
   background-color: #fffafa;
-  /* Couleur de fond pour les cartes avec index pair */
 }
 
 .card-container.odd {
   background-color: #ffadd9;
-  /* Couleur de fond pour les cartes avec index impair */
 }
 
 @media screen and (max-width: 425px) {

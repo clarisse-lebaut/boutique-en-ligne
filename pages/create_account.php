@@ -15,8 +15,7 @@ if ($_POST) {
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
     $role = "User";
-
-    // Conditions de sécurité pour le mot de passe
+    
     $password_min_length = 8;
     $password_has_uppercase = preg_match('@[A-Z]@', $password);
     $password_has_lowercase = preg_match('@[a-z]@', $password);

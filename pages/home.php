@@ -1,12 +1,9 @@
-<!-- import class and fonction -->
 <?php
 $pageTitle = "Accueil";
 include "./assets/components/search.php";
-// Appelle la fonction pour obtenir les produits
 $request = new Request();
 $products = $request->getProductsCarousel();
 $productsDamier = $request->getProductsCheckerBoard();
-// Appelle la classe de la barre de recherche
 $searchForm = new SearchForm();
 ?>
 
@@ -17,7 +14,7 @@ $searchForm->render();
 <!-- PART : to make appear the name of the connected user -->
 <h1 class="user-name">
     <?php
-    // Condition pour vérifier si une session est en cour
+    // Condition to check if a session is already run
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
@@ -26,17 +23,12 @@ $searchForm->render();
     {
         return isset($_SESSION['accountId']);
     }
-    // Exécution conditionnelle en fonction de l'état de connexion
+
     if (isLoggedIn()) {
         $account = $request->getAccountById($_SESSION["accountId"]);
-
-        // Action à prendre si l'utilisateur est connecté
         echo "Quelle sera votre péché " . $account['firstname'] . " ?";
-        // Ajoutez ici les actions que vous souhaitez prendre si l'utilisateur est connecté
     } else {
-        // Action à prendre si l'utilisateur n'est pas connecté
         echo "Bienvenue dans un monde de pur merveille";
-        // Ajoutez ici les actions que vous souhaitez prendre si l'utilisateur n'est pas connecté
     }
     ?>
 </h1>
@@ -120,8 +112,6 @@ $searchForm->render();
     </div>
 </div>
 
-
-
 <!-- PART :carousel to make appeart the last news -->
 <div class="container mt-4">
     <div class="container w-100">
@@ -154,7 +144,3 @@ $searchForm->render();
         </div>
     </div>
 </div>
-
-</body>
-
-</html>

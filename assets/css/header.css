@@ -7,7 +7,7 @@
 
 .link-style {
   padding: 0 40px;
-  position: relative; /* Assure que les éléments enfants positionnés seront référencés par rapport à ce parent */
+  position: relative;
 }
 
 .link-style:hover {
@@ -15,19 +15,19 @@
 }
 
 .link-style::after {
-  content: ""; /* Ajoute un élément pseudo pour créer la ligne */
-  position: absolute; /* Position absolue par rapport à l'élément parent */
-  left: 25%; /* Alignement à gauche */
-  bottom: -5px; /* Position sous le lien */
-  width: 50%; /* Largeur de la ligne */
-  height: 3px; /* Épaisseur de la ligne */
-  background-color: red; /* Couleur de la ligne */
-  transform: scaleX(0); /* Échelle de départ nulle pour l'effet d'animation */
-  transition: transform 0.3s ease; /* Animation de la transformation */
+  content: "";
+  position: absolute;
+  left: 25%;
+  bottom: -5px;
+  width: 50%;
+  height: 3px;
+  background-color: red;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
 .link-style:hover::after {
-  transform: scaleX(1); /* Rétablit l'échelle pour afficher la ligne */
+  transform: scaleX(1);
 }
 
 .link-style {

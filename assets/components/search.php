@@ -9,12 +9,12 @@ class SearchForm extends BDD
 
     public function getSuggestions()
     {
-        $query = "SELECT name FROM candy";  // Assurez-vous que 'name' correspond à votre colonne dans la table
+        $query = "SELECT name FROM candy";
         $stmt = $this->connection->query($query);
         $suggestions = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $suggestions[] = $row['name'];  // Utilisez 'name' pour récupérer la suggestion
+            $suggestions[] = $row['name'];  // Use 'name' to get the suggestion
         }
 
         return $suggestions;
@@ -98,7 +98,7 @@ class SearchForm extends BDD
                 ?>
             </div>
             <div class="modal-footer">
-                <!-- bouton pour ajouter favoris -->
+                <!-- button to add at favorite -->
                 <?php if (isset($_SESSION["accountId"])) { ?>
                     <a href="index.php?page=<?= $_GET['page'] ?>&action=add_favorite&candy_id=<?= $candy["id"] ?>"
                         class="btn btn-primary">
@@ -106,7 +106,7 @@ class SearchForm extends BDD
                     </a>
                 <?php } ?>
 
-                <!-- bouton pour ajouter au panier -->
+                <!-- button to add at basket -->
                 <a href="index.php?page=<?= $_GET['page'] ?>&action=add_to_cart&candy_id=<?= $candy["id"] ?>"
                     class="btn btn-secondary">
                     <img class="svg-candy" src="../assets/images/icon/basket.svg" alt="">

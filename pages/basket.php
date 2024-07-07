@@ -1,29 +1,27 @@
 <?php
-$requete = new Request(); // Instanciation de votre classe Requete
-$cart = []; // Initialisez le tableau pour stocker les produits du panier
+$requete = new Request();
+$cart = [];
 
-// Suppression d'un article du panier
+// Delete a prodcut frome the basket
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove'])) {
     $candyIdToRemove = $_POST['candyId'];
     if (($key = array_search($candyIdToRemove, $_SESSION['cart'])) !== false) {
         unset($_SESSION['cart'][$key]);
-        // Réindexer le tableau pour éviter des trous dans les clés
         $_SESSION['cart'] = array_values($_SESSION['cart']);
     }
 }
 
-// Vérifiez si le panier existe dans la session
+// Check if a basket is present in the session
 if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-    // Parcourez les bonbons dans le panier et récupérez leurs détails
     foreach ($_SESSION['cart'] as $candyId) {
-        $candy = $requete->getCandyById($candyId); // Supposons que getCandyById récupère les détails du bonbon par son ID
+        $candy = $requete->getCandyById($candyId);
         if ($candy) {
-            $cart[] = $candy; // Ajoutez le bonbon au tableau $cart
+            $cart[] = $candy;
         }
     }
 }
 
-$total = 0; // Initialisez le montant total du panier à 0
+$total = 0;
 ?>
 
 <main>
@@ -36,8 +34,8 @@ $total = 0; // Initialisez le montant total du panier à 0
             <?php } else { ?>
                 <?php foreach ($cart as $key => $candy): ?>
                     <?php
-                    $subtotal = $candy["price"] * 1; // Multipliez le prix par la quantité (1 dans ce cas)
-                    $total += $subtotal; // Ajoutez le sous-total au total
+                    $subtotal = $candy["price"] * 1;
+                    $total += $subtotal;
                     ?>
                     <div class="modal fade" id="candyInfos<?= $candy["id"] ?>" tabindex="-1"
                         aria-labelledby="candyInfos<?= $candy["id"] ?>Label" aria-hidden="true">
@@ -74,7 +72,7 @@ $total = 0; // Initialisez le montant total du panier à 0
                                 </div>
                                 <div class="modal-footer">
                                     <div class="modal-footer">
-                                        <!-- bouton pour ajouter favoris -->
+                                        <!-- button to add at the favorite -->
                                         <?php if (isset($_SESSION["accountId"])) { ?>
                                             <a href="index.php?page=<?= $_GET['page'] ?>&action=add_favorite&candy_id=<?= $candy["id"] ?>"
                                                 class="btn btn-primary">
@@ -100,7 +98,7 @@ $total = 0; // Initialisez le montant total du panier à 0
                                     <input type="number" name="quantity" value="1" min="1">
                                     <button type="submit" name="update" class="btn btn-primary">Mettre à jour</button>
                                     <button type="submit" name="remove" class="btn btn-danger">Supprimer</button>
-                                    <!-- bouton pour afficher le modal et faire apparaître les détails d'un produit -->
+                                    <!-- button to make appear the modal -->
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#candyInfos<?= $candy["id"] ?>">
                                         Voir plus
@@ -117,7 +115,7 @@ $total = 0; // Initialisez le montant total du panier à 0
                 </div>
             </div>
             <?php
-            // Stocker le montant total dans la session
+            // Get the amount on the session
             $_SESSION['total'] = $total;
             ?>
         <?php } ?>

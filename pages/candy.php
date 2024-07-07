@@ -1,34 +1,26 @@
 <?php
-// Instanciation de la classe Requete
 $requete = new Request();
-
-// Appel de la méthode pour récupérer les catégories
 $categories = $requete->getCategories();
 $classification = $requete->getClassificationCandy();
 
-// Ajouter un bonbon aux favoris ou au panier
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
     $action = $_GET['action'];
     $candyId = $_GET['candy_id'];
 
     if ($action === 'add_favorite') {
-        // Initialiser le tableau des favoris s'il n'existe pas
         if (!isset($_SESSION['favorites'])) {
             $_SESSION['favorites'] = [];
         }
 
-        // Ajouter le bonbon aux favoris s'il n'est pas déjà présent
         if (!in_array($candyId, $_SESSION['favorites'])) {
             $_SESSION['favorites'][] = $candyId;
         }
 
     } elseif ($action === 'add_to_cart') {
-        // Initialiser le panier s'il n'existe pas encore
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
 
-        // Ajouter le bonbon au panier s'il n'est pas déjà présent
         if (!in_array($candyId, $_SESSION['cart'])) {
             $_SESSION['cart'][] = $candyId;
         }
@@ -101,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
                                         </a>
                                     <?php } ?>
 
-                                    <!-- bouton pour ajouter au panier -->
+                                    <!-- button to add to the basket -->
                                     <a href="index.php?page=<?= $_GET['page'] ?>&action=add_to_cart&candy_id=<?= $candy["id"] ?>"
                                         class="btn btn-secondary">
                                         <img class="svg-candy" src="../assets/images/icon/basket.svg" alt="">
@@ -130,13 +122,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
                                 </a>
                             <?php } ?>
 
-                            <!-- bouton pour ajouter au panier -->
+                            <!-- button to add at the faovrites -->
                             <a href="index.php?page=<?= $_GET['page'] ?>&action=add_to_cart&candy_id=<?= $candy["id"] ?>"
                                 class="btn btn-secondary">
                                 <img class="svg-candy" src="../assets/images/icon/basket.svg" alt="">
                             </a>
 
-                            <!-- bouton pour afficher le modal et faire apparaître les détails d'un produit -->
+                            <!-- button to make appear the modal -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#candyInfos<?= $candy["id"] ?>">
                                 Voir plus

@@ -49,9 +49,9 @@
   width: 100%;
 }
 .card-container.white {
-  background-color: #fffafa; /* Couleur de fond pour les cartes paires */
+  background-color: #fffafa;
 }
 
 .card-container.pink {
-  background-color: #ffadd9; /* Couleur de fond pour les cartes impaires */
+  background-color: #ffadd9;
 }

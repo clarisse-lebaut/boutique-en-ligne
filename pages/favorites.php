@@ -1,24 +1,22 @@
 <?php
-// Instanciation de la classe Requete
 $requete = new Request();
 
-// Vérifie si l'identifiant du bonbon à supprimer est présent
+//Check if the ID of the deleted candy is present
 if (isset($_POST['candyId'])) {
     $candyIdToRemove = $_POST['candyId'];
 
-    // Retirer le bonbon de la session des favoris s'il existe
     if (isset($_SESSION['favorites'])) {
         $key = array_search($candyIdToRemove, $_SESSION['favorites']);
         if ($key !== false) {
             unset($_SESSION['favorites'][$key]);
             $message = "Bonbon supprimer des favoris !";
-            // Réindexer le tableau après suppression
+            // Re-index array after delete
             $_SESSION['favorites'] = array_values($_SESSION['favorites']);
         }
     }
 }
 
-// Vérifier si des favoris existent dans la session
+// Check if favorites exist in the session
 $favorites = [];
 if (isset($_SESSION['favorites'])) {
     foreach ($_SESSION['favorites'] as $candyId) {
@@ -36,7 +34,7 @@ if (isset($_SESSION['favorites'])) {
         <?php if (count($favorites) == 0) { ?>
             <div>Pas de favoris</div>
         <?php } else {
-            $count = 0; // Pour alterner les couleurs
+            $count = 0; //To atlerne the color
             foreach ($favorites as $candy): ?>
                 <div class="modal fade" id="candyInfos<?= $candy["id"] ?>" tabindex="-1"
                     aria-labelledby="candyInfos<?= $candy["id"] ?>Label" aria-hidden="true">
@@ -72,7 +70,7 @@ if (isset($_SESSION['favorites'])) {
                                 ?>
                             </div>
                             <div class="modal-footer">
-                                <!-- bouton pour ajouter favoris -->
+                                <!-- button to add at the favotire -->
                                 <?php if (isset($_SESSION["accountId"])) { ?>
                                     <a href="index.php?page=<?= $_GET['page'] ?>&action=add_favorite&candy_id=<?= $candy["id"] ?>"
                                         class="btn btn-primary">
@@ -80,7 +78,7 @@ if (isset($_SESSION['favorites'])) {
                                     </a>
                                 <?php } ?>
 
-                                <!-- bouton pour ajouter au panier -->
+                                <!-- button to add to the basket -->
                                 <a href="index.php?page=<?= $_GET['page'] ?>&action=add_to_cart&candy_id=<?= $candy["id"] ?>"
                                     class="btn btn-secondary">
                                     <img class="svg-candy" src="../assets/images/icon/basket.svg" alt="">
@@ -100,7 +98,8 @@ if (isset($_SESSION['favorites'])) {
                         <form action="" method="POST">
                             <input type="hidden" name="candyId" value="<?= $candy['id'] ?>">
                             <button type="submit" class="btn btn-primary" name="deleteFav">Supprimer des favoris</button>
-                        </form> <!-- bouton pour afficher le modal et faire apparaître les détails d'un produit -->
+                        </form> 
+                        <!-- button to make appear the modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#candyInfos<?= $candy["id"] ?>">
                             Voir plus

@@ -100,7 +100,7 @@ class Request extends BDD
 
   public function addUser($firstname, $lastname, $email, $address, $zipcode, $password)
   {
-    // Vérifier si l'adresse e-mail existe déjà
+    // Check if the e-amil already exist
     $checkSql = 'SELECT COUNT(*) FROM account WHERE email = :email';
     $checkStmt = $this->connection->prepare($checkSql);
     $checkStmt->bindParam(':email', $email);
@@ -111,8 +111,8 @@ class Request extends BDD
       return 'Email already exists';
     }
 
-    // Si l'email n'existe pas, ajouter le nouvel utilisateur
-    $role = 'User'; // Valeur par défaut pour le rôle
+    // If email not exist, add the new user
+    $role = 'User'; // Default value for the role
     $sql = 'INSERT INTO account (firstname, lastname, email, address, zipcode, password, role) VALUES (:firstname, :lastname, :email, :address, :zipcode, :password, :role)';
     $stmt = $this->connection->prepare($sql);
 
@@ -121,16 +121,13 @@ class Request extends BDD
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':address', $address);
     $stmt->bindParam(':zipcode', $zipcode);
-    // Hachage du mot de passe avant de le stocker
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $stmt->bindParam(':password', $hashedPassword);
     $stmt->bindParam(':role', $role);
 
     if ($stmt->execute()) {
-      // Rediriger vers la page d'accueil
-      // echo "Utilsateur ajouté à la base de donnée";
       header('Location: index.php?page=' . PAGE_CONNECTION);
-      exit(); // Assurez-vous de quitter le script après la redirection
+      exit();
     } else {
       return 'Failed to add user';
     }

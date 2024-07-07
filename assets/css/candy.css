@@ -33,12 +33,10 @@ option {
 
 .card-even {
   background-color: #fffafa;
-  /* Couleur pour les cartes paires */
 }
 
 .card-odd {
   background-color: pink;
-  /* Couleur pour les cartes impaires */
 }
 
 .card-body {
