@@ -3,24 +3,13 @@
   box-shadow: 0 0 20px 1px gray;
 }
 
-.item-style {
-  margin: 30px;
-}
-
-.container-style {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-}
-
 .link-style {
   padding: 0 40px;
   position: relative; /* Assure que les éléments enfants positionnés seront référencés par rapport à ce parent */
 }
 
-.link-style:hover{
-    color: white;
+.link-style:hover {
+  color: white;
 }
 
 .link-style::after {
@@ -42,18 +31,4 @@
 .link-style {
   text-decoration: none;
   color: black;
-}
-
-.nav-item {
-  text-decoration: none;
-  list-style: none;
-  text-align: center;
-}
-.logo-nav{
-  text-decoration: none;
-  list-style: none;
-  text-align: center;
-}
-.svg-nav{
-  width: 20%;
 }
