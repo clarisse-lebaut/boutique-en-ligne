@@ -135,7 +135,6 @@ $searchForm->render();
                         target="_blank">Woke par les ricains</a>
                     <time datetime="01/01/1997">01/01/1997</time>
                     <blockquote>20minutes.fr</blockquote>
-                    <p class="text-center">actu 1</p>
                 </div>
                 <div class="card">
                     <img class="pic" src="../assets/images/news/cbd.webp" alt="">
@@ -143,7 +142,6 @@ $searchForm->render();
                         target="_blank">CBD dans les bonbons</a>
                     <time datetime="01/01/1997">01/01/1997</time>
                     <blockquote>20minutes.fr</blockquote>
-                    <p class="text-center">actu 1</p>
                 </div>
                 <div class="card">
                     <img class="pic" src="../assets/images/news/inflation.webp" alt="">
@@ -151,7 +149,6 @@ $searchForm->render();
                         target="_blank">Mon dieux que c'est hors de prix</a>
                     <time datetime="01/01/1997">01/01/1997</time>
                     <blockquote>20minutes.fr</blockquote>
-                    <p class="text-center">actu 1</p>
                 </div>
             </div>
         </div>

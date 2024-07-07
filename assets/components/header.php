@@ -26,14 +26,15 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg nav-style ">
-    <div class="container-fluid pt-2 pb-2">
-      <a class="navbar-brand logo-nav link-style d-flex align-items-center" href="./index.php?page=<?= PAGE_HOME ?>">HOME</a>
+  <nav class="navbar navbar-expand-lg nav-style fs-5">
+    <div class="container-fluid pt-4 pb-4">
+      <a class="navbar-brand logo-nav link-style d-flex align-items-center"
+        href="./index.php?page=<?= PAGE_HOME ?>">HOME</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse container-style" id="navbarNavDropdown">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav d-flex align-items-center">
           <li class="nav-item">
             <a class="link-style" href="./index.php?page=<?= PAGE_PRODUCTS ?>">Produits</a>
