@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="./assets/css/create_account.css">
   <link rel="stylesheet" href="./assets/css/connection.css">
   <link rel="stylesheet" href="./assets/css/contact.css">
+  <link rel="stylesheet" href="./assets/css/payement.css">
 </head>
 
 <body>

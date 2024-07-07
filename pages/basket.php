@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove'])) {
         $_SESSION['cart'] = array_values($_SESSION['cart']);
     }
 }
+
 // Vérifiez si le panier existe dans la session
 if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
     // Parcourez les bonbons dans le panier et récupérez leurs détails
@@ -115,6 +116,15 @@ $total = 0; // Initialisez le montant total du panier à 0
                     <p>Total : <?= htmlspecialchars($total) ?> €</p>
                 </div>
             </div>
+            <?php
+            // Stocker le montant total dans la session
+            $_SESSION['total'] = $total;
+            ?>
+        <?php } ?>
+        <?php if (isset($_SESSION["accountId"])) { ?>
+            <a href="./index?page=<?= PAGE_PAYEMENT ?>">Passer la commande</a>
+        <?php } else { ?>
+            <a href="./index?page=<?= PAGE_CONNECTION ?>">Passer la commande</a>
         <?php } ?>
     </div>
 </main>

@@ -31,6 +31,9 @@ switch ($_GET["page"]) {
   case PAGE_REGISTER:
     include "./pages/create_account.php";
     break;
+  case PAGE_PAYEMENT:
+    include "./pages/payement.php";
+    break;
   case PAGE_CONDITIONS:
     include "./pages/404.php";
     break;
