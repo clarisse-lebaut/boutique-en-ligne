@@ -53,3 +53,9 @@ li {
 .svg-footer {
   width: 40px;
 }
+
+@media screen and (max-width: 425px) {
+  .link {
+    flex-direction: column;
+  }
+}
