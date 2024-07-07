@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Formulaire de paiement -->
         <form class="d-flex flex-column" action="" method="post">
             <input type="hidden" name="amount" value="<?= htmlspecialchars($total) ?>">
-            <label for="card_number">Numéro de carte:</label>
+            <label class="mb-2" for="card_number">Numéro de carte:</label>
             <input class="payment-input" type="number" id="card_number" name="card_number" required><br><br>
             <input class="btn btn-primary" type="submit" value="Payer">
         </form>
