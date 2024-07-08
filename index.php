@@ -268,8 +268,10 @@ switch ($_GET["page"]) {
     }
     break;
   case DISCONNECTION:
-    session_destroy();
-    header("Location: index.php?page=" . PAGE_HOME);
+    if (isset($_SESSION["accountId"])) {
+      session_destroy();
+      header("Location: index.php?page=" . PAGE_HOME);
+    }
     break;
   case MODIFICATION_OF_PROFILE:
     $account = $request->getAccountById($_SESSION["accountId"]);
